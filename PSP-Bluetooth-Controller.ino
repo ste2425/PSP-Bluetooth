@@ -93,7 +93,7 @@ void onDisconnectedGamepad(GamepadPtr gp) {
 
 void releaseUnusedPins(){
   for(byte i = 0; i < mappedPinsSize; i++){
-    if (!(mappedPins[i].pressed)){
+    if (mappedPins[i].pressed == false){
       pinMode(mappedPins[i].pin, INPUT);
     }
   }
@@ -106,7 +106,7 @@ void resetPinPressed() {
 }
 
 void pressPin(byte pin) {  
-    Serial.println("Pressing pin:");
+    Serial.println("PRessing pin:");
     Serial.println(pin);
     
     pinMode(pin, OUTPUT);
@@ -115,17 +115,23 @@ void pressPin(byte pin) {
 
 void updateButtons(GamepadPtr gamepad) {
   for (byte i = 0; i < mappedPinsSize; i++){
-    pinMap mapping = mappedPins[i];
+    pinMap *mapping = &mappedPins[i];
 
-    switch (mapping.type) {
+    switch (mapping->type) {
       case TYPE_DPAD:
-        if (gamepad->dpad() & mapping.controllerMask) {
-          pressPin(mapping.pin);
+        if (gamepad->dpad() & mapping->controllerMask) {
+          mapping->pressed = true;
+          pressPin(mapping->pin);
+        } else {
+          mapping->pressed = false;
         }
       break;
       case TYPE_BUTTONS:
-        if (gamepad->buttons() & mapping.controllerMask) {
-          pressPin(mapping.pin);
+        if (gamepad->buttons() & mapping->controllerMask) {
+          mapping->pressed = true;
+          pressPin(mapping->pin);
+        } else {          
+          mapping->pressed = false;
         }
       break;
     }
@@ -135,10 +141,10 @@ void updateButtons(GamepadPtr gamepad) {
 void loop() {
   BP32.update();
   
-  resetPinPressed();
-
   if (myGamepad && myGamepad->isConnected()) {  
     updateButtons(myGamepad);
+  } else {
+    resetPinPressed();
   }
   
   releaseUnusedPins();
