@@ -27,6 +27,12 @@ enum {
   BUTTON_THUMB_R = 1 << 9,
 };
 
+enum {
+  MISC_BUTTON_SYSTEM = 1 << 0,  // AKA: PS, Xbox, etc.
+  MISC_BUTTON_BACK = 1 << 1,    // AKA: Select, Share, -
+  MISC_BUTTON_HOME = 1 << 2,    // AKA: Start, Options, +
+};
+
 // ---------------------------------------------------------------
 
 typedef enum {
@@ -37,17 +43,27 @@ typedef enum {
 
 typedef struct {
   const byte pin;
-  const byte controllerMask;
+  const int controllerMask;
   bool pressed;
   controllerType type;
 } pinMap;
 
 pinMap mappedPins[] = {
-  { 9, DPAD_UP, false, TYPE_DPAD  }, // up - D9 - pin 12
-  { 8, DPAD_DOWN, false, TYPE_DPAD  }, // down - D8 - Pin 11
-  { 7, DPAD_RIGHT, false, TYPE_DPAD  }, // right - D7 - Pin 10
-  { 6, DPAD_LEFT, false, TYPE_DPAD  }, // left - D6 - Pin 9
+  // Bottom buttons
+  { 15, MISC_BUTTON_SYSTEM, false, TYPE_HOME }, // home - D15 - Pin 20
+  { 14, MISC_BUTTON_HOME, false, TYPE_HOME }, // start - D14 - Pin 19
+  { 13, MISC_BUTTON_BACK, false, TYPE_HOME }, // select - D13 - Pin 16
+  { 12, BUTTON_THUMB_R, false, TYPE_BUTTONS },  // screen - D12 - Pin 15
+
+  // Left hand buttons
+  { 11, BUTTON_SHOULDER_L, false, TYPE_BUTTONS  }, // Left Shoulder Button - D11 - pin 14
+  { 10, DPAD_UP, false, TYPE_DPAD  }, // up - D10 - pin 13
+  { 9, DPAD_DOWN, false, TYPE_DPAD  }, // down - D9 - pin 12
+  { 8, DPAD_RIGHT, false, TYPE_DPAD  }, // right - D8 - Pin 11
+  { 7, DPAD_LEFT, false, TYPE_DPAD  }, // left - D7 - Pin 10
   
+  // Right hand buttons
+  { 6, BUTTON_SHOULDER_R, false, TYPE_BUTTONS }, // Right shoulder Button - D6 - Pin 9
   { 5, BUTTON_A, false, TYPE_BUTTONS  }, // Cross - D5 - pin 8
   { 4, BUTTON_B, false, TYPE_BUTTONS  }, // Circle - D4 - Pin 7
   { 3, BUTTON_X, false, TYPE_BUTTONS  }, // Square - D3 - Pin 6
@@ -58,8 +74,7 @@ const byte mappedPinsSize = sizeof(mappedPins) / sizeof(pinMap);
 void setup() {
 
   Serial.begin(9600);
-
-  // Need to put this behind some pin check so it can be disabled at boot time
+  
   while (!Serial) {
     ;
   }
