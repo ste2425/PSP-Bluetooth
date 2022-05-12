@@ -38,7 +38,7 @@ enum {
 typedef enum {
   TYPE_DPAD = 0,
   TYPE_BUTTONS = 1,
-  TYPE_HOME = 2
+  TYPE_SYSTEM = 2
 } controllerType;
 
 typedef struct {
@@ -50,9 +50,9 @@ typedef struct {
 
 pinMap mappedPins[] = {
   // Bottom buttons
-  { 15, MISC_BUTTON_SYSTEM, false, TYPE_HOME }, // home - D15 - Pin 20
-  { 14, MISC_BUTTON_HOME, false, TYPE_HOME }, // start - D14 - Pin 19
-  { 13, MISC_BUTTON_BACK, false, TYPE_HOME }, // select - D13 - Pin 16
+  { 15, MISC_BUTTON_SYSTEM, false, TYPE_SYSTEM }, // home - D15 - Pin 20
+  { 14, MISC_BUTTON_HOME, false, TYPE_SYSTEM }, // start - D14 - Pin 19
+  { 13, MISC_BUTTON_BACK, false, TYPE_SYSTEM }, // select - D13 - Pin 16
   { 12, BUTTON_THUMB_R, false, TYPE_BUTTONS },  // screen - D12 - Pin 15
 
   // Left hand buttons
@@ -149,6 +149,14 @@ void updateButtons(GamepadPtr gamepad) {
           mapping->pressed = false;
         }
       break;
+      case TYPE_SYSTEM:
+        if (gamepad->miscButtons() & mapping->controllerMask) {
+          mapping->pressed = true;
+          pressPin(mapping->pin);
+        } else {          
+          mapping->pressed = false;
+        }
+      break; 
     }
   }
 }
