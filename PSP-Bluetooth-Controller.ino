@@ -139,6 +139,7 @@ void updateButtons(GamepadPtr gamepad) {
           pressPin(mapping->pin);
         } else {
           mapping->pressed = false;
+      pinMode(mapping->pin, INPUT);
         }
       break;
       case TYPE_BUTTONS:
@@ -147,6 +148,7 @@ void updateButtons(GamepadPtr gamepad) {
           pressPin(mapping->pin);
         } else {          
           mapping->pressed = false;
+      pinMode(mapping->pin, INPUT);
         }
       break;
       case TYPE_SYSTEM:
@@ -155,6 +157,7 @@ void updateButtons(GamepadPtr gamepad) {
           pressPin(mapping->pin);
         } else {          
           mapping->pressed = false;
+      pinMode(mapping->pin, INPUT);
         }
       break; 
     }
@@ -170,7 +173,7 @@ void loop() {
     resetPinPressed();
   }
   
-  releaseUnusedPins();
+  //releaseUnusedPins();
   
   delay(3);
 }
