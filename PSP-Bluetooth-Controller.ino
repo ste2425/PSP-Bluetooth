@@ -62,24 +62,27 @@ void loop() {
     int axisX = myGamepad->axisX();
     int axisY = myGamepad->axisY();
 
-    int axisXMapped = map(axisX, -512, 511, 0, 255);
-    int axisYMapped = map(axisY, -512, 511, 0, 255);
+    int axisXMapped = map(axisX, -512, 511, 0, 200);
+    int axisYMapped = map(axisY, -513, 512, 0, 200);
 
     
-    Serial.println("Original X");
-    Serial.println(axisX);
-    Serial.println("Mapped X");
-    Serial.println(axisXMapped);
+    //Serial.println("Original X");
+    //Serial.println(axisX);
+    //Serial.println("Mapped X");
+    Serial.print(axisY);
+    Serial.print(" ");
+    Serial.print(axisYMapped);
+    Serial.println("");
     //Serial.println("Original Y");
     //Serial.println(axisY);
     //Serial.println("Mapped Y");
     //Serial.println(axisYMapped);
 
-  // digitalPotWrite(wiper0writeAddr, axisYMapped);
-   // digitalPotWrite(wiper1writeAddr, axisXMapped);
+   digitalPotWrite(wiper0writeAddr, axisYMapped);
+   digitalPotWrite(wiper1writeAddr, axisXMapped);
   }
   
-  delay(1000);
+  //delay(1000);
 }
 
 // This function takes care of sending SPI data to the pot.
