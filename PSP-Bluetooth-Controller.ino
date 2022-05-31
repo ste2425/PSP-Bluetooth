@@ -1,41 +1,130 @@
 #include <Bluepad32.h>
 #include <SPI.h>
 
-// set pin 10 as the slave select for the digital pot:
 const int slaveSelectPin = 10;
-const int wiper0writeAddr = B00000000;
-const int wiper1writeAddr = B00010000;
-const int tconwriteAddr = B01000000;
-const int tcon_0off_1on = B11110000;
-const int tcon_0on_1off = B00001111;
-const int tcon_0off_1off = B00000000;
-const int tcon_0on_1on = B11111111;
+const int wiper0writeAddr = 0b00000000;
+const int wiper1writeAddr = 0b00010000;
 
 // Currently only use the first connected gamepad. Bluepad32 supports upto 4
 // Would be good to allow multiple, maybe could use different controllers for emulators etc
 GamepadPtr myGamepad = nullptr;
 
-void setup() {
+// Controller masks ---------------------------------------------
+// These are coppied from Gamepad.h from Bluepad32 however they are declared against a Gamepad instance
+// That or my lack of C++ knowledge prevents me from accessing them without a gamepad instance.
+enum {
+  DPAD_UP = 1 << 0,
+  DPAD_DOWN = 1 << 1,
+  DPAD_RIGHT = 1 << 2,
+  DPAD_LEFT = 1 << 3,
+};
 
-  Serial.begin(9600);
+enum {
+  BUTTON_A = 1 << 0,
+  BUTTON_B = 1 << 1,
+  BUTTON_X = 1 << 2,
+  BUTTON_Y = 1 << 3,
+  BUTTON_SHOULDER_L = 1 << 4,
+  BUTTON_SHOULDER_R = 1 << 5,
+  BUTTON_TRIGGER_L = 1 << 6,
+  BUTTON_TRIGGER_R = 1 << 7,
+  BUTTON_THUMB_L = 1 << 8,
+  BUTTON_THUMB_R = 1 << 9,
+};
+
+enum {
+  MISC_BUTTON_SYSTEM = 1 << 0,  // AKA: PS, Xbox, etc.
+  MISC_BUTTON_BACK = 1 << 1,    // AKA: Select, Share, -
+  MISC_BUTTON_HOME = 1 << 2,    // AKA: Start, Options, +
+};
+
+// ---------------------------------------------------------------
+
+typedef enum {
+  TYPE_DPAD = 0,
+  TYPE_BUTTONS = 1,
+  TYPE_SYSTEM = 2
+} controllerType;
+
+typedef struct {
+  const byte pin;
+  const int controllerMask;
+  bool pressed;
+  controllerType type;
+} pinMap;
+
+pinMap mappedPins[] = {
+  // Bottom buttons
+  { 14, MISC_BUTTON_SYSTEM, false, TYPE_SYSTEM }, // home - D15 - Pin 20
+  { 17, MISC_BUTTON_HOME, false, TYPE_SYSTEM }, // start - D14 - Pin 19
+  { 16, MISC_BUTTON_BACK, false, TYPE_SYSTEM }, // select - D13 - Pin 16
+  { 15, BUTTON_THUMB_R, false, TYPE_BUTTONS },  // screen - D12 - Pin 15
+
+  // Left hand buttons
+  { 19, BUTTON_SHOULDER_L, false, TYPE_BUTTONS  }, // Left Shoulder Button - D11 - pin 14
+  { 9, DPAD_UP, false, TYPE_DPAD  }, // up - D10 - pin 13
+  { 7, DPAD_DOWN, false, TYPE_DPAD  }, // down - D9 - pin 12
+  { 18, DPAD_RIGHT, false, TYPE_DPAD  }, // right - D8 - Pin 11
+  { 8, DPAD_LEFT, false, TYPE_DPAD  }, // left - D7 - Pin 10
   
-  while (!Serial) {
-    ;
+  // Right hand buttons
+  { 5, BUTTON_SHOULDER_R, false, TYPE_BUTTONS }, // Right shoulder Button - D6 - Pin 9
+  { 2, BUTTON_A, false, TYPE_BUTTONS  }, // Cross - D5 - pin 8
+  { 3, BUTTON_B, false, TYPE_BUTTONS  }, // Circle - D4 - Pin 7
+  { 6, BUTTON_X, false, TYPE_BUTTONS  }, // Square - D3 - Pin 6
+  { 4, BUTTON_Y, false, TYPE_BUTTONS  } // Triangle - D2 - Pin 5
+};
+const byte mappedPinsSize = sizeof(mappedPins) / sizeof(pinMap);
+
+int currentX = 0;
+int currentY = 0;
+
+void powerUp(){
+  pressPin(21);
+  delay(500);
+  pinMode(21, INPUT);
+}
+void setPot(int x, int y) {
+  delay(100);
+  if (x != currentX) {
+    digitalPotWrite(wiper1writeAddr, x);
+    currentX = x;
   }
-  
-  String fv = BP32.firmwareVersion();
-  Serial.print("Firmware version installed: ");
-  Serial.println(fv);
 
+  if (y != currentY) {
+    Serial.println(y);
+    digitalPotWrite(wiper0writeAddr, y);
+    currentY = y;
+  }
+}
+// Should really use a lib for this
+void digitalPotWrite(int address, int value) {
+  // take the SS pin low to select the chip:
+  digitalWrite(slaveSelectPin,LOW);
+  //  send in the address and value via SPI:
+  SPI.transfer(address);
+  SPI.transfer(value);
+  // take the SS pin high to de-select the chip:
+  digitalWrite(slaveSelectPin,HIGH); 
+}
+
+void setup() {
+  Serial.begin(9600);
+    
+  String fv = BP32.firmwareVersion();
   BP32.setup(&onConnectedGamepad, &onDisconnectedGamepad);
+  
+  Serial.println("Setup");
+  Serial.println(fv);
 
   // This needs to be behind a reset button later
   BP32.forgetBluetoothKeys();
-  
-  // set the slaveSelectPin as an output:
-  pinMode (slaveSelectPin, OUTPUT);
-  // initialize SPI:
+
+  pinMode(slaveSelectPin, OUTPUT);
   SPI.begin(); 
+  
+  setPot(127, 127);
+  Serial.println("Setup Complete");
 }
 
 void onConnectedGamepad(GamepadPtr gp) {
@@ -54,44 +143,96 @@ void onDisconnectedGamepad(GamepadPtr gp) {
   }
 }
 
+void releaseAllPins() {
+  for(byte i = 0; i < mappedPinsSize; i++){
+    mappedPins[i].pressed = false;
+    releasePin(mappedPins[i].pin);
+  }
+}
 
-void loop() {
+void releasePin(byte pin) {
+  pinMode(pin, INPUT);
+}
+
+void pressPin(byte pin) { 
+    Serial.println(pin);     
+    pinMode(pin, OUTPUT);
+    digitalWrite(pin, LOW);
+}
+
+void updateButtons(GamepadPtr gamepad) {
+  for (byte i = 0; i < mappedPinsSize; i++){
+    pinMap *mapping = &mappedPins[i];
+
+    switch (mapping->type) {
+      case TYPE_DPAD:
+        if (gamepad->dpad() & mapping->controllerMask) {
+          if (!mapping->pressed) {
+            mapping->pressed = true;
+            pressPin(mapping->pin);
+          }
+        } else {
+          if (mapping->pressed) {
+            mapping->pressed = false;
+            releasePin(mapping->pin);
+          }
+        }
+      break;
+      case TYPE_BUTTONS:
+        if (gamepad->buttons() & mapping->controllerMask) {
+          if (!mapping->pressed) {
+            mapping->pressed = true;
+            pressPin(mapping->pin);
+          }
+        } else {          
+          if (mapping->pressed) {
+            mapping->pressed = false;
+            releasePin(mapping->pin);
+          }
+        }
+      break;
+      case TYPE_SYSTEM:
+        if (gamepad->miscButtons() & mapping->controllerMask) {
+          if (!mapping->pressed) {
+            mapping->pressed = true;
+            pressPin(mapping->pin);
+          }
+        } else {          
+          if (mapping->pressed) {
+            mapping->pressed = false;
+            releasePin(mapping->pin);
+          }
+        }
+      break; 
+    }
+  }
+}
+
+void loop() {  
   BP32.update();
   
   if (myGamepad && myGamepad->isConnected()) {  
-    int axisX = myGamepad->axisX();
-    int axisY = myGamepad->axisY();
+    updateButtons(myGamepad);
+    updateLeftStick(myGamepad);
 
-    int axisXMapped = map(axisX, -512, 511, 0, 200);
-    int axisYMapped = map(axisY, -513, 512, 0, 200);
-
-    
-    //Serial.println("Original X");
-    //Serial.println(axisX);
-    //Serial.println("Mapped X");
-    Serial.print(axisY);
-    Serial.print(" ");
-    Serial.print(axisYMapped);
-    Serial.println("");
-    //Serial.println("Original Y");
-    //Serial.println(axisY);
-    //Serial.println("Mapped Y");
-    //Serial.println(axisYMapped);
-
-   digitalPotWrite(wiper0writeAddr, axisYMapped);
-   digitalPotWrite(wiper1writeAddr, axisXMapped);
-  }
-  
-  //delay(1000);
+    if (myGamepad->thumbL())
+      powerUp();
+          
+  } else {
+    releaseAllPins();
+  } 
 }
 
-// This function takes care of sending SPI data to the pot.
-void digitalPotWrite(int address, int value) {
-  // take the SS pin low to select the chip:
-  digitalWrite(slaveSelectPin,LOW);
-  //  send in the address and value via SPI:
-  SPI.transfer(address);
-  SPI.transfer(value);
-  // take the SS pin high to de-select the chip:
-  digitalWrite(slaveSelectPin,HIGH); 
+void updateLeftStick(GamepadPtr gamepad) {
+    int axisX = gamepad->axisX();
+    int axisY = gamepad->axisY();
+
+    // Get controlers scale starting from zero not pivoted on zero
+    // Controler scale is four times greater than digi pot so scale down
+    int axisXMapped = (axisX + 511 ) / 4;
+    int axisYMapped = (axisY + 511 ) / 4;
+
+    // Scale is inverted so need to correct
+    // 255 needs to be zero and zero needs to be 255
+    setPot(255 - axisXMapped, 255 - axisYMapped);
 }
