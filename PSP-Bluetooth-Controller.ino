@@ -1,10 +1,6 @@
 #include <Bluepad32.h>
 #include <SPI.h>
 
-const int slaveSelectPin = 10;
-const int wiper0writeAddr = 0b00000000;
-const int wiper1writeAddr = 0b00010000;
-
 // Currently only use the first connected gamepad. Bluepad32 supports upto 4
 // Would be good to allow multiple, maybe could use different controllers for emulators etc
 GamepadPtr myGamepad = nullptr;
@@ -76,27 +72,53 @@ pinMap mappedPins[] = {
 };
 const byte mappedPinsSize = sizeof(mappedPins) / sizeof(pinMap);
 
+const int slaveSelectPin = 10;
+const int wiper0writeAddr = B00000000; // 0b00000000;
+const int wiper1writeAddr = B00010000;// 0b00010000;
+
 int currentX = 0;
 int currentY = 0;
 
-void powerUp(){
+byte PSPPoweredOn = 0;
+
+void togglePower(){
   pressPin(21);
   delay(500);
   pinMode(21, INPUT);
 }
+
+void powerOn() {
+  if (PSPPoweredOn == 0){
+    togglePower();
+    PSPPoweredOn = 1;
+  }
+}
+
+void powerOff() {
+  if (PSPPoweredOn == 1){
+    togglePower();
+    PSPPoweredOn = 0;
+  }
+}
+
+/*
+ * --------------------------------
+ * Analog stick related methods
+ * --------------------------------
+ */
+
 void setPot(int x, int y) {
-  delay(100);
   if (x != currentX) {
     digitalPotWrite(wiper1writeAddr, x);
     currentX = x;
   }
 
   if (y != currentY) {
-    Serial.println(y);
     digitalPotWrite(wiper0writeAddr, y);
     currentY = y;
   }
 }
+
 // Should really use a lib for this
 void digitalPotWrite(int address, int value) {
   // take the SS pin low to select the chip:
@@ -108,30 +130,34 @@ void digitalPotWrite(int address, int value) {
   digitalWrite(slaveSelectPin,HIGH); 
 }
 
-void setup() {
-  Serial.begin(9600);
-    
-  String fv = BP32.firmwareVersion();
-  BP32.setup(&onConnectedGamepad, &onDisconnectedGamepad);
-  
-  Serial.println("Setup");
-  Serial.println(fv);
+void updateLeftStick(GamepadPtr gamepad) {
+    int axisX = gamepad->axisX();
+    int axisY = gamepad->axisY();
 
-  // This needs to be behind a reset button later
-  BP32.forgetBluetoothKeys();
+    // Get controlers scale starting from zero not pivoted on zero
+    // Controler scale is four times greater than digi pot so scale down
+    int axisXMapped = (axisX + 511 ) / 4;
+    int axisYMapped = (axisY + 511 ) / 4;
 
-  pinMode(slaveSelectPin, OUTPUT);
-  SPI.begin(); 
-  
-  setPot(127, 127);
-  Serial.println("Setup Complete");
+    // Scale is inverted so need to correct
+    // 255 needs to be zero and zero needs to be 255
+    setPot(255 - axisXMapped, 255 - axisYMapped);
 }
 
+//---------------------------------------
+
+/*
+ * --------------------------------------
+ * Bluepad32 callbacks
+ * --------------------------------------
+ */
 void onConnectedGamepad(GamepadPtr gp) {
   if (myGamepad == nullptr) {
     myGamepad = gp;
     
     Serial.println("CALLBACK: Gamepad is connected");
+
+    powerOn();
   }
 }
 
@@ -140,9 +166,18 @@ void onDisconnectedGamepad(GamepadPtr gp) {
     myGamepad = nullptr;
     
     Serial.println("CALLBACK: Gamepad is disconnected");
+
+    powerOff();
   }
 }
 
+//------------------------------------------
+
+/*
+ * -----------------------------------------
+ * Button handling methods
+ * -----------------------------------------
+ */
 void releaseAllPins() {
   for(byte i = 0; i < mappedPinsSize; i++){
     mappedPins[i].pressed = false;
@@ -156,6 +191,7 @@ void releasePin(byte pin) {
 
 void pressPin(byte pin) { 
     Serial.println(pin);     
+    
     pinMode(pin, OUTPUT);
     digitalWrite(pin, LOW);
 }
@@ -208,6 +244,34 @@ void updateButtons(GamepadPtr gamepad) {
   }
 }
 
+// -------------------------------------------------
+
+/*
+ * ----------------------------------------
+ * Arduino lifecycle methods
+ * ----------------------------------------
+ */
+
+void setup() {
+  Serial.begin(9600);
+    
+  String fv = BP32.firmwareVersion();
+  BP32.setup(&onConnectedGamepad, &onDisconnectedGamepad);
+  
+  Serial.println("Setup");
+  Serial.println(fv);
+
+  // This needs to be behind a reset button later
+  BP32.forgetBluetoothKeys();
+
+  pinMode(slaveSelectPin, OUTPUT);
+  SPI.begin(); 
+  
+  setPot(127, 127);
+  
+  Serial.println("Setup Complete");
+}
+
 void loop() {  
   BP32.update();
   
@@ -216,23 +280,11 @@ void loop() {
     updateLeftStick(myGamepad);
 
     if (myGamepad->thumbL())
-      powerUp();
+      togglePower();
           
   } else {
     releaseAllPins();
   } 
 }
 
-void updateLeftStick(GamepadPtr gamepad) {
-    int axisX = gamepad->axisX();
-    int axisY = gamepad->axisY();
-
-    // Get controlers scale starting from zero not pivoted on zero
-    // Controler scale is four times greater than digi pot so scale down
-    int axisXMapped = (axisX + 511 ) / 4;
-    int axisYMapped = (axisY + 511 ) / 4;
-
-    // Scale is inverted so need to correct
-    // 255 needs to be zero and zero needs to be 255
-    setPot(255 - axisXMapped, 255 - axisYMapped);
-}
+//--------------------------------------
