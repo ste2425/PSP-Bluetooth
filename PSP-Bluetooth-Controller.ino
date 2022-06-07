@@ -87,10 +87,18 @@ void togglePower(){
   pinMode(21, INPUT);
 }
 
+void toggleScreen(){
+  pressPin(15);
+  delay(5000);
+  pinMode(15, INPUT);
+}
+
 void powerOn() {
   if (PSPPoweredOn == 0){
     togglePower();
     PSPPoweredOn = 1;
+    delay(1000);
+    toggleScreen();
   }
 }
 
@@ -108,14 +116,17 @@ void powerOff() {
  */
 
 void setPot(int x, int y) {
-  if (x != currentX) {
-    digitalPotWrite(wiper1writeAddr, x);
-    currentX = x;
+  int xToSet = constrain(x, 0, 255);
+  int yToSet = constrain(y, 0, 255);
+  
+  if (xToSet != currentX) {
+    digitalPotWrite(wiper1writeAddr, xToSet);
+    currentX = xToSet;
   }
 
-  if (y != currentY) {
-    digitalPotWrite(wiper0writeAddr, y);
-    currentY = y;
+  if (yToSet != currentY) {
+    digitalPotWrite(wiper0writeAddr, yToSet);
+    currentY = yToSet;
   }
 }
 
@@ -131,17 +142,14 @@ void digitalPotWrite(int address, int value) {
 }
 
 void updateLeftStick(GamepadPtr gamepad) {
-    int axisX = gamepad->axisX();
-    int axisY = gamepad->axisY();
+    int axisX = gamepad->axisX() + 511;
+    int axisY = gamepad->axisY() + 511;
 
-    // Get controlers scale starting from zero not pivoted on zero
-    // Controler scale is four times greater than digi pot so scale down
-    int axisXMapped = (axisX + 511 ) / 4;
-    int axisYMapped = (axisY + 511 ) / 4;
+    // For some reason PSP reports full range from a value of 50 - 200.
+    int axisXMapped = map(axisX, 0, 1023, 50, 200);
+    int axisYMapped = map(axisY, 0, 1023, 50, 200);
 
-    // Scale is inverted so need to correct
-    // 255 needs to be zero and zero needs to be 255
-    setPot(255 - axisXMapped, 255 - axisYMapped);
+    setPot(axisXMapped, axisYMapped);
 }
 
 //---------------------------------------
