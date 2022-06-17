@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 #include <stdint.h>
-#include "pot.h"
+#include "digipot.h"
 
 extern const uint8_t PSP_HOME;
 extern const uint8_t PSP_START;
@@ -24,6 +24,7 @@ extern const uint8_t PSP_LS_LEFT;
 extern const uint8_t PSP_LS_RIGHT;
 extern const uint8_t PSP_LS_UP;
 extern const uint8_t PSP_LS_DOWN;
+extern const uint8_t PSP_LS;
 
 void PSP_mark_all_for_release();
 void PSP_release_unused();
@@ -31,6 +32,8 @@ void PSP_press_button(uint8_t pspButton);
 void PSP_power_on();
 void PSP_power_off();
 void PSP_toggle_screen();
+void PSP_set_ls(uint8_t x, uint8_t y);
+uint8_t PSP_map_controller(int controllerVal);
 void toggle_power();
 
 #endif

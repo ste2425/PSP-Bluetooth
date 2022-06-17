@@ -19,11 +19,14 @@ const uint8_t PSP_LS_LEFT = 15;
 const uint8_t PSP_LS_RIGHT = 16;
 const uint8_t PSP_LS_UP = 17;
 const uint8_t PSP_LS_DOWN = 18;
+const uint8_t PSP_LS = 19;
+
 
 const uint8_t pinCount = 14;
 bool pspPoweredOn = false;
 
 bool XAxisToBeReset = false;
+bool YAxisToBeReset = false;
 
 uint8_t pins[pinCount] = {
   14, // home
@@ -68,6 +71,7 @@ void PSP_mark_all_for_release() {
   }
 
   XAxisToBeReset = true;
+  YAxisToBeReset = true;
 }
 
 void PSP_release_unused() {
@@ -78,8 +82,11 @@ void PSP_release_unused() {
   }
 
   if (XAxisToBeReset) {
-    POT_write_X(127);
-    POT_write_Y(127);
+    DIGIPOT_write_x(127);
+  }
+  
+  if (YAxisToBeReset) {
+    DIGIPOT_write_y(127);
   }
 }
 
@@ -90,25 +97,37 @@ bool isButtonLS(uint8_t pspButton) {
     pspButton == PSP_LS_DOWN;
 }
 
-void moveLS(uint8_t pspButton) {
-  XAxisToBeReset = false;
-  
+void PSP_set_ls(uint8_t x, uint8_t y) {
+      uint8_t xToSet = constrain(x, 50, 200);
+      XAxisToBeReset = false;
+      DIGIPOT_write_x(xToSet);
+      
+      uint8_t yToSet = constrain(y, 50, 200);
+      YAxisToBeReset = false;
+      DIGIPOT_write_y(yToSet);
+}
+
+void moveLS(uint8_t pspButton) {  
   switch(pspButton) {
     case PSP_LS_LEFT:
       Serial.println("Moving LS LEFT");
-      POT_write_X(50);
+      XAxisToBeReset = false;
+      DIGIPOT_write_x(50);
     break;
     case PSP_LS_RIGHT:
       Serial.println("Moving LS RIGHT");
-      POT_write_X(200);
+      XAxisToBeReset = false;
+      DIGIPOT_write_x(200);
     break;
     case PSP_LS_UP:
       Serial.println("Moving LS LEFT");
-      POT_write_Y(50);
+      YAxisToBeReset = false;
+      DIGIPOT_write_y(50);
     break;
     case PSP_LS_DOWN:
       Serial.println("Moving LS RIGHT");
-      POT_write_Y(200);
+      YAxisToBeReset = false;
+      DIGIPOT_write_y(200);
     break;
   }
 }
@@ -162,4 +181,15 @@ void PSP_toggle_screen(){
   digitalWrite(pins[PSP_DISPLAY], LOW);
   delay(5000);
   pinMode(pins[PSP_DISPLAY], INPUT);
+}
+
+uint8_t PSP_map_controller(int controllerVal) {  
+  /*
+   * Controllers report range of -511 - 512
+   * bring to 0 - 1023 then map to Digital pots acceptable range.
+   * Digi pot accepts 0 - 257 however
+   * for some reason PSP reports full range from a value of 50 - 200.
+   */
+   
+  return map(controllerVal + 511, 0, 1023, 50, 200);
 }

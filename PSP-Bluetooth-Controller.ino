@@ -1,7 +1,8 @@
 #include <Bluepad32.h>
-#include "pot.h"
+#include "digipot.h"
 #include "pspPins.h"
 #include "mappings.h"
+#include "variables.h"
 
 // Currently only use the first connected gamepad. Bluepad32 supports upto 4
 // Would be good to allow multiple, maybe could use different controllers for emulators etc
@@ -14,21 +15,24 @@ int mode = 0;
 bool modeToggled = false;
 
 void setup() {
-  Serial.begin(9600);
-  while (!Serial) {
-    ; // wait for serial port to connect. Needed for native USB port only
+  Serial.begin(VAR_serial_baud);
+
+  if (VAR_serial_wait) {
+    while (!Serial) {
+      ;
+    }
   }
+  
   String fv = BP32.firmwareVersion();
   Serial.print("Firmware version installed: ");
   Serial.println(fv);
   
-  // This call is mandatory. It setups Bluepad32 and creates the callbacks.
   BP32.setup(&onConnectedGamepad, &onDisconnectedGamepad);
 
   // This needs to be behind a reset button later
   BP32.forgetBluetoothKeys();
   
-  POT_setup();
+  DIGIPOT_setup();
   
   Serial.println("Setup Complete");
 }
@@ -40,7 +44,6 @@ void loop() {
   
   if (myGamepad && myGamepad->isConnected()) {  
     updateButtons(myGamepad);
-   // updateLeftStick(myGamepad);
     
     if (myGamepad->miscBack()) {
       toggleMode();
@@ -50,8 +53,7 @@ void loop() {
 
     if (myGamepad->thumbL()) {
       toggle_power();
-    }
-          
+    }          
   }
 
   PSP_release_unused();
@@ -63,7 +65,7 @@ void toggleMode() {
   modeToggled = true;
   mode++;
 
-  if (mode > 1)
+  if (mode > 2)
     mode = 0;
 
   PSP_mark_all_for_release();
@@ -78,6 +80,9 @@ void toggleMode() {
       mappedPins = FPSMappings;
       mappedPinsSizePTR = &FPSMappingsLength;
     break;
+    case 2:
+      mappedPins = PS1Mappings;
+      mappedPinsSizePTR = &PS1MappingsLength;
   }
 
   myGamepad->setPlayerLEDs((mode + 1) & 0x0f);
@@ -86,13 +91,6 @@ void toggleMode() {
   Serial.print("Changing Mode ");
   Serial.print(mode);
   Serial.println("");
-}
-
-void updateLeftStick(GamepadPtr gamepad) {
-    int axisX = POT_map_controller(gamepad->axisX());
-    int axisY = POT_map_controller(gamepad->axisY());
-
-    POT_set(axisX, axisY);
 }
 
 //---------------------------------------
@@ -115,7 +113,7 @@ void onConnectedGamepad(GamepadPtr gp) {
             "flags: 0x%02x",
             properties.btaddr[0], properties.btaddr[1], properties.btaddr[2],
             properties.btaddr[3], properties.btaddr[4], properties.btaddr[5],
-            properties.vendor_id, properties.product_id, properties.flags);
+            properties.type, properties.subtype, properties.flags);
     Serial.println(buf);
 
     //PSP_power_on();
@@ -154,35 +152,42 @@ void updateButtons(GamepadPtr gamepad) {
         }
       break; 
       case TYPE_TRIGGER:
-        if (mapping->controllerMask == BUTTON_THROTTLE ? myGamepad->throttle() : myGamepad->brake() > 300) {
+        if (mapping->controllerMask == BUTTON_THROTTLE ? myGamepad->throttle() : myGamepad->brake() > VAR_analog_trigger_threshold) {
             PSP_press_button(mapping->pin);
         }
       break;
       case TYPE_RS:
         handle_RS(mapping);
       break;
+      case TYPE_LS:
+        handle_LS(mapping);
+      break;
     }
   }
 }
 
-bool handle_RS(pinMap *mapping) {
-  int xVal = myGamepad->axisRX();
-  int yVal = myGamepad->axisRY();
+void handle_LS(pinMap *mapping) {
+  int xVal = myGamepad->axisX();
+  int yVal = myGamepad->axisY();
 
   int activated = 0;
 
   switch(mapping->controllerMask) {
-    case RS_UP:
-      activated = yVal < -250;
+    case BUTTON_RS_UP:
+      activated = yVal < VAR_ts_btn_threshold * -1;
     break;
-    case RS_DOWN:
-      activated = yVal > 250;
+    case BUTTON_RS_DOWN:
+      activated = yVal > VAR_ts_btn_threshold;
     break;
-    case RS_RIGHT:
-      activated = xVal > 250;
+    case BUTTON_RS_RIGHT:
+      activated = xVal > VAR_ts_btn_threshold;
     break;
-    case RS_LEFT:
-      activated = xVal <- 250;
+    case BUTTON_RS_LEFT:
+      activated = xVal < VAR_ts_btn_threshold * -1;
+    break;
+    case BUTTON_LS:
+      PSP_set_ls(PSP_map_controller(xVal), PSP_map_controller(yVal));
+      return;
     break;
   }
 
@@ -191,3 +196,32 @@ bool handle_RS(pinMap *mapping) {
   }
 }
 
+void handle_RS(pinMap *mapping) {
+  int xVal = myGamepad->axisRX();
+  int yVal = myGamepad->axisRY();
+
+  int activated = 0;
+
+  switch(mapping->controllerMask) {
+    case BUTTON_RS_UP:
+      activated = yVal < VAR_ts_btn_threshold * -1;
+    break;
+    case BUTTON_RS_DOWN:
+      activated = yVal > VAR_ts_btn_threshold;
+    break;
+    case BUTTON_RS_RIGHT:
+      activated = xVal > VAR_ts_btn_threshold;
+    break;
+    case BUTTON_RS_LEFT:
+      activated = xVal < VAR_ts_btn_threshold * -1;
+    break;
+    case BUTTON_LS:
+      PSP_set_ls(PSP_map_controller(xVal), PSP_map_controller(yVal));
+      return;
+    break;
+  }
+
+  if (activated) {
+      PSP_press_button(mapping->pin);
+  }
+}

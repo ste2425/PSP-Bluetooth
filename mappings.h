@@ -9,7 +9,8 @@ enum controllerType {
   TYPE_BUTTONS = 2,
   TYPE_SYSTEM = 3,
   TYPE_TRIGGER = 4,
-  TYPE_RS = 5
+  TYPE_RS = 5,
+  TYPE_LS = 6
 };
 
 struct pinMap {
@@ -41,10 +42,12 @@ enum {
 enum {
   BUTTON_THROTTLE,
   BUTTON_BRAKE,
-  RS_UP,
-  RS_RIGHT,
-  RS_LEFT,
-  RS_DOWN
+  BUTTON_RS_UP,
+  BUTTON_RS_RIGHT,
+  BUTTON_RS_LEFT,
+  BUTTON_RS_DOWN,
+  BUTTON_RS,
+  BUTTON_LS
 };
 
 enum {
@@ -58,5 +61,8 @@ extern pinMap defaultMappings[];
 
 extern const int FPSMappingsLength;
 extern pinMap FPSMappings[];
+
+extern const int PS1MappingsLength;
+extern pinMap PS1Mappings[];
 
 #endif
