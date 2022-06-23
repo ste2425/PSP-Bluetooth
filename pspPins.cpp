@@ -28,6 +28,9 @@ bool pspPoweredOn = false;
 bool XAxisToBeReset = false;
 bool YAxisToBeReset = false;
 
+
+//Proto
+/*
 uint8_t pins[pinCount] = {
   14, // home
   17, // start
@@ -42,6 +45,26 @@ uint8_t pins[pinCount] = {
   2, //cross
   3, // circle
   6, // square
+  4, // triangle
+ // 21 // power
+};
+*/
+
+// PCB V2
+uint8_t pins[pinCount] = {
+  17, // home
+  14, // start
+  15, // select
+  16, // display
+  9, //l1
+  7, // dup
+  6, //ddown
+  8, // dright
+  18, //dleft
+  5, //r1
+  2, //cross
+  3, // circle
+  19, // square
   4, // triangle
  // 21 // power
 };
