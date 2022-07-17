@@ -21,7 +21,6 @@ const uint8_t PSP_LS_UP = 17;
 const uint8_t PSP_LS_DOWN = 18;
 const uint8_t PSP_LS = 19;
 
-
 const uint8_t pinCount = 14;
 bool pspPoweredOn = false;
 
@@ -29,38 +28,16 @@ bool XAxisToBeReset = false;
 bool YAxisToBeReset = false;
 
 
-//Proto
-/*
-uint8_t pins[pinCount] = {
-  14, // home
-  17, // start
-  16, // select
-  15, // display
-  19, //l1
-  9, // dup
-  7, //ddown
-  18, // dright
-  8, //dleft
-  5, //r1
-  2, //cross
-  3, // circle
-  6, // square
-  4, // triangle
- // 21 // power
-};
-*/
-
-// PCB V2
 uint8_t pins[pinCount] = {
   17, // home
   14, // start
   15, // select
   16, // display
-  9, //l1
+  6, //l1
   7, // dup
-  6, //ddown
-  8, // dright
-  18, //dleft
+  9, //ddown
+  18, // dright
+  8, //dleft
   5, //r1
   2, //cross
   3, // circle
@@ -160,11 +137,7 @@ void PSP_press_button (uint8_t pspButton) {
     moveLS(pspButton);
   } else {
     pinPressed[pspButton] = true;
-  
-    Serial.print("Pressing pin ");
-    Serial.print(pins[pspButton]);
-    Serial.println("");
-    
+      
     pinMode(pins[pspButton], OUTPUT);
     digitalWrite(pins[pspButton], LOW);
   }
@@ -179,13 +152,21 @@ void toggle_power() {
   pinMode(21, INPUT);
 }
 
-void PSP_power_on() {
+bool coldBoot = true;
+
+bool PSP_power_on() {
+  bool isColdBoot = coldBoot;
+
+  coldBoot = false;
+  
   if (!pspPoweredOn) {
     Serial.println("Powering on");
     pspPoweredOn = true;
 
     toggle_power();
   }
+
+  return isColdBoot;
 }
 
 void PSP_power_off() {
@@ -197,6 +178,17 @@ void PSP_power_off() {
   }
 }
 
+void PSP_press_screen() {
+  Serial.println("Press screen");
+  pinMode(pins[PSP_DISPLAY], OUTPUT);
+  digitalWrite(pins[PSP_DISPLAY], LOW);
+}
+
+void PSP_release_screen() {
+  Serial.println("Release screen");
+  pinMode(pins[PSP_DISPLAY], INPUT);
+}
+
 void PSP_toggle_screen(){
   Serial.println("Toggle screen");
   
@@ -204,6 +196,7 @@ void PSP_toggle_screen(){
   digitalWrite(pins[PSP_DISPLAY], LOW);
   delay(5000);
   pinMode(pins[PSP_DISPLAY], INPUT);
+  Serial.println("Toggle screen - DONE");
 }
 
 uint8_t PSP_map_controller(int controllerVal) {  
@@ -214,5 +207,5 @@ uint8_t PSP_map_controller(int controllerVal) {
    * for some reason PSP reports full range from a value of 50 - 200.
    */
    
-  return map(controllerVal + 511, 0, 1023, 50, 200);
+  return map(controllerVal + 511, 0, 1023, 200, 50);
 }

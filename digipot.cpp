@@ -1,8 +1,8 @@
 #include "digipot.h"
 
 const int slaveSelectPin = 10;
-const int xAddr = B00000000; // 0b00000000;
-const int yAddr = B00010000;// 0b00010000;
+const int yAddr = 0b00000000; // B00000000;
+const int xAddr = 0b00010000;// B00010000;
 
 void write(int address, int value) {
   digitalWrite(slaveSelectPin,LOW);
