@@ -1,0 +1,4 @@
+(sym_lib_table
+  (lib (name "JLCPCB_schematic")(type "KiCad")(uri "${KIPRJMOD}/Library/JLCPCB/Schematic/JLCPCB_schematic.kicad_sym")(options "")(descr ""))
+  (lib (name "Arduino-nano-33")(type "KiCad")(uri "${KIPRJMOD}/Library/Nano_33-master/lib/Arduino-nano-33.kicad_sym")(options "")(descr ""))
+)

@@ -1,0 +1,5 @@
+(fp_lib_table
+  (lib (name "Graphics")(type "KiCad")(uri "${KIPRJMOD}/Library/Logo")(options "")(descr ""))
+  (lib (name "JLCPCB_footprint")(type "KiCad")(uri "${KIPRJMOD}/Library/JLCPCB/JLCPCB_footprint")(options "")(descr ""))
+  (lib (name "Nano_33")(type "KiCad")(uri "${KIPRJMOD}/Library/Nano_33-master/Nano_33.pretty")(options "")(descr ""))
+)

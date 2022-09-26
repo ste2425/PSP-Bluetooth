@@ -1,4 +1,4 @@
-19816695188901530
+19830004494138860
 Battery
 BatteryHolder_Bulgin_BX0036_1xC
 Bulgin Battery Holder, BX0036, Battery Type C (https://www.bulgin.com/products/pub/media/bulgin/data/Battery_holders.pdf)
@@ -52093,6 +52093,13 @@ Fuse Fuseholder TR5 Littelfuse/Wickmann No. 460 No560
 0
 2
 2
+Graphics
+pcblogo
+
+
+0
+0
+0
 Heatsink
 Heatsink_35x26mm_1xFixation3mm_Fischer-SK486-35
 Heatsink, 35mm x 26mm, 1x Fixation 3mm, Fischer SK486-35
@@ -55481,6 +55488,34 @@ L_Toroid Vertical series Radial pin pitch 31.80mm  length 67.6mm width 36.1mm Vi
 0
 2
 2
+JLCPCB_footprint
+FPC-SMD_AFA07-S04FCC-00
+FPC-SMD_AFA07-S04FCC-00 footprint
+FPC-SMD_AFA07-S04FCC-00 footprint
+0
+6
+6
+JLCPCB_footprint
+FPC-SMD_P0.50-10P_LCS-SJ-H2.0
+FPC-SMD_P0.50-10P_LCS-SJ-H2.0 footprint
+FPC-SMD_P0.50-10P_LCS-SJ-H2.0 footprint
+0
+12
+12
+JLCPCB_footprint
+FPC-SMD_P0.50-14P_LCS-SJ-H2.0
+FPC-SMD_P0.50-14P_LCS-SJ-H2.0 footprint
+FPC-SMD_P0.50-14P_LCS-SJ-H2.0 footprint
+0
+16
+16
+JLCPCB_footprint
+SW-SMD_4P-L6.0-W6.0-P4.50-LS9.2
+SW-SMD_4P-L6.0-W6.0-P4.50-LS9.2 footprint
+SW-SMD_4P-L6.0-W6.0-P4.50-LS9.2 footprint
+0
+4
+4
 Jumper
 SolderJumper-2_P1.3mm_Bridged2Bar_Pad1.0x1.5mm
 SMD Solder Jumper, 1x1.5mm Pads, 0.3mm gap, bridged with 2 copper strips
@@ -59254,6 +59289,27 @@ Mounting 4.5mm 9774100982
 0
 8
 1
+Nano_33
+NANO_33_Footprint_SMD_Castell
+Through hole straight socket strip, 1x15, 2.54mm pitch
+Through hole socket strip THT 1x15 2.54mm single row
+0
+30
+30
+Nano_33
+NANO_33_Socket_Castell
+Through hole straight socket strip, 1x15, 2.54mm pitch
+Through hole socket strip THT 1x15 2.54mm single row
+0
+90
+30
+Nano_33
+NANO_33_Socket_Castell&SMD
+Through hole straight socket strip, 1x15, 2.54mm pitch
+Through hole socket strip THT 1x15 2.54mm single row
+0
+60
+30
 NetTie
 NetTie-2_SMD_Pad0.5mm
 Net tie, 2 pin, 0.5mm square SMD pads

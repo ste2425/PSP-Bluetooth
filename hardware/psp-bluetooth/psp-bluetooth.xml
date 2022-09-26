@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <export version="E">
   <design>
-    <source>C:\Users\stephen.cooper\Documents\GitHub\PSP-Bluetooth-Controller\hardware\psp-bluetooth\psp-bluetooth\psp-bluetooth.kicad_sch</source>
-    <date>06/06/2022 16:17:00</date>
+    <source>C:\Users\stephen.cooper\Documents\GitHub\PSP-Bluetooth-Controller\hardware\psp-bluetooth\psp-bluetooth.kicad_sch</source>
+    <date>26/09/2022 20:40:18</date>
     <tool>Eeschema (6.0.1)</tool>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
-        <title/>
-        <company/>
-        <rev/>
-        <date>jeu. 02 avril 2015</date>
+        <title>PSP Consolizer Board</title>
+        <company>https://github.com/ste2425/PSP-Consolizer</company>
+        <rev>4</rev>
+        <date>2022-09-12</date>
         <source>psp-bluetooth.kicad_sch</source>
         <comment number="1" value=""/>
         <comment number="2" value=""/>
@@ -24,32 +24,86 @@
     </sheet>
   </design>
   <components>
-    <comp ref="J1">
-      <value>Left Connector</value>
-      <footprint>Connector_FFC-FPC:Hirose_FH12-10S-0.5SH_1x10-1MP_P0.50mm_Horizontal</footprint>
-      <libsource lib="Connector_Generic" part="Conn_01x10" description="Generic connector, single row, 01x10, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+    <comp ref="D1">
+      <value>LED</value>
+      <footprint>LED_THT:LED_D3.0mm_Horizontal_O1.27mm_Z6.0mm</footprint>
+      <libsource lib="Device" part="LED" description="Light emitting diode"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="psp-bluetooth.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>e8c0638d-a67d-4b62-aff7-93909ae85d91</tstamps>
+      <tstamps>46aac001-1e0b-4992-9b6b-7fbd6860af0e</tstamps>
+    </comp>
+    <comp ref="H1">
+      <value>MountingHole</value>
+      <footprint>MountingHole:MountingHole_2.5mm</footprint>
+      <libsource lib="Mechanical" part="MountingHole" description="Mounting Hole without connection"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="psp-bluetooth.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>d50083d6-d17e-4a70-b770-f9d1f7072eef</tstamps>
+    </comp>
+    <comp ref="H2">
+      <value>MountingHole</value>
+      <footprint>MountingHole:MountingHole_2.5mm</footprint>
+      <libsource lib="Mechanical" part="MountingHole" description="Mounting Hole without connection"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="psp-bluetooth.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>51f194c7-ef76-4a0c-b6e3-225d78b6ff68</tstamps>
+    </comp>
+    <comp ref="H3">
+      <value>MountingHole</value>
+      <footprint>MountingHole:MountingHole_2.5mm</footprint>
+      <libsource lib="Mechanical" part="MountingHole" description="Mounting Hole without connection"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="psp-bluetooth.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>0f90f760-cde2-4a32-853a-c1b7b1d65200</tstamps>
+    </comp>
+    <comp ref="H4">
+      <value>MountingHole</value>
+      <footprint>MountingHole:MountingHole_2.5mm</footprint>
+      <libsource lib="Mechanical" part="MountingHole" description="Mounting Hole without connection"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="psp-bluetooth.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>280d6ee7-c046-40fc-a967-6565f9d6dce3</tstamps>
+    </comp>
+    <comp ref="H5">
+      <value>MountingHole</value>
+      <footprint>MountingHole:MountingHole_2.5mm</footprint>
+      <libsource lib="Mechanical" part="MountingHole" description="Mounting Hole without connection"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="psp-bluetooth.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>c4de7fa7-b283-4149-a790-a90d4fff96d1</tstamps>
+    </comp>
+    <comp ref="J1">
+      <value>Arduino-NANO-33</value>
+      <footprint>Nano_33:NANO_33_Socket_Castell&amp;SMD</footprint>
+      <libsource lib="Arduino-nano-33" part="Arduino-NANO-33" description="Arduino NANO 33"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="psp-bluetooth.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>e461d5d7-172c-4adc-a51a-69abea250f4d</tstamps>
     </comp>
     <comp ref="J2">
-      <value>Center Connector</value>
-      <footprint>Connector_FFC-FPC:Hirose_FH12-10S-0.5SH_1x10-1MP_P0.50mm_Horizontal</footprint>
-      <libsource lib="Connector_Generic" part="Conn_01x10" description="Generic connector, single row, 01x10, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <value>Conn_01x02</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical</footprint>
+      <libsource lib="Connector_Generic" part="Conn_01x02" description="Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="psp-bluetooth.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>cbfe036f-5613-48df-a314-10875a3b599a</tstamps>
+      <tstamps>13bc3998-5745-424e-ada9-f8a9e1f5329c</tstamps>
     </comp>
     <comp ref="J3">
-      <value>Right Connector</value>
-      <footprint>Connector_FFC-FPC:Hirose_FH12-14S-0.5SH_1x14-1MP_P0.50mm_Horizontal</footprint>
-      <libsource lib="Connector_Generic" part="Conn_01x14" description="Generic connector, single row, 01x14, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <value>Conn_01x02</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical</footprint>
+      <libsource lib="Connector_Generic" part="Conn_01x02" description="Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="psp-bluetooth.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>67623a6e-679f-4db5-9778-ff4b2144034b</tstamps>
+      <tstamps>372eb80c-116e-4b19-abae-92abb6d35e81</tstamps>
     </comp>
     <comp ref="J4">
       <value>Analog Connector</value>
@@ -60,32 +114,14 @@
       <sheetpath names="/" tstamps="/"/>
       <tstamps>bc52c389-6eb3-41d8-8a4f-d80daf67a8bd</tstamps>
     </comp>
-    <comp ref="J5">
-      <value>PSP Power out</value>
-      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical</footprint>
-      <libsource lib="Connector_Generic" part="Conn_01x02" description="Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
-      <property name="Sheetname" value=""/>
-      <property name="Sheetfile" value="psp-bluetooth.kicad_sch"/>
-      <sheetpath names="/" tstamps="/"/>
-      <tstamps>391ede60-2c72-4be8-88cd-a14f9878a436</tstamps>
-    </comp>
-    <comp ref="J6">
-      <value>Power IN</value>
-      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical</footprint>
-      <libsource lib="Connector_Generic" part="Conn_01x02" description="Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
-      <property name="Sheetname" value=""/>
-      <property name="Sheetfile" value="psp-bluetooth.kicad_sch"/>
-      <sheetpath names="/" tstamps="/"/>
-      <tstamps>476a855b-a0a3-415c-983f-eaf05fe0c36f</tstamps>
-    </comp>
     <comp ref="J7">
-      <value>Serial</value>
+      <value>Programming Header 1</value>
       <footprint>Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical</footprint>
       <libsource lib="Connector_Generic" part="Conn_01x02" description="Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="psp-bluetooth.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>9acfcfc7-989c-4acc-abb2-e00b92310a55</tstamps>
+      <tstamps>ba7f31aa-9062-4aae-85d4-9505b7c62b96</tstamps>
     </comp>
     <comp ref="J8">
       <value>Vin Toggle</value>
@@ -96,78 +132,46 @@
       <sheetpath names="/" tstamps="/"/>
       <tstamps>c804af17-c55f-40bf-b2b9-46678ee29802</tstamps>
     </comp>
+    <comp ref="JP1">
+      <value>SJ Vin Toggle</value>
+      <footprint>Jumper:SolderJumper-2_P1.3mm_Open_Pad1.0x1.5mm</footprint>
+      <libsource lib="Jumper" part="SolderJumper_2_Open" description="Solder Jumper, 2-pole, open"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="psp-bluetooth.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>70618f0b-a6a1-4ceb-a46d-03d95a3ab642</tstamps>
+    </comp>
+    <comp ref="JP2">
+      <value>SJ LED Indicator</value>
+      <footprint>Jumper:SolderJumper-2_P1.3mm_Open_Pad1.0x1.5mm</footprint>
+      <libsource lib="Jumper" part="SolderJumper_2_Open" description="Solder Jumper, 2-pole, open"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="psp-bluetooth.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>c4009eaa-9387-4ecd-ba8f-391a4ed3d470</tstamps>
+    </comp>
     <comp ref="P1">
-      <value>Digital</value>
-      <footprint>Socket_Arduino_Nano:Socket_Strip_Arduino_1x15</footprint>
-      <libsource lib="Connector_Generic" part="Conn_01x15" description="Generic connector, single row, 01x15, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
-      <property name="Sheetname" value=""/>
-      <property name="Sheetfile" value="psp-bluetooth.kicad_sch"/>
-      <sheetpath names="/" tstamps="/"/>
-      <tstamps>00000000-0000-0000-0000-000056d73fac</tstamps>
-    </comp>
-    <comp ref="P2">
-      <value>Analog</value>
-      <footprint>Socket_Arduino_Nano:Socket_Strip_Arduino_1x15</footprint>
-      <libsource lib="Connector_Generic" part="Conn_01x15" description="Generic connector, single row, 01x15, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
-      <property name="Sheetname" value=""/>
-      <property name="Sheetfile" value="psp-bluetooth.kicad_sch"/>
-      <sheetpath names="/" tstamps="/"/>
-      <tstamps>00000000-0000-0000-0000-000056d740c7</tstamps>
-    </comp>
-    <comp ref="P3">
-      <value>CONN_01X01</value>
-      <footprint>Socket_Arduino_Nano:1pin_Nano</footprint>
-      <libsource lib="Connector_Generic" part="Conn_01x01" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
-      <property name="Sheetname" value=""/>
-      <property name="Sheetfile" value="psp-bluetooth.kicad_sch"/>
-      <sheetpath names="/" tstamps="/"/>
-      <tstamps>00000000-0000-0000-0000-000056d73add</tstamps>
-    </comp>
-    <comp ref="P4">
-      <value>CONN_01X01</value>
-      <footprint>Socket_Arduino_Nano:1pin_Nano</footprint>
-      <libsource lib="Connector_Generic" part="Conn_01x01" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
-      <property name="Sheetname" value=""/>
-      <property name="Sheetfile" value="psp-bluetooth.kicad_sch"/>
-      <sheetpath names="/" tstamps="/"/>
-      <tstamps>00000000-0000-0000-0000-000056d73d86</tstamps>
-    </comp>
-    <comp ref="P5">
-      <value>CONN_01X01</value>
-      <footprint>Socket_Arduino_Nano:1pin_Nano</footprint>
-      <libsource lib="Connector_Generic" part="Conn_01x01" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
-      <property name="Sheetname" value=""/>
-      <property name="Sheetfile" value="psp-bluetooth.kicad_sch"/>
-      <sheetpath names="/" tstamps="/"/>
-      <tstamps>00000000-0000-0000-0000-000056d73dae</tstamps>
-    </comp>
-    <comp ref="P6">
-      <value>CONN_01X01</value>
-      <footprint>Socket_Arduino_Nano:1pin_Nano</footprint>
-      <libsource lib="Connector_Generic" part="Conn_01x01" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
-      <property name="Sheetname" value=""/>
-      <property name="Sheetfile" value="psp-bluetooth.kicad_sch"/>
-      <sheetpath names="/" tstamps="/"/>
-      <tstamps>00000000-0000-0000-0000-000056d73dd9</tstamps>
-    </comp>
-    <comp ref="S1">
-      <value>L102021ML04Q</value>
-      <footprint>L102021ML04Q:SW_L102021ML04Q</footprint>
+      <value>FPC_4P_Pull_type_1_0MM_Under_the_next</value>
+      <footprint>JLCPCB_footprint:FPC-SMD_AFA07-S04FCC-00</footprint>
+      <datasheet>https://item.szlcsc.com/14405.html</datasheet>
       <fields>
-        <field name="MANUFACTURER">C&amp;K</field>
-        <field name="MAXIMUM_PACKAGE_HEIGHT">7.92mm</field>
-        <field name="PARTREV">N/A</field>
-        <field name="STANDARD">Manufacturer Recommendations</field>
+        <field name="LCSC">C13750</field>
       </fields>
-      <libsource lib="L102021ML04Q" part="L102021ML04Q" description=""/>
-      <property name="STANDARD" value="Manufacturer Recommendations"/>
-      <property name="PARTREV" value="N/A"/>
-      <property name="MAXIMUM_PACKAGE_HEIGHT" value="7.92mm"/>
-      <property name="MANUFACTURER" value="C&amp;K"/>
+      <libsource lib="JLCPCB_schematic" part="FPC_4P_Pull_type_1_0MM_Under_the_next" description=""/>
+      <property name="LCSC" value="C13750"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="psp-bluetooth.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>56f85c0d-dadb-40f6-9977-f0f83c1b8e9b</tstamps>
+      <tstamps>954e166c-579e-4bde-95f2-6a938ce1dcfd</tstamps>
+    </comp>
+    <comp ref="R1">
+      <value>140 ohm</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="psp-bluetooth.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>9fb044e3-00d4-4901-9cd7-c364c152358f</tstamps>
     </comp>
     <comp ref="U1">
       <value>MCP4251-xxxx-P</value>
@@ -179,21 +183,112 @@
       <sheetpath names="/" tstamps="/"/>
       <tstamps>0229b4d2-0b96-4ed0-b714-664d97b7b960</tstamps>
     </comp>
+    <comp ref="U2">
+      <value>AFC07-S10ECA-00</value>
+      <footprint>JLCPCB_footprint:FPC-SMD_P0.50-10P_LCS-SJ-H2.0</footprint>
+      <datasheet>https://item.szlcsc.com/253892.html</datasheet>
+      <fields>
+        <field name="LCSC">C262583</field>
+        <field name="Name">Left Connector</field>
+      </fields>
+      <libsource lib="JLCPCB_schematic" part="AFC07-S10ECA-00" description=""/>
+      <property name="LCSC" value="C262583"/>
+      <property name="Name" value="Left Connector"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="psp-bluetooth.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>04619ea7-cbc8-455c-aca2-a13db58e78c7</tstamps>
+    </comp>
+    <comp ref="U3">
+      <value>AFC07-S14ECA-00</value>
+      <footprint>JLCPCB_footprint:FPC-SMD_P0.50-14P_LCS-SJ-H2.0</footprint>
+      <datasheet>https://item.szlcsc.com/253896.html</datasheet>
+      <fields>
+        <field name="LCSC">C262587</field>
+        <field name="Name">Right Connector</field>
+      </fields>
+      <libsource lib="JLCPCB_schematic" part="AFC07-S14ECA-00" description=""/>
+      <property name="LCSC" value="C262587"/>
+      <property name="Name" value="Right Connector"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="psp-bluetooth.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>aebeedf9-7a72-4766-92a3-1013e3e664fe</tstamps>
+    </comp>
+    <comp ref="U4">
+      <value>AFC07-S10ECA-00</value>
+      <footprint>JLCPCB_footprint:FPC-SMD_P0.50-10P_LCS-SJ-H2.0</footprint>
+      <datasheet>https://item.szlcsc.com/253892.html</datasheet>
+      <fields>
+        <field name="LCSC">C262583</field>
+        <field name="Name">Center Connector</field>
+      </fields>
+      <libsource lib="JLCPCB_schematic" part="AFC07-S10ECA-00" description=""/>
+      <property name="LCSC" value="C262583"/>
+      <property name="Name" value="Center Connector"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="psp-bluetooth.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>8cbb5749-47a1-467e-a46e-0352c53aeff3</tstamps>
+    </comp>
+    <comp ref="U5">
+      <value>TS-1102SD-A-F-R</value>
+      <footprint>JLCPCB_footprint:SW-SMD_4P-L6.0-W6.0-P4.50-LS9.2</footprint>
+      <datasheet>https://item.szlcsc.com/617126.html</datasheet>
+      <fields>
+        <field name="LCSC">C3010209</field>
+      </fields>
+      <libsource lib="JLCPCB_schematic" part="TS-1102SD-A-F-R" description=""/>
+      <property name="LCSC" value="C3010209"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="psp-bluetooth.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>0c1f89ce-0c30-4b40-9919-454d5a2b39e2</tstamps>
+    </comp>
   </components>
   <libparts>
-    <libpart lib="Connector_Generic" part="Conn_01x01">
-      <description>Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+    <libpart lib="Arduino-nano-33" part="Arduino-NANO-33">
+      <description>Arduino NANO 33</description>
       <docs>~</docs>
       <footprints>
         <fp>Connector*:*_1x??_*</fp>
       </footprints>
       <fields>
         <field name="Reference">J</field>
-        <field name="Value">Conn_01x01</field>
+        <field name="Value">Arduino-NANO-33</field>
         <field name="Datasheet">~</field>
       </fields>
       <pins>
-        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="1" name="D13" type="bidirectional"/>
+        <pin num="2" name="+3.3v" type="power_out"/>
+        <pin num="3" name="AREF" type="bidirectional"/>
+        <pin num="4" name="D14" type="bidirectional"/>
+        <pin num="5" name="D15" type="bidirectional"/>
+        <pin num="6" name="D16~" type="bidirectional"/>
+        <pin num="7" name="D17~" type="bidirectional"/>
+        <pin num="8" name="D18" type="bidirectional"/>
+        <pin num="9" name="D19~" type="bidirectional"/>
+        <pin num="10" name="D20" type="bidirectional"/>
+        <pin num="11" name="D21" type="bidirectional"/>
+        <pin num="12" name="+5v" type="power_out"/>
+        <pin num="13" name="~{RESET}" type="passive"/>
+        <pin num="14" name="GND" type="power_in"/>
+        <pin num="15" name="VIN" type="power_in"/>
+        <pin num="16" name="TX" type="bidirectional"/>
+        <pin num="17" name="RX" type="bidirectional"/>
+        <pin num="18" name="~{RESET}" type="passive"/>
+        <pin num="19" name="GND" type="power_in"/>
+        <pin num="20" name="D2~" type="bidirectional"/>
+        <pin num="21" name="D3~" type="bidirectional"/>
+        <pin num="22" name="D4" type="bidirectional"/>
+        <pin num="23" name="D5~" type="bidirectional"/>
+        <pin num="24" name="D6~" type="bidirectional"/>
+        <pin num="25" name="D7" type="bidirectional"/>
+        <pin num="26" name="D8" type="bidirectional"/>
+        <pin num="27" name="D9~" type="bidirectional"/>
+        <pin num="28" name="D10~" type="bidirectional"/>
+        <pin num="29" name="D11~" type="bidirectional"/>
+        <pin num="30" name="D12~" type="bidirectional"/>
       </pins>
     </libpart>
     <libpart lib="Connector_Generic" part="Conn_01x02">
@@ -230,102 +325,153 @@
         <pin num="4" name="Pin_4" type="passive"/>
       </pins>
     </libpart>
-    <libpart lib="Connector_Generic" part="Conn_01x10">
-      <description>Generic connector, single row, 01x10, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+    <libpart lib="Device" part="LED">
+      <description>Light emitting diode</description>
       <docs>~</docs>
       <footprints>
-        <fp>Connector*:*_1x??_*</fp>
+        <fp>LED*</fp>
+        <fp>LED_SMD:*</fp>
+        <fp>LED_THT:*</fp>
       </footprints>
       <fields>
-        <field name="Reference">J</field>
-        <field name="Value">Conn_01x10</field>
+        <field name="Reference">D</field>
+        <field name="Value">LED</field>
         <field name="Datasheet">~</field>
       </fields>
       <pins>
-        <pin num="1" name="Pin_1" type="passive"/>
-        <pin num="2" name="Pin_2" type="passive"/>
-        <pin num="3" name="Pin_3" type="passive"/>
-        <pin num="4" name="Pin_4" type="passive"/>
-        <pin num="5" name="Pin_5" type="passive"/>
-        <pin num="6" name="Pin_6" type="passive"/>
-        <pin num="7" name="Pin_7" type="passive"/>
-        <pin num="8" name="Pin_8" type="passive"/>
-        <pin num="9" name="Pin_9" type="passive"/>
-        <pin num="10" name="Pin_10" type="passive"/>
+        <pin num="1" name="K" type="passive"/>
+        <pin num="2" name="A" type="passive"/>
       </pins>
     </libpart>
-    <libpart lib="Connector_Generic" part="Conn_01x14">
-      <description>Generic connector, single row, 01x14, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+    <libpart lib="Device" part="R">
+      <description>Resistor</description>
       <docs>~</docs>
       <footprints>
-        <fp>Connector*:*_1x??_*</fp>
+        <fp>R_*</fp>
       </footprints>
       <fields>
-        <field name="Reference">J</field>
-        <field name="Value">Conn_01x14</field>
+        <field name="Reference">R</field>
+        <field name="Value">R</field>
         <field name="Datasheet">~</field>
-      </fields>
-      <pins>
-        <pin num="1" name="Pin_1" type="passive"/>
-        <pin num="2" name="Pin_2" type="passive"/>
-        <pin num="3" name="Pin_3" type="passive"/>
-        <pin num="4" name="Pin_4" type="passive"/>
-        <pin num="5" name="Pin_5" type="passive"/>
-        <pin num="6" name="Pin_6" type="passive"/>
-        <pin num="7" name="Pin_7" type="passive"/>
-        <pin num="8" name="Pin_8" type="passive"/>
-        <pin num="9" name="Pin_9" type="passive"/>
-        <pin num="10" name="Pin_10" type="passive"/>
-        <pin num="11" name="Pin_11" type="passive"/>
-        <pin num="12" name="Pin_12" type="passive"/>
-        <pin num="13" name="Pin_13" type="passive"/>
-        <pin num="14" name="Pin_14" type="passive"/>
-      </pins>
-    </libpart>
-    <libpart lib="Connector_Generic" part="Conn_01x15">
-      <description>Generic connector, single row, 01x15, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
-      <docs>~</docs>
-      <footprints>
-        <fp>Connector*:*_1x??_*</fp>
-      </footprints>
-      <fields>
-        <field name="Reference">J</field>
-        <field name="Value">Conn_01x15</field>
-        <field name="Datasheet">~</field>
-      </fields>
-      <pins>
-        <pin num="1" name="Pin_1" type="passive"/>
-        <pin num="2" name="Pin_2" type="passive"/>
-        <pin num="3" name="Pin_3" type="passive"/>
-        <pin num="4" name="Pin_4" type="passive"/>
-        <pin num="5" name="Pin_5" type="passive"/>
-        <pin num="6" name="Pin_6" type="passive"/>
-        <pin num="7" name="Pin_7" type="passive"/>
-        <pin num="8" name="Pin_8" type="passive"/>
-        <pin num="9" name="Pin_9" type="passive"/>
-        <pin num="10" name="Pin_10" type="passive"/>
-        <pin num="11" name="Pin_11" type="passive"/>
-        <pin num="12" name="Pin_12" type="passive"/>
-        <pin num="13" name="Pin_13" type="passive"/>
-        <pin num="14" name="Pin_14" type="passive"/>
-        <pin num="15" name="Pin_15" type="passive"/>
-      </pins>
-    </libpart>
-    <libpart lib="L102021ML04Q" part="L102021ML04Q">
-      <fields>
-        <field name="Reference">S</field>
-        <field name="Value">L102021ML04Q</field>
-        <field name="Footprint">SW_L102021ML04Q</field>
-        <field name="STANDARD">Manufacturer Recommendations</field>
-        <field name="PARTREV">N/A</field>
-        <field name="MAXIMUM_PACKAGE_HEIGHT">7.92mm</field>
-        <field name="MANUFACTURER">C&amp;K</field>
       </fields>
       <pins>
         <pin num="1" name="" type="passive"/>
         <pin num="2" name="" type="passive"/>
-        <pin num="3" name="" type="passive"/>
       </pins>
+    </libpart>
+    <libpart lib="JLCPCB_schematic" part="AFC07-S10ECA-00">
+      <docs>https://item.szlcsc.com/253892.html</docs>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">AFC07-S10ECA-00</field>
+        <field name="Footprint">JLCPCB_footprint:FPC-SMD_P0.50-10P_LCS-SJ-H2.0</field>
+        <field name="Datasheet">https://item.szlcsc.com/253892.html</field>
+        <field name="LCSC">C262583</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="unspecified"/>
+        <pin num="2" name="2" type="unspecified"/>
+        <pin num="3" name="3" type="unspecified"/>
+        <pin num="4" name="4" type="unspecified"/>
+        <pin num="5" name="5" type="unspecified"/>
+        <pin num="6" name="6" type="unspecified"/>
+        <pin num="7" name="7" type="unspecified"/>
+        <pin num="8" name="8" type="unspecified"/>
+        <pin num="9" name="9" type="unspecified"/>
+        <pin num="10" name="10" type="unspecified"/>
+        <pin num="11" name="11" type="unspecified"/>
+        <pin num="12" name="12" type="unspecified"/>
+      </pins>
+    </libpart>
+    <libpart lib="JLCPCB_schematic" part="AFC07-S14ECA-00">
+      <docs>https://item.szlcsc.com/253896.html</docs>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">AFC07-S14ECA-00</field>
+        <field name="Footprint">JLCPCB_footprint:FPC-SMD_P0.50-14P_LCS-SJ-H2.0</field>
+        <field name="Datasheet">https://item.szlcsc.com/253896.html</field>
+        <field name="LCSC">C262587</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="unspecified"/>
+        <pin num="2" name="2" type="unspecified"/>
+        <pin num="3" name="3" type="unspecified"/>
+        <pin num="4" name="4" type="unspecified"/>
+        <pin num="5" name="5" type="unspecified"/>
+        <pin num="6" name="6" type="unspecified"/>
+        <pin num="7" name="7" type="unspecified"/>
+        <pin num="8" name="8" type="unspecified"/>
+        <pin num="9" name="9" type="unspecified"/>
+        <pin num="10" name="10" type="unspecified"/>
+        <pin num="11" name="11" type="unspecified"/>
+        <pin num="12" name="12" type="unspecified"/>
+        <pin num="13" name="13" type="unspecified"/>
+        <pin num="14" name="14" type="unspecified"/>
+        <pin num="15" name="15" type="unspecified"/>
+        <pin num="16" name="16" type="unspecified"/>
+      </pins>
+    </libpart>
+    <libpart lib="JLCPCB_schematic" part="FPC_4P_Pull_type_1_0MM_Under_the_next">
+      <docs>https://item.szlcsc.com/14405.html</docs>
+      <fields>
+        <field name="Reference">P</field>
+        <field name="Value">FPC_4P_Pull_type_1_0MM_Under_the_next</field>
+        <field name="Footprint">JLCPCB_footprint:FPC-SMD_AFA07-S04FCC-00</field>
+        <field name="Datasheet">https://item.szlcsc.com/14405.html</field>
+        <field name="LCSC">C13750</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="unspecified"/>
+        <pin num="2" name="2" type="unspecified"/>
+        <pin num="3" name="3" type="unspecified"/>
+        <pin num="4" name="4" type="unspecified"/>
+        <pin num="5" name="5" type="unspecified"/>
+        <pin num="6" name="6" type="unspecified"/>
+      </pins>
+    </libpart>
+    <libpart lib="JLCPCB_schematic" part="TS-1102SD-A-F-R">
+      <docs>https://item.szlcsc.com/617126.html</docs>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">TS-1102SD-A-F-R</field>
+        <field name="Footprint">JLCPCB_footprint:SW-SMD_4P-L6.0-W6.0-P4.50-LS9.2</field>
+        <field name="Datasheet">https://item.szlcsc.com/617126.html</field>
+        <field name="LCSC">C3010209</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="unspecified"/>
+        <pin num="2" name="2" type="unspecified"/>
+        <pin num="3" name="3" type="unspecified"/>
+        <pin num="4" name="4" type="unspecified"/>
+      </pins>
+    </libpart>
+    <libpart lib="Jumper" part="SolderJumper_2_Open">
+      <description>Solder Jumper, 2-pole, open</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>SolderJumper*Open*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">JP</field>
+        <field name="Value">SolderJumper_2_Open</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="A" type="passive"/>
+        <pin num="2" name="B" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Mechanical" part="MountingHole">
+      <description>Mounting Hole without connection</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>MountingHole*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">H</field>
+        <field name="Value">MountingHole</field>
+        <field name="Datasheet">~</field>
+      </fields>
     </libpart>
     <libpart lib="Potentiometer_Digital" part="MCP4251-xxxx-P">
       <description>Dual 8 Bit Digital Pot, SPI, Volatile Memory, PDIP-14</description>
@@ -358,11 +504,23 @@
     </libpart>
   </libparts>
   <libraries>
+    <library logical="Arduino-nano-33">
+      <uri>C:\Users\stephen.cooper\Documents\GitHub\PSP-Bluetooth-Controller\hardware\psp-bluetooth/Library/Nano_33-master/lib/Arduino-nano-33.kicad_sym</uri>
+    </library>
     <library logical="Connector_Generic">
       <uri>C:\Program Files\KiCad\6.0\share\kicad\symbols\/Connector_Generic.kicad_sym</uri>
     </library>
-    <library logical="L102021ML04Q">
-      <uri>C:/Users/stephen.cooper/Downloads/L102021ML04Q/L102021ML04Q.lib</uri>
+    <library logical="Device">
+      <uri>C:\Program Files\KiCad\6.0\share\kicad\symbols\/Device.kicad_sym</uri>
+    </library>
+    <library logical="JLCPCB_schematic">
+      <uri>C:\Users\stephen.cooper\Documents\GitHub\PSP-Bluetooth-Controller\hardware\psp-bluetooth/Library/JLCPCB/Schematic/JLCPCB_schematic.kicad_sym</uri>
+    </library>
+    <library logical="Jumper">
+      <uri>C:\Program Files\KiCad\6.0\share\kicad\symbols\/Jumper.kicad_sym</uri>
+    </library>
+    <library logical="Mechanical">
+      <uri>C:\Program Files\KiCad\6.0\share\kicad\symbols\/Mechanical.kicad_sym</uri>
     </library>
     <library logical="Potentiometer_Digital">
       <uri>C:\Program Files\KiCad\6.0\share\kicad\symbols\/Potentiometer_Digital.kicad_sym</uri>
@@ -370,195 +528,226 @@
   </libraries>
   <nets>
     <net code="1" name="+3V3">
-      <node ref="P2" pin="14" pinfunction="Pin_14" pintype="passive"/>
+      <node ref="J1" pin="2" pinfunction="+3.3v" pintype="power_out"/>
       <node ref="U1" pin="14" pinfunction="VDD" pintype="power_in"/>
     </net>
     <net code="2" name="+5V">
-      <node ref="P2" pin="4" pinfunction="Pin_4" pintype="passive"/>
+      <node ref="J1" pin="12" pinfunction="+5v" pintype="power_out"/>
     </net>
     <net code="3" name="/0(Rx)">
-      <node ref="J7" pin="2" pinfunction="Pin_2" pintype="passive"/>
-      <node ref="P1" pin="2" pinfunction="Pin_2" pintype="passive"/>
+      <node ref="J1" pin="17" pinfunction="RX" pintype="bidirectional"/>
     </net>
     <net code="4" name="/1(Tx)">
-      <node ref="J7" pin="1" pinfunction="Pin_1" pintype="passive"/>
-      <node ref="P1" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="J1" pin="16" pinfunction="TX" pintype="bidirectional"/>
+      <node ref="J7" pin="2" pinfunction="Pin_2" pintype="passive"/>
+      <node ref="JP2" pin="2" pinfunction="B" pintype="passive"/>
     </net>
     <net code="5" name="/2">
-      <node ref="J3" pin="5" pinfunction="Pin_5" pintype="passive"/>
-      <node ref="P1" pin="5" pinfunction="Pin_5" pintype="passive"/>
+      <node ref="J1" pin="20" pinfunction="D2~" pintype="bidirectional"/>
+      <node ref="U3" pin="5" pinfunction="5" pintype="unspecified"/>
     </net>
     <net code="6" name="/3(**)">
-      <node ref="J3" pin="4" pinfunction="Pin_4" pintype="passive"/>
-      <node ref="P1" pin="6" pinfunction="Pin_6" pintype="passive"/>
+      <node ref="J1" pin="21" pinfunction="D3~" pintype="bidirectional"/>
+      <node ref="U3" pin="4" pinfunction="4" pintype="unspecified"/>
     </net>
     <net code="7" name="/4">
-      <node ref="J3" pin="3" pinfunction="Pin_3" pintype="passive"/>
-      <node ref="P1" pin="7" pinfunction="Pin_7" pintype="passive"/>
+      <node ref="J1" pin="22" pinfunction="D4" pintype="bidirectional"/>
+      <node ref="U3" pin="3" pinfunction="3" pintype="unspecified"/>
     </net>
     <net code="8" name="/5(**)">
-      <node ref="J3" pin="2" pinfunction="Pin_2" pintype="passive"/>
-      <node ref="P1" pin="8" pinfunction="Pin_8" pintype="passive"/>
+      <node ref="J1" pin="23" pinfunction="D5~" pintype="bidirectional"/>
+      <node ref="U3" pin="2" pinfunction="2" pintype="unspecified"/>
     </net>
     <net code="9" name="/6(**)">
-      <node ref="J3" pin="1" pinfunction="Pin_1" pintype="passive"/>
-      <node ref="P1" pin="9" pinfunction="Pin_9" pintype="passive"/>
+      <node ref="J1" pin="24" pinfunction="D6~" pintype="bidirectional"/>
+      <node ref="U2" pin="10" pinfunction="10" pintype="unspecified"/>
     </net>
     <net code="10" name="/7">
-      <node ref="J1" pin="6" pinfunction="Pin_6" pintype="passive"/>
-      <node ref="P1" pin="10" pinfunction="Pin_10" pintype="passive"/>
+      <node ref="J1" pin="25" pinfunction="D7" pintype="bidirectional"/>
+      <node ref="U2" pin="8" pinfunction="8" pintype="unspecified"/>
     </net>
     <net code="11" name="/8">
-      <node ref="J1" pin="7" pinfunction="Pin_7" pintype="passive"/>
-      <node ref="P1" pin="11" pinfunction="Pin_11" pintype="passive"/>
+      <node ref="J1" pin="26" pinfunction="D8" pintype="bidirectional"/>
+      <node ref="U2" pin="7" pinfunction="7" pintype="unspecified"/>
     </net>
     <net code="12" name="/9(**)">
-      <node ref="J1" pin="8" pinfunction="Pin_8" pintype="passive"/>
-      <node ref="P1" pin="12" pinfunction="Pin_12" pintype="passive"/>
+      <node ref="J1" pin="27" pinfunction="D9~" pintype="bidirectional"/>
+      <node ref="U2" pin="6" pinfunction="6" pintype="unspecified"/>
     </net>
     <net code="13" name="/10(**{slash}SS)">
-      <node ref="P1" pin="13" pinfunction="Pin_13" pintype="passive"/>
+      <node ref="J1" pin="28" pinfunction="D10~" pintype="bidirectional"/>
       <node ref="U1" pin="1" pinfunction="~{CS}" pintype="input"/>
     </net>
     <net code="14" name="/11(**{slash}MOSI)">
-      <node ref="P1" pin="14" pinfunction="Pin_14" pintype="passive"/>
+      <node ref="J1" pin="29" pinfunction="D11~" pintype="bidirectional"/>
       <node ref="U1" pin="3" pinfunction="SDI" pintype="input"/>
     </net>
     <net code="15" name="/12(MISO)">
-      <node ref="P1" pin="15" pinfunction="Pin_15" pintype="passive"/>
+      <node ref="J1" pin="30" pinfunction="D12~" pintype="bidirectional"/>
       <node ref="U1" pin="13" pinfunction="SDO" pintype="output"/>
     </net>
     <net code="16" name="/13(SCK)">
-      <node ref="P2" pin="15" pinfunction="Pin_15" pintype="passive"/>
+      <node ref="J1" pin="1" pinfunction="D13" pintype="bidirectional"/>
       <node ref="U1" pin="2" pinfunction="SCK" pintype="input"/>
     </net>
     <net code="17" name="/A0 (D14)">
-      <node ref="J2" pin="1" pinfunction="Pin_1" pintype="passive"/>
-      <node ref="P2" pin="12" pinfunction="Pin_12" pintype="passive"/>
+      <node ref="J1" pin="4" pinfunction="D14" pintype="bidirectional"/>
+      <node ref="U4" pin="10" pinfunction="10" pintype="unspecified"/>
     </net>
     <net code="18" name="/A1 (D15)">
-      <node ref="J2" pin="7" pinfunction="Pin_7" pintype="passive"/>
-      <node ref="P2" pin="11" pinfunction="Pin_11" pintype="passive"/>
+      <node ref="J1" pin="5" pinfunction="D15" pintype="bidirectional"/>
+      <node ref="U4" pin="9" pinfunction="9" pintype="unspecified"/>
     </net>
     <net code="19" name="/A2 (D16)">
-      <node ref="J2" pin="9" pinfunction="Pin_9" pintype="passive"/>
-      <node ref="P2" pin="10" pinfunction="Pin_10" pintype="passive"/>
+      <node ref="J1" pin="6" pinfunction="D16~" pintype="bidirectional"/>
+      <node ref="U4" pin="7" pinfunction="7" pintype="unspecified"/>
     </net>
     <net code="20" name="/A3 (D17)">
-      <node ref="J2" pin="10" pinfunction="Pin_10" pintype="passive"/>
-      <node ref="P2" pin="9" pinfunction="Pin_9" pintype="passive"/>
+      <node ref="J1" pin="7" pinfunction="D17~" pintype="bidirectional"/>
+      <node ref="U4" pin="1" pinfunction="1" pintype="unspecified"/>
     </net>
     <net code="21" name="/A4 (D18)">
-      <node ref="J1" pin="9" pinfunction="Pin_9" pintype="passive"/>
-      <node ref="P2" pin="8" pinfunction="Pin_8" pintype="passive"/>
+      <node ref="J1" pin="8" pinfunction="D18" pintype="bidirectional"/>
+      <node ref="U2" pin="9" pinfunction="9" pintype="unspecified"/>
     </net>
     <net code="22" name="/A5 (D19)">
-      <node ref="J1" pin="10" pinfunction="Pin_10" pintype="passive"/>
-      <node ref="P2" pin="7" pinfunction="Pin_7" pintype="passive"/>
+      <node ref="J1" pin="9" pinfunction="D19~" pintype="bidirectional"/>
+      <node ref="U3" pin="1" pinfunction="1" pintype="unspecified"/>
     </net>
     <net code="23" name="/A6 (D20)">
-      <node ref="P2" pin="6" pinfunction="Pin_6" pintype="passive+no_connect"/>
+      <node ref="J1" pin="10" pinfunction="D20" pintype="bidirectional"/>
+      <node ref="U5" pin="1" pinfunction="1" pintype="unspecified"/>
     </net>
     <net code="24" name="/A7 (D21)">
-      <node ref="J3" pin="10" pinfunction="Pin_10" pintype="passive"/>
-      <node ref="P2" pin="5" pinfunction="Pin_5" pintype="passive"/>
+      <node ref="J1" pin="11" pinfunction="D21" pintype="bidirectional"/>
+      <node ref="U3" pin="10" pinfunction="10" pintype="unspecified"/>
     </net>
-    <net code="25" name="/AREF">
-      <node ref="P2" pin="13" pinfunction="Pin_13" pintype="passive+no_connect"/>
-    </net>
-    <net code="26" name="/Reset">
-      <node ref="P1" pin="3" pinfunction="Pin_3" pintype="passive+no_connect"/>
-      <node ref="P2" pin="3" pinfunction="Pin_3" pintype="passive+no_connect"/>
-    </net>
-    <net code="27" name="GND">
-      <node ref="J1" pin="1" pinfunction="Pin_1" pintype="passive"/>
-      <node ref="J1" pin="2" pinfunction="Pin_2" pintype="passive"/>
-      <node ref="J1" pin="3" pinfunction="Pin_3" pintype="passive"/>
-      <node ref="J1" pin="4" pinfunction="Pin_4" pintype="passive"/>
-      <node ref="J1" pin="5" pinfunction="Pin_5" pintype="passive"/>
-      <node ref="J2" pin="4" pinfunction="Pin_4" pintype="passive"/>
-      <node ref="J2" pin="5" pinfunction="Pin_5" pintype="passive"/>
-      <node ref="J2" pin="6" pinfunction="Pin_6" pintype="passive"/>
-      <node ref="J3" pin="6" pinfunction="Pin_6" pintype="passive"/>
-      <node ref="J3" pin="7" pinfunction="Pin_7" pintype="passive"/>
-      <node ref="J3" pin="8" pinfunction="Pin_8" pintype="passive"/>
-      <node ref="J3" pin="9" pinfunction="Pin_9" pintype="passive"/>
-      <node ref="J4" pin="1" pinfunction="Pin_1" pintype="passive"/>
-      <node ref="J5" pin="1" pinfunction="Pin_1" pintype="passive"/>
-      <node ref="J6" pin="1" pinfunction="Pin_1" pintype="passive"/>
-      <node ref="P1" pin="4" pinfunction="Pin_4" pintype="passive"/>
-      <node ref="P2" pin="2" pinfunction="Pin_2" pintype="passive"/>
-      <node ref="U1" pin="10" pinfunction="P0B" pintype="passive"/>
-      <node ref="U1" pin="4" pinfunction="VSS" pintype="power_in"/>
-      <node ref="U1" pin="5" pinfunction="P1B" pintype="passive"/>
-    </net>
-    <net code="28" name="Net-(J4-Pad2)">
-      <node ref="J4" pin="2" pinfunction="Pin_2" pintype="passive"/>
-      <node ref="U1" pin="6" pinfunction="P1W" pintype="passive"/>
-    </net>
-    <net code="29" name="Net-(J4-Pad3)">
+    <net code="25" name="/P0A{slash}P1A">
       <node ref="J4" pin="3" pinfunction="Pin_3" pintype="passive"/>
+      <node ref="P1" pin="3" pinfunction="3" pintype="unspecified"/>
       <node ref="U1" pin="7" pinfunction="P1A" pintype="passive"/>
       <node ref="U1" pin="8" pinfunction="P0A" pintype="passive"/>
     </net>
-    <net code="30" name="Net-(J4-Pad4)">
+    <net code="26" name="/P0W">
       <node ref="J4" pin="4" pinfunction="Pin_4" pintype="passive"/>
+      <node ref="P1" pin="4" pinfunction="4" pintype="unspecified"/>
       <node ref="U1" pin="9" pinfunction="P0W" pintype="passive"/>
     </net>
-    <net code="31" name="Net-(J5-Pad2)">
-      <node ref="J5" pin="2" pinfunction="Pin_2" pintype="passive"/>
+    <net code="27" name="/P1W">
+      <node ref="J4" pin="2" pinfunction="Pin_2" pintype="passive"/>
+      <node ref="P1" pin="2" pinfunction="2" pintype="unspecified"/>
+      <node ref="U1" pin="6" pinfunction="P1W" pintype="passive"/>
+    </net>
+    <net code="28" name="GND">
+      <node ref="D1" pin="1" pinfunction="K" pintype="passive"/>
+      <node ref="J1" pin="14" pinfunction="GND" pintype="power_in"/>
+      <node ref="J1" pin="19" pinfunction="GND" pintype="power_in"/>
+      <node ref="J2" pin="2" pinfunction="Pin_2" pintype="passive"/>
+      <node ref="J3" pin="2" pinfunction="Pin_2" pintype="passive"/>
+      <node ref="J4" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="P1" pin="1" pinfunction="1" pintype="unspecified"/>
+      <node ref="U1" pin="10" pinfunction="P0B" pintype="passive"/>
+      <node ref="U1" pin="4" pinfunction="VSS" pintype="power_in"/>
+      <node ref="U1" pin="5" pinfunction="P1B" pintype="passive"/>
+      <node ref="U2" pin="1" pinfunction="1" pintype="unspecified"/>
+      <node ref="U2" pin="2" pinfunction="2" pintype="unspecified"/>
+      <node ref="U2" pin="3" pinfunction="3" pintype="unspecified"/>
+      <node ref="U2" pin="4" pinfunction="4" pintype="unspecified"/>
+      <node ref="U2" pin="5" pinfunction="5" pintype="unspecified"/>
+      <node ref="U3" pin="6" pinfunction="6" pintype="unspecified"/>
+      <node ref="U3" pin="7" pinfunction="7" pintype="unspecified"/>
+      <node ref="U3" pin="8" pinfunction="8" pintype="unspecified"/>
+      <node ref="U3" pin="9" pinfunction="9" pintype="unspecified"/>
+      <node ref="U4" pin="4" pinfunction="4" pintype="unspecified"/>
+      <node ref="U4" pin="5" pinfunction="5" pintype="unspecified"/>
+      <node ref="U4" pin="6" pinfunction="6" pintype="unspecified"/>
+      <node ref="U5" pin="3" pinfunction="3" pintype="unspecified"/>
+    </net>
+    <net code="29" name="Net-(D1-Pad2)">
+      <node ref="D1" pin="2" pinfunction="A" pintype="passive"/>
+      <node ref="R1" pin="2" pintype="passive"/>
+    </net>
+    <net code="30" name="Net-(J2-Pad1)">
+      <node ref="J2" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="J3" pin="1" pinfunction="Pin_1" pintype="passive"/>
       <node ref="J8" pin="1" pinfunction="Pin_1" pintype="passive"/>
-      <node ref="S1" pin="2" pintype="passive"/>
+      <node ref="JP1" pin="1" pinfunction="A" pintype="passive"/>
     </net>
-    <net code="32" name="Net-(J6-Pad2)">
-      <node ref="J6" pin="2" pinfunction="Pin_2" pintype="passive"/>
-      <node ref="S1" pin="3" pintype="passive"/>
+    <net code="31" name="Net-(J7-Pad1)">
+      <node ref="J7" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="JP2" pin="1" pinfunction="A" pintype="passive"/>
+      <node ref="R1" pin="1" pintype="passive"/>
     </net>
-    <net code="33" name="VIN">
+    <net code="32" name="VIN">
+      <node ref="J1" pin="15" pinfunction="VIN" pintype="power_in"/>
       <node ref="J8" pin="2" pinfunction="Pin_2" pintype="passive"/>
-      <node ref="P2" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="JP1" pin="2" pinfunction="B" pintype="passive"/>
     </net>
-    <net code="34" name="unconnected-(J2-Pad2)">
-      <node ref="J2" pin="2" pinfunction="Pin_2" pintype="passive+no_connect"/>
+    <net code="33" name="unconnected-(J1-Pad3)">
+      <node ref="J1" pin="3" pinfunction="AREF" pintype="bidirectional+no_connect"/>
     </net>
-    <net code="35" name="unconnected-(J2-Pad3)">
-      <node ref="J2" pin="3" pinfunction="Pin_3" pintype="passive+no_connect"/>
+    <net code="34" name="unconnected-(J1-Pad13)">
+      <node ref="J1" pin="13" pinfunction="~{RESET}" pintype="passive+no_connect"/>
     </net>
-    <net code="36" name="unconnected-(J2-Pad8)">
-      <node ref="J2" pin="8" pinfunction="Pin_8" pintype="passive+no_connect"/>
+    <net code="35" name="unconnected-(J1-Pad18)">
+      <node ref="J1" pin="18" pinfunction="~{RESET}" pintype="passive+no_connect"/>
     </net>
-    <net code="37" name="unconnected-(J3-Pad11)">
-      <node ref="J3" pin="11" pinfunction="Pin_11" pintype="passive+no_connect"/>
+    <net code="36" name="unconnected-(P1-Pad5)">
+      <node ref="P1" pin="5" pinfunction="5" pintype="unspecified"/>
     </net>
-    <net code="38" name="unconnected-(J3-Pad12)">
-      <node ref="J3" pin="12" pinfunction="Pin_12" pintype="passive+no_connect"/>
+    <net code="37" name="unconnected-(P1-Pad6)">
+      <node ref="P1" pin="6" pinfunction="6" pintype="unspecified"/>
     </net>
-    <net code="39" name="unconnected-(J3-Pad13)">
-      <node ref="J3" pin="13" pinfunction="Pin_13" pintype="passive+no_connect"/>
-    </net>
-    <net code="40" name="unconnected-(J3-Pad14)">
-      <node ref="J3" pin="14" pinfunction="Pin_14" pintype="passive+no_connect"/>
-    </net>
-    <net code="41" name="unconnected-(P3-Pad1)">
-      <node ref="P3" pin="1" pinfunction="Pin_1" pintype="passive+no_connect"/>
-    </net>
-    <net code="42" name="unconnected-(P4-Pad1)">
-      <node ref="P4" pin="1" pinfunction="Pin_1" pintype="passive+no_connect"/>
-    </net>
-    <net code="43" name="unconnected-(P5-Pad1)">
-      <node ref="P5" pin="1" pinfunction="Pin_1" pintype="passive+no_connect"/>
-    </net>
-    <net code="44" name="unconnected-(P6-Pad1)">
-      <node ref="P6" pin="1" pinfunction="Pin_1" pintype="passive+no_connect"/>
-    </net>
-    <net code="45" name="unconnected-(S1-Pad1)">
-      <node ref="S1" pin="1" pintype="passive+no_connect"/>
-    </net>
-    <net code="46" name="unconnected-(U1-Pad11)">
+    <net code="38" name="unconnected-(U1-Pad11)">
       <node ref="U1" pin="11" pinfunction="~{WP}" pintype="input+no_connect"/>
     </net>
-    <net code="47" name="unconnected-(U1-Pad12)">
+    <net code="39" name="unconnected-(U1-Pad12)">
       <node ref="U1" pin="12" pinfunction="~{SHDN}" pintype="input+no_connect"/>
+    </net>
+    <net code="40" name="unconnected-(U2-Pad11)">
+      <node ref="U2" pin="11" pinfunction="11" pintype="unspecified+no_connect"/>
+    </net>
+    <net code="41" name="unconnected-(U2-Pad12)">
+      <node ref="U2" pin="12" pinfunction="12" pintype="unspecified+no_connect"/>
+    </net>
+    <net code="42" name="unconnected-(U3-Pad11)">
+      <node ref="U3" pin="11" pinfunction="11" pintype="unspecified+no_connect"/>
+    </net>
+    <net code="43" name="unconnected-(U3-Pad12)">
+      <node ref="U3" pin="12" pinfunction="12" pintype="unspecified+no_connect"/>
+    </net>
+    <net code="44" name="unconnected-(U3-Pad13)">
+      <node ref="U3" pin="13" pinfunction="13" pintype="unspecified+no_connect"/>
+    </net>
+    <net code="45" name="unconnected-(U3-Pad14)">
+      <node ref="U3" pin="14" pinfunction="14" pintype="unspecified+no_connect"/>
+    </net>
+    <net code="46" name="unconnected-(U3-Pad15)">
+      <node ref="U3" pin="15" pinfunction="15" pintype="unspecified+no_connect"/>
+    </net>
+    <net code="47" name="unconnected-(U3-Pad16)">
+      <node ref="U3" pin="16" pinfunction="16" pintype="unspecified+no_connect"/>
+    </net>
+    <net code="48" name="unconnected-(U4-Pad2)">
+      <node ref="U4" pin="2" pinfunction="2" pintype="unspecified+no_connect"/>
+    </net>
+    <net code="49" name="unconnected-(U4-Pad3)">
+      <node ref="U4" pin="3" pinfunction="3" pintype="unspecified+no_connect"/>
+    </net>
+    <net code="50" name="unconnected-(U4-Pad8)">
+      <node ref="U4" pin="8" pinfunction="8" pintype="unspecified+no_connect"/>
+    </net>
+    <net code="51" name="unconnected-(U4-Pad11)">
+      <node ref="U4" pin="11" pinfunction="11" pintype="unspecified+no_connect"/>
+    </net>
+    <net code="52" name="unconnected-(U4-Pad12)">
+      <node ref="U4" pin="12" pinfunction="12" pintype="unspecified+no_connect"/>
+    </net>
+    <net code="53" name="unconnected-(U5-Pad2)">
+      <node ref="U5" pin="2" pinfunction="2" pintype="unspecified+no_connect"/>
+    </net>
+    <net code="54" name="unconnected-(U5-Pad4)">
+      <node ref="U5" pin="4" pinfunction="4" pintype="unspecified+no_connect"/>
     </net>
   </nets>
 </export>

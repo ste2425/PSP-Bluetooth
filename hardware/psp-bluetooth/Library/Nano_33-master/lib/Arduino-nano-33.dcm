@@ -1,0 +1,9 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP Arduino-NANO-33
+D Arduino NANO 33
+K connector
+F ~
+$ENDCMP
+#
+#End Doc Library
