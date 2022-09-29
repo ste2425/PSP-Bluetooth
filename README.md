@@ -6,16 +6,7 @@ An Arduino based board to turn a PSP-2000 into a console you can play on your TV
 ## Last update video
 
 <a href="https://youtu.be/4dDin1_Opjc" title="Music Caster Video Demo">
-  <p align="center" style="
-    position: relative;
-  ">
-    <img src="./overlay.png" stlye="position: absolute" style="
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 50px;
-    height: 50px;
-    top: 50%; ">
+  <p style="text-align: center">
     <img width="75%" src="https://img.youtube.com/vi/4dDin1_Opjc/hqdefault.jpg"   alt="Music Caster Video Demo Thumbnail">
   </p>
 </a>
@@ -39,64 +30,28 @@ An Arduino based board to turn a PSP-2000 into a console you can play on your TV
 
 ### Controller Mappings
 <a href="https://youtu.be/pflKwbyAxQ8" title="Music Caster Video Demo">
-  <p align="center" style="
-    position: relative;
-  ">
-    <img src="./overlay.png" stlye="position: absolute" style="
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 50px;
-    height: 50px;
-    top: 50%; ">
+  <p align="center">
     <img width="75%" src="https://img.youtube.com/vi/pflKwbyAxQ8/hqdefault.jpg"   alt="Music Caster Video Demo Thumbnail">
   </p>
 </a>
 
 ## Dev demo PT3
 <a href="https://youtu.be/_pwvS-qsQaA" title="Music Caster Video Demo">
-  <p align="center" style="
-    position: relative;
-  ">
-    <img src="./overlay.png" stlye="position: absolute" style="
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 50px;
-    height: 50px;
-    top: 50%; ">
+  <p align="center">
     <img width="75%" src="https://img.youtube.com/vi/_pwvS-qsQaA/hqdefault.jpg"   alt="Music Caster Video Demo Thumbnail">
   </p>
 </a>
 
 ## Dev demo PT2
 <a href="https://youtu.be/zTRF4sWweqI" title="Music Caster Video Demo">
-  <p align="center" style="
-    position: relative;
-  ">
-    <img src="./overlay.png" stlye="position: absolute" style="
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 50px;
-    height: 50px;
-    top: 50%; ">
+  <p align="center">
     <img width="75%" src="https://img.youtube.com/vi/zTRF4sWweqI/hqdefault.jpg"   alt="Music Caster Video Demo Thumbnail">
   </p>
 </a>
 
 ## Dev demo PT1
 <a href="https://youtu.be/aO6hr9lEFRw" title="Music Caster Video Demo">
-  <p align="center" style="
-    position: relative;
-  ">
-    <img src="./overlay.png" stlye="position: absolute" style="
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 50px;
-    height: 50px;
-    top: 50%; ">
+  <p align="center">
     <img width="75%" src="https://img.youtube.com/vi/aO6hr9lEFRw/hqdefault.jpg"   alt="Music Caster Video Demo Thumbnail">
   </p>
 </a>
