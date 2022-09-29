@@ -2,18 +2,6 @@
 #define VARIABLES_H
 
 /*
- * Controls the Serial baud rate 
- * Default: 9600
- */
-const int VAR_serial_baud = 9600;
-
-/*
- * Controls if the Arduino should wait for a serial connection before booting
- * Default: false
- */
-const bool VAR_serial_wait = false;
-
-/*
  * Controls how far contrllers with analog triggers have to be pressed before they trigger
  * a mapped PSP button.
  * 
@@ -47,10 +35,8 @@ const int VAR_ts_btn_threshold = 250;
  * 
  * Default: 10000
  */
-
-const int VAR_boot_screen_wait = 11000;
-const int VAR_boot_screen_wait_warm = 1000;
-
+const int VAR_boot_screen_wait = 12000;
+const int VAR_boot_screen_wait_warm = 1100;
 
 /*
  * Controls if the PSP should be put into standby mode
@@ -62,7 +48,13 @@ const int VAR_boot_screen_wait_warm = 1000;
  */
 const bool VAR_standby_mode = true;
 
-
+/**
+ * Controls if the PSP should be auto booted at all. Useful for use when developing.
+ * 
+ * Will take control over VAR_standby_mode
+ * 
+ * If true the PSP will never be auto powered on or off. 
+ */
 const bool VAR_disable_auto_boot = false;
 
 #endif

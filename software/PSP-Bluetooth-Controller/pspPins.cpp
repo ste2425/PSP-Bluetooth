@@ -1,5 +1,6 @@
 #include "pspPins.h"
 
+// Array indexes for referencing each PSP button
 const uint8_t PSP_HOME = 0;
 const uint8_t PSP_START = 1;
 const uint8_t PSP_SELECT = 2;
@@ -27,7 +28,7 @@ bool pspPoweredOn = false;
 bool XAxisToBeReset = false;
 bool YAxisToBeReset = false;
 
-
+// Lists the physical Arduino pin for each PSP button
 uint8_t pins[pinCount] = {
   17, // home
   14, // start
@@ -43,9 +44,9 @@ uint8_t pins[pinCount] = {
   3, // circle
   19, // square
   4, // triangle
- // 21 // power
 };
 
+// State tracking for each PSP button press
 bool pinPressed[pinCount] = {
   false,
   false,
@@ -61,7 +62,6 @@ bool pinPressed[pinCount] = {
   false,
   false,
   false,
- // false,
 };
 
 void PSP_mark_all_for_release() {
@@ -97,6 +97,27 @@ bool isButtonLS(uint8_t pspButton) {
     pspButton == PSP_LS_DOWN;
 }
 
+void moveLS(uint8_t pspButton) {  
+  switch(pspButton) {
+    case PSP_LS_LEFT:
+      XAxisToBeReset = false;
+      DIGIPOT_write_x(50);
+    break;
+    case PSP_LS_RIGHT:
+      XAxisToBeReset = false;
+      DIGIPOT_write_x(200);
+    break;
+    case PSP_LS_UP:
+      YAxisToBeReset = false;
+      DIGIPOT_write_y(50);
+    break;
+    case PSP_LS_DOWN:
+      YAxisToBeReset = false;
+      DIGIPOT_write_y(200);
+    break;
+  }
+}
+
 void PSP_set_ls(uint8_t x, uint8_t y) {
       uint8_t xToSet = constrain(x, 50, 200);
       XAxisToBeReset = false;
@@ -105,31 +126,6 @@ void PSP_set_ls(uint8_t x, uint8_t y) {
       uint8_t yToSet = constrain(y, 50, 200);
       YAxisToBeReset = false;
       DIGIPOT_write_y(yToSet);
-}
-
-void moveLS(uint8_t pspButton) {  
-  switch(pspButton) {
-    case PSP_LS_LEFT:
-      Serial.println("Moving LS LEFT");
-      XAxisToBeReset = false;
-      DIGIPOT_write_x(50);
-    break;
-    case PSP_LS_RIGHT:
-      Serial.println("Moving LS RIGHT");
-      XAxisToBeReset = false;
-      DIGIPOT_write_x(200);
-    break;
-    case PSP_LS_UP:
-      Serial.println("Moving LS LEFT");
-      YAxisToBeReset = false;
-      DIGIPOT_write_y(50);
-    break;
-    case PSP_LS_DOWN:
-      Serial.println("Moving LS RIGHT");
-      YAxisToBeReset = false;
-      DIGIPOT_write_y(200);
-    break;
-  }
 }
 
 void PSP_press_button (uint8_t pspButton) {
@@ -143,16 +139,14 @@ void PSP_press_button (uint8_t pspButton) {
   }
 }
 
-void toggle_power() {
-  Serial.println("Toggle Power");
-  
+bool coldBoot = true;
+
+void toggle_power() {  
   pinMode(21, OUTPUT);
   digitalWrite(21, LOW);
   delay(500);
   pinMode(21, INPUT);
 }
-
-bool coldBoot = true;
 
 bool PSP_power_on() {
   bool isColdBoot = coldBoot;
@@ -160,7 +154,6 @@ bool PSP_power_on() {
   coldBoot = false;
   
   if (!pspPoweredOn) {
-    Serial.println("Powering on");
     pspPoweredOn = true;
 
     toggle_power();
@@ -171,7 +164,6 @@ bool PSP_power_on() {
 
 void PSP_power_off() {
   if (pspPoweredOn) {
-    Serial.println("Powering off");
     pspPoweredOn = false;
 
     toggle_power();
@@ -179,24 +171,19 @@ void PSP_power_off() {
 }
 
 void PSP_press_screen() {
-  Serial.println("Press screen");
   pinMode(pins[PSP_DISPLAY], OUTPUT);
   digitalWrite(pins[PSP_DISPLAY], LOW);
 }
 
 void PSP_release_screen() {
-  Serial.println("Release screen");
   pinMode(pins[PSP_DISPLAY], INPUT);
 }
 
-void PSP_toggle_screen(){
-  Serial.println("Toggle screen");
-  
+void PSP_toggle_screen(){  
   pinMode(pins[PSP_DISPLAY], OUTPUT);
   digitalWrite(pins[PSP_DISPLAY], LOW);
   delay(5000);
   pinMode(pins[PSP_DISPLAY], INPUT);
-  Serial.println("Toggle screen - DONE");
 }
 
 uint8_t PSP_map_controller(int controllerVal) {  

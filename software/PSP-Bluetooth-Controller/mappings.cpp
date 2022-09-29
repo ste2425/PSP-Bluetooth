@@ -4,7 +4,6 @@ uint8_t defaultMappingsLength = 14;
 pinMap defaultMappings[14] = {
   { PSP_HOME, CTR_MISC_BUTTON_SYSTEM, CTR_TYPE_SYSTEM },
   { PSP_START, CTR_MISC_BUTTON_HOME, CTR_TYPE_SYSTEM },
-  //{ PSP_DISPLAY, CTR_BUTTON_THUMB_R, CTR_TYPE_BUTTONS },
   { PSP_SELECT, CTR_MISC_BUTTON_BACK, CTR_TYPE_SYSTEM },
   
   { PSP_L1, CTR_BUTTON_SHOULDER_L, CTR_TYPE_BUTTONS  },
@@ -83,6 +82,7 @@ pinMap PS1Mappings[21] = {
 
 pinMap *MAPPINGS_pins = defaultMappings;
 uint8_t MAPPINGS_pin_size = defaultMappingsLength;
+uint8_t MAPPINGS_colour[3] = { 0, 0, 255 };
 
 uint8_t mode = 0;
 
@@ -95,23 +95,27 @@ void MAPPINGS_next_mapping() {
   PSP_mark_all_for_release();
   PSP_release_unused();
 
+  // reset mapping colour
+  MAPPINGS_colour[0] = 0;
+  MAPPINGS_colour[1] = 0;
+  MAPPINGS_colour[2] = 0;
+
   switch (mode) {
     case 0:
       MAPPINGS_pins = defaultMappings;
       MAPPINGS_pin_size = defaultMappingsLength;
+      MAPPINGS_colour[2] = 255;
     break;
     case 1:
       MAPPINGS_pins = FPSMappings;
       MAPPINGS_pin_size = FPSMappingsLength;
+      MAPPINGS_colour[0] = 255;
     break;
     case 2:
       MAPPINGS_pins = PS1Mappings;
       MAPPINGS_pin_size = PS1MappingsLength;
+      MAPPINGS_colour[1] = 255;
   }
 
   //myGamepad->setPlayerLEDs((mode + 1) & 0x0f);
-
-  Serial.print("Changing Mode ");
-  Serial.print(mode);
-  Serial.println("");
 }
