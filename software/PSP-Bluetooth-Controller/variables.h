@@ -36,7 +36,7 @@ const int VAR_ts_btn_threshold = 250;
  * Default: 10000
  */
 const int VAR_boot_screen_wait = 12000;
-const int VAR_boot_screen_wait_warm = 1100;
+const int VAR_boot_screen_wait_warm = 1500;
 
 /*
  * Controls if the PSP should be put into standby mode
