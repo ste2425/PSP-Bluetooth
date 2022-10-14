@@ -7,7 +7,7 @@ jobs:
       - uses: actions/checkout@master
         with:
           repository: ste2425/psp-consolizer-installer
-          path: installer
+          path: SuperDuper
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
