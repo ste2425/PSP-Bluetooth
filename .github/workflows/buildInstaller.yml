@@ -24,5 +24,3 @@ jobs:
       - name: list directories
         run: |
           dir
-
-steps:
