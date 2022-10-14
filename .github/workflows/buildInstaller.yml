@@ -10,7 +10,7 @@ jobs:
       - uses: actions/checkout@master
         with:
           repository: ste2425/psp-consolizer-installer
-          path: SuperDuper
+          path: installer
       - uses: actions/setup-node@v3
         with:
           node-version: "16"
@@ -21,9 +21,17 @@ jobs:
           arduino-cli core update-index
           arduino-cli core install arduino:samd
 
-      #- name: Compile Sketch
-      #  run: arduino-cli compile --fqbn arduino:samd:nano_33_iot ./software/PSP-Bluetooth-Controller
+      - name: Compile Sketch
+        run: arduino-cli compile --fqbn arduino:samd:nano_33_iot main/software/PSP-Bluetooth-Controller -e
+
+      - name: install installer
+        run: yarn
+        working-directory: installer
+
+      - name: package
+        run: yarn package
+        working-directory: installer
 
       - name: list directories
-        run: |
-          dir
+        run: dir
+        working-directory: installer
