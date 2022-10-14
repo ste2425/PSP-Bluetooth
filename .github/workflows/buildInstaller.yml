@@ -6,7 +6,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
         with:
-          name: ste2425/psp-consolizer-installer
+          repository: ste2425/psp-consolizer-installer
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
