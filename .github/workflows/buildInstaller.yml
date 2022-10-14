@@ -21,8 +21,8 @@ jobs:
           arduino-cli core update-index
           arduino-cli core install arduino:samd
 
-      - name: Compile Sketch
-        run: arduino-cli compile --fqbn arduino:samd:nano_33_iot ./software/PSP-Bluetooth-Controller
+      #- name: Compile Sketch
+      #  run: arduino-cli compile --fqbn arduino:samd:nano_33_iot ./software/PSP-Bluetooth-Controller
 
       - name: list directories
         run: |
