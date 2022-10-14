@@ -4,17 +4,25 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v3      
+      - uses: actions/checkout@master
+        with:
+          name: ste2425/psp-consolizer-installer
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: '16'      
+          node-version: "16"
       - uses: arduino/setup-arduino-cli@v1
-        
+
       - name: Install platform
         run: |
           arduino-cli core update-index
           arduino-cli core install arduino:samd
-          
+
       - name: Compile Sketch
         run: arduino-cli compile --fqbn arduino:samd:nano_33_iot ./software/PSP-Bluetooth-Controller
-      
+
+      - name: list directories
+        run: |
+          dir
+
+steps:
