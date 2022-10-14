@@ -1,0 +1,21 @@
+board_manager:
+  additional_urls: []
+daemon:
+  port: "50051"
+directories:
+  user: ./arduino/user
+library:
+  enable_unsafe_install: false
+logging:
+  file: ""
+  format: text
+  level: info
+metrics:
+  addr: :9090
+  enabled: true
+output:
+  no_color: false
+sketch:
+  always_export_binaries: false
+updater:
+  enable_notification: true
