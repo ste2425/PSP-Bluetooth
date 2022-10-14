@@ -1,0 +1,19 @@
+name: build-installer
+on: [push]
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Arduino CLI
+        uses: arduino/setup-arduino-cli@v1
+        
+      - name: Install platform
+        run: |
+          arduino-cli core update-index
+          arduino-cli core install arduino:samd
+          
+      - name: Compile Sketch
+        run: arduino-cli compile --fqbn install arduino:samd ./software/PSP-Bluetooth-Controller
+      
