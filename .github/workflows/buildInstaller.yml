@@ -18,9 +18,9 @@ jobs:
 
       - name: Extract files
         uses: a7ul/tar-action@v1.1.0
+        working-directory: bluepad
         with:
           command: x
-          cwd: ./bluepad
           files: bluepad32-nina-v3.5.1.tar.gz
 
       - name: Dir
