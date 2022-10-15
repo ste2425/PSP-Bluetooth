@@ -13,14 +13,14 @@ jobs:
           out-file-path: bluepad
 
       - name: Dir
-        run: echo ${{ GITHUB_WORKSPACE }}/bluepad
+        run: echo ${{ github.workspace }}/bluepad
 
       - name: Extract files
         uses: a7ul/tar-action@v1.1.0
         id: extract
         with:
           command: x
-          cwd: ${{ GITHUB_WORKSPACE }}/bluepad
+          cwd: ${{ github.workspace }}/bluepad
           files: bluepad32-nina-v3.5.1.tar.gz
 
       - name: Dir
