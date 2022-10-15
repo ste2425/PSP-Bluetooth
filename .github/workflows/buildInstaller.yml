@@ -33,7 +33,7 @@ jobs:
         run: yarn
         working-directory: installer
 
-      -name: Copy PSP Consolizer binary
+      - name: Copy PSP Consolizer binary
         run: copy main\software\PSP-Bluetooth-Controller\build\arduino.samd.nano_33_iot\PSP-Bluetooth-Controller.ino.bin installer\
 
       - name: Run yarn package
