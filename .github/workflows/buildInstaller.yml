@@ -4,6 +4,17 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
+      - name: Download Bluepad 32
+        uses: robinraju/release-downloader@v1.5
+        with:
+          repository: ricardoquesada/bluepad32
+          tag: release_v3.5.1
+          fileName: bluepad32-nina-v3.5.1.tar.gz
+          out-file-path: bluepad
+
+      - name: Dir
+        run: dir
+
       - uses: actions/checkout@v3
         name: checkout PSP-consolizer
         with:
