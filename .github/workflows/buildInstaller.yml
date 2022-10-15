@@ -53,3 +53,9 @@ jobs:
       - name: Run yarn package
         run: yarn package
         working-directory: installer
+
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: Installer
+          path: installer/build/psp-consoliser-programmer 1.0.0.exe
