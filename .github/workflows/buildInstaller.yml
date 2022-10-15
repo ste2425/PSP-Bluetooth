@@ -5,18 +5,22 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
+        name: checkout PSP-consolizer
         with:
           path: main
+
       - uses: actions/checkout@master
+        name: Checkout installer
         with:
           repository: ste2425/psp-consolizer-installer
           path: installer
+
       - uses: actions/setup-node@v3
         with:
           node-version: "16"
       - uses: arduino/setup-arduino-cli@v1
 
-      - name: Install platform
+      - name: Install Arduino platform
         run: |
           arduino-cli core update-index
           arduino-cli core install arduino:samd
@@ -25,14 +29,13 @@ jobs:
         run: arduino-cli compile --fqbn arduino:samd:nano_33_iot software/PSP-Bluetooth-Controller -e
         working-directory: main
 
-      - name: install installer
+      - name: Run yarn install
         run: yarn
         working-directory: installer
 
-      - name: package
-        run: yarn package
-        working-directory: installer
+      -name: Copy PSP Consolizer binary
+        run: copy main\software\PSP-Bluetooth-Controller\build\arduino.samd.nano_33_iot\PSP-Bluetooth-Controller.ino.bin installer\
 
-      - name: list directories
-        run: dir
+      - name: Run yarn package
+        run: yarn package
         working-directory: installer
