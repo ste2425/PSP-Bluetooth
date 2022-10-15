@@ -18,6 +18,7 @@ jobs:
 
       - name: Extract files
         uses: a7ul/tar-action@v1.1.0
+        id: extract
         with:
           command: x
           cwd: ./bluepad
