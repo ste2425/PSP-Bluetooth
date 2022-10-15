@@ -13,7 +13,7 @@ jobs:
           out-file-path: bluepad
 
       - name: Dir
-        run: tar -xvzf bluepad32-nina-v3.5.1.tar.gz -C output
+        run: tar -xvzf bluepad32-nina-v3.5.1.tar.gz -C ./output
         working-directory: bluepad
 
       - name: Dir
