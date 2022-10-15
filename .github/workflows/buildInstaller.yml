@@ -17,9 +17,9 @@ jobs:
         working-directory: bluepad
 
       - uses: edgarrc/action-7z@v1
-        working-directory: bluepad
         with:
           args: 7z e bluepad32-nina-v3.5.1.tar.gz
+        working-directory: bluepad
 
       - name: Dir
         run: dir
