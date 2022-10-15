@@ -16,9 +16,13 @@ jobs:
         run: dir
         working-directory: bluepad
 
-      - uses: edgarrc/action-7z@v1
+      - name: Extract files
+        uses: a7ul/tar-action@v1.1.0
+        id: extract
         with:
-          args: 7z e ./bluepad/bluepad32-nina-v3.5.1.tar.gz
+          command: x
+          cwd: $GITHUB_WORKSPACE/bluepad
+          files: bluepad32-nina-v3.5.1.tar.gz
 
       - name: Dir
         run: dir
