@@ -13,8 +13,7 @@ jobs:
           out-file-path: bluepad
 
       - name: Dir
-        run: dir
-        working-directory: bluepad
+        run: echo $GITHUB_WORKSPACE/bluepad
 
       - name: Extract files
         uses: a7ul/tar-action@v1.1.0
