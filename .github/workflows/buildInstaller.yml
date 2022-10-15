@@ -16,13 +16,10 @@ jobs:
         run: dir
         working-directory: bluepad
 
-      - name: Extract files
-        uses: a7ul/tar-action@v1.1.0
-        id: extract
+      - uses: edgarrc/action-7z@v1
+        working-directory: bluepad
         with:
-          command: x
-          cwd: .\bluepad
-          files: bluepad32-nina-v3.5.1.tar.gz
+          args: 7z e bluepad32-nina-v3.5.1.tar.gz
 
       - name: Dir
         run: dir
