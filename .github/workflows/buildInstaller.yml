@@ -21,7 +21,7 @@ jobs:
         id: extract
         with:
           command: x
-          cwd: ./bluepad
+          cwd: .\bluepad
           files: bluepad32-nina-v3.5.1.tar.gz
 
       - name: Dir
