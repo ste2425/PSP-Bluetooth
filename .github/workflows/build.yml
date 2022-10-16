@@ -1,0 +1,35 @@
+name: Build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        name: checkout PSP-consolizer
+        with:
+          path: main
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+      - uses: arduino/setup-arduino-cli@v1
+
+      - name: Install Arduino platform
+        run: |
+          arduino-cli core update-index
+          arduino-cli core install arduino:samd
+
+      - name: Compile Sketch
+        run: arduino-cli compile --fqbn arduino:samd:nano_33_iot software/PSP-Bluetooth-Controller -e
+        working-directory: main
+        
+      - name: list
+        run: ls -l
+        working-directory: main/software/PSP-Bluetooth-Controller/build
