@@ -53,9 +53,9 @@ jobs:
 
       - name: Copy binaries
         run: |
-          cp main\software\PSP-Bluetooth-Controller\build\arduino.samd.nano_33_iot\PSP-Bluetooth-Controller.ino.bin installer\PSP-Bluetooth-Controller.ino.bin
-          cp bluepad\bluepad32-nina-v3.5.1\bluepad32-nina-full-v3.5.1.bin installer\bluepad32-nina.bin
-          sed -i 's/<changeme>/Bluepad32 for NINA v3.5.1/g' installer\config.json
+          cp main/software/PSP-Bluetooth-Controller/build/arduino.samd.nano_33_iot/PSP-Bluetooth-Controller.ino.bin installer/PSP-Bluetooth-Controller.ino.bin
+          cp bluepad/bluepad32-nina-v3.5.1/bluepad32-nina-full-v3.5.1.bin installer/bluepad32-nina.bin
+          sed -i 's/<changeme>/Bluepad32 for NINA v3.5.1/g' installer/config.json
 
       - name: Run yarn install
         run: yarn
