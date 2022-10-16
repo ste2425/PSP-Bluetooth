@@ -59,4 +59,5 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Installer
-          path: installer/build
+          path: |
+            installer/build/psp-consoliser-programmer 1.0.0.exe
