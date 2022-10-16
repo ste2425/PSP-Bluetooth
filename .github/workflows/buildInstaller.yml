@@ -69,3 +69,4 @@ jobs:
           files: |
             installer/build/psp-consoliser-programmer 1.0.0.exe
             hardware/psp-bluetooth/Gerber/PSP-Consolizer-v1.0.zip
+            hardware/psp-bluetooth/Gerber/psp-bluetooth-User_Drawings.gbr
