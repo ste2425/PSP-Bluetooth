@@ -82,7 +82,7 @@ pinMap PS1Mappings[21] = {
 
 pinMap *MAPPINGS_pins = defaultMappings;
 uint8_t MAPPINGS_pin_size = defaultMappingsLength;
-uint8_t MAPPINGS_colour[3] = {255, 0, 255};
+uint8_t MAPPINGS_colour[3] = {0, 0, 255};
 
 uint8_t mode = 0;
 
@@ -106,7 +106,6 @@ void MAPPINGS_next_mapping()
   case 0:
     MAPPINGS_pins = defaultMappings;
     MAPPINGS_pin_size = defaultMappingsLength;
-    MAPPINGS_colour[0] = 255;
     MAPPINGS_colour[2] = 255;
     break;
   case 1:
@@ -117,7 +116,6 @@ void MAPPINGS_next_mapping()
   case 2:
     MAPPINGS_pins = PS1Mappings;
     MAPPINGS_pin_size = PS1MappingsLength;
-    MAPPINGS_colour[0] = 255;
     MAPPINGS_colour[1] = 255;
   }
 
