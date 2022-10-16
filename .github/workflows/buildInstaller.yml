@@ -67,6 +67,6 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
-            installer/build/psp-consoliser-programmer 1.0.0.exe
             hardware/psp-bluetooth/Gerber/PSP-Consolizer-v1.0.zip
+            installer/build/psp-consoliser-programmer 1.0.0.exe
             hardware/psp-bluetooth/Gerber/psp-bluetooth-User_Drawings.gbr
