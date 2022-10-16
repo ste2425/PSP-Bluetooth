@@ -49,7 +49,7 @@ jobs:
         run: |
           copy main\software\PSP-Bluetooth-Controller\build\arduino.samd.nano_33_iot\PSP-Bluetooth-Controller.ino.bin installer\PSP-Bluetooth-Controller.ino.bin
           copy bluepad\bluepad32-nina-v3.5.1\bluepad32-nina-full-v3.5.1.bin installer\bluepad32-nina.bin
-          ((Get-Content -path installer\config.json -Raw) -replace '<changeme>','bluepad32-nina-full-v3.5.1') | Set-Content -Path installer\config.json
+          ((Get-Content -path installer\config.json -Raw) -replace '<changeme>','Bluepad32 for NINA v3.5.1') | Set-Content -Path installer\config.json
 
       - name: Run yarn package
         run: yarn package
