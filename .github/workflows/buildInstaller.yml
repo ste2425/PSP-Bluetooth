@@ -65,10 +65,11 @@ jobs:
       - name: Prepare Release
         #if: startsWith(github.ref, 'refs/tags/')
         run: |
-          xcopy "main/hardware/psp-bluetooth/Gerber/PSP-Consolizer-v1.0.zip" "release/hardware/" /F /R /Y /I
-          xcopy "main/hardware/psp-bluetooth/psp-bluetooth_bom_jlc.csv" "release/hardware/" /F /R /Y /I
-          xcopy "main/hardware/psp-bluetooth/psp-bluetooth_cpl_jlc.csv" "release/hardware/" /F /R /Y /I
-          xcopy "installer/build/psp-consoliser-programmer 1.0.0.exe" "release/hardware/" /F /R /Y /I
+          mkdir -p release/hardware
+          copy "main/hardware/psp-bluetooth/Gerber/PSP-Consolizer-v1.0.zip" "release/hardware/PSP-Consolizer-v1.0.zip"
+          copy "main/hardware/psp-bluetooth/psp-bluetooth_bom_jlc.csv" "release/hardware/psp-bluetooth_bom_jlc.csv"
+          copy "main/hardware/psp-bluetooth/psp-bluetooth_cpl_jlc.csv" "release/hardware/psp-bluetooth_cpl_jlc.csv"
+          copy "installer/build/psp-consoliser-programmer 1.0.0.exe" "release/psp-consoliser-programmer 1.0.0.exe"
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
