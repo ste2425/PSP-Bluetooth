@@ -3,7 +3,7 @@ board_manager:
 daemon:
   port: "50051"
 directories:
-  user: ./arduino/user
+  user: ./Arduino/user
 library:
   enable_unsafe_install: false
 logging:

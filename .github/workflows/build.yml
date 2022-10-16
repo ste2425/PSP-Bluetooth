@@ -2,13 +2,12 @@ name: Build
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -26,10 +25,14 @@ jobs:
           arduino-cli core update-index
           arduino-cli core install arduino:samd
 
+      - name: list
+        run: ls -l
+        working-directory: main
+
       - name: Compile Sketch
         run: arduino-cli compile --fqbn arduino:samd:nano_33_iot software/PSP-Bluetooth-Controller -e
         working-directory: main
-        
+
       - name: list
         run: ls -l
         working-directory: main/software/PSP-Bluetooth-Controller/build
