@@ -1,9 +1,5 @@
 name: build-installer
 on: [push]
-env:
-  BLUEPAD_TAG: release_v3.5.1
-  BLUEPAD_BINARY: bluepad32-nina-v3.5.1\bluepad32-nina-full-v3.5.1.bin
-  BLUEPAD_EXPECTED_VERSION: Bluepad32 for NINA v3.5.1
 jobs:
   build:
     runs-on: windows-latest
@@ -12,7 +8,7 @@ jobs:
         uses: robinraju/release-downloader@v1.5
         with:
           repository: ricardoquesada/bluepad32
-          tag: $env:BLUEPAD_TAG
+          tag: release_v3.5.1
           fileName: bluepad32-nina-v3.5.1.tar.gz
           out-file-path: bluepad
 
@@ -52,8 +48,8 @@ jobs:
       - name: Copy binaries
         run: |
           copy main\software\PSP-Bluetooth-Controller\build\arduino.samd.nano_33_iot\PSP-Bluetooth-Controller.ino.bin installer\PSP-Bluetooth-Controller.ino.bin
-          copy bluepad\$env:BLUEPAD_BINARY installer\bluepad32-nina.bin
-          ((Get-Content -path installer\config.json -Raw) -replace '<changeme>','$env:BLUEPAD_EXPECTED_VERSION') | Set-Content -Path installer\config.json
+          copy bluepad\bluepad32-nina-v3.5.1\bluepad32-nina-full-v3.5.1.bin installer\bluepad32-nina.bin
+          ((Get-Content -path installer\config.json -Raw) -replace '<changeme>','Bluepad32 for NINA v3.5.1') | Set-Content -Path installer\config.json
 
       - name: Run yarn package
         run: yarn package
