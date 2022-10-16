@@ -51,6 +51,12 @@ jobs:
         run: arduino-cli compile --fqbn arduino:samd:nano_33_iot software/PSP-Bluetooth-Controller -e
         working-directory: main
 
+      - name: Copy binaries
+        run: |
+          cp main\software\PSP-Bluetooth-Controller\build\arduino.samd.nano_33_iot\PSP-Bluetooth-Controller.ino.bin installer\PSP-Bluetooth-Controller.ino.bin
+          cp bluepad\bluepad32-nina-v3.5.1\bluepad32-nina-full-v3.5.1.bin installer\bluepad32-nina.bin
+          sed -i 's/<changeme>/Bluepad32 for NINA v3.5.1/g' installer\config.json
+
       - name: Run yarn install
         run: yarn
         working-directory: installer
@@ -58,3 +64,18 @@ jobs:
       - name: Run yarn package
         run: yarn package
         working-directory: installer
+
+      - name: Prepare Release
+        run: |
+          mkdir -p release/hardware
+          cp "main/hardware/psp-bluetooth/Gerber/PSP-Consolizer-v1.0.zip" "release/hardware/"
+          cp "main/hardware/psp-bluetooth/psp-bluetooth_bom_jlc.csv" "release/hardware/"
+          cp "main/hardware/psp-bluetooth/psp-bluetooth_cpl_jlc.csv" "release/hardware/
+          cp "installer/build/psp-consoliser-programmer 1.0.0.exe" "release/"
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        #if: startsWith(github.ref, 'refs/tags/')
+        with:
+          prerelease: true
+          files: release
