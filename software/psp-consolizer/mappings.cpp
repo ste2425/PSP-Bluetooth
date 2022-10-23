@@ -83,6 +83,7 @@ pinMap PS1Mappings[21] = {
 pinMap *MAPPINGS_pins = defaultMappings;
 uint8_t MAPPINGS_pin_size = defaultMappingsLength;
 uint8_t MAPPINGS_colour[3] = {0, 0, 255};
+uint8_t MAPPINGS_INDEX = 0;
 
 uint8_t mode = 0;
 
@@ -101,6 +102,8 @@ void MAPPINGS_next_mapping()
   MAPPINGS_colour[1] = 0;
   MAPPINGS_colour[2] = 0;
 
+  MAPPINGS_INDEX = mode;
+
   switch (mode)
   {
   case 0:
@@ -118,6 +121,4 @@ void MAPPINGS_next_mapping()
     MAPPINGS_pin_size = PS1MappingsLength;
     MAPPINGS_colour[1] = 255;
   }
-
-  // myGamepad->setPlayerLEDs((mode + 1) & 0x0f);
 }

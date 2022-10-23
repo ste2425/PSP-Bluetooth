@@ -14,6 +14,7 @@ struct pinMap {
 extern pinMap *MAPPINGS_pins;
 extern uint8_t MAPPINGS_pin_size;
 extern uint8_t MAPPINGS_colour[3];
+extern uint8_t MAPPINGS_INDEX;
 
 void MAPPINGS_next_mapping();
 
