@@ -4,6 +4,9 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
+      - name: log
+        run: echo '${{ github.event.commits.*.message }}'
+
       - name: Download Bluepad 32
         uses: robinraju/release-downloader@v1.5
         with:
@@ -51,7 +54,7 @@ jobs:
           copy bluepad\bluepad32-nina-v3.5.1\bluepad32-nina-full-v3.5.1.bin installer\bluepad32-nina.bin
           ((Get-Content -path installer\config.json -Raw) -replace '<changeme>','Bluepad32 for NINA v3.5.1') | Set-Content -Path installer\config.json
           ((Get-Content -path installer\config.json -Raw) -replace '<commitmessage>','${{ github.event.head_commit.message }}') | Set-Content -Path installer\config.json
-          ((Get-Content -path installer\config.json -Raw) -replace '<commitsha>','${{ github.event.head_commit.id }}') | Set-Content -Path installer\config.json
+          ((Get-Content -path installer\config.json -Raw) -replace '<commitsha>','${{ github.event.commits.*.message }}') | Set-Content -Path installer\config.json
 
       - name: Run yarn package
         run: yarn package
