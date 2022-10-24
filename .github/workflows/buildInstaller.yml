@@ -5,7 +5,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: log
-        run: echo '${{ github.event.commits.*.message }}'
+        run: echo '${{ join(github.event.commits.*.message, ', ') }}'
 
       - name: Download Bluepad 32
         uses: robinraju/release-downloader@v1.5
