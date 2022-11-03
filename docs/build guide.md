@@ -385,6 +385,8 @@ The arduino can be programmed before or after installing it into the PSP Consoli
 
 It will tell you what steps need to be followed next.
 
+**NOTE** The exe is not signed. Your web browser of choice will complaining downloading the exe as will Windows when it launches it.
+
 <div class="page"/>
 
 # 4 - Connecting the Arduino and PSP
