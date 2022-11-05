@@ -17,7 +17,11 @@ This is a personal project <em>NOT</em> a commercial product. As such do your ow
 </p>
 
 <p align="center">
-Please don't just take my word for it that it actually. Check everything yourself before spending any money.
+Please don't just take my word for it that this actually works. Check everything yourself before spending any money.
+</p>
+
+<p align="center">
+This mod just provides controller over the PSP with Bluetooth controllers. It still expects you to use the PSP's TV out functionality.
 </p>
 
 <style>
@@ -214,11 +218,12 @@ Next is the job of assembling the board. The following components will be needed
 - Arduino Nano 33 iot
 - 2x 10pin 0.5mm pitch FFC cables Type A (contacts on both sides)
 - 1x 14pin 0.5mm pitch FFC cable Type A (contacts on both sides)
-- MCP 4251 digital potentiometer 14 pin DIP package
+- MCP4251-103E/P 10K digital potentiometer 14 pin DIP package
 - LED colour of choice (See LED below)
   - Suitable resistor for LED
 - Mounting hardware (see Mounting Arduino & MCP4251 below)
 - Jumpers and pins (see Jumpers below)
+- TV out cable
 
 ## Mounting Arduino & MCP4251
 
