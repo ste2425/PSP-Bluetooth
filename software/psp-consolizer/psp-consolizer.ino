@@ -12,6 +12,7 @@ uint8_t LEDScale = 10;
 ezButton syncBtn(20);
 
 Timer controllerLEDTunoff;
+Timer shutdownTimer;
 
 // Currently only use the first connected gamepad. Bluepad32 supports upto 4
 // Would be good to allow multiple, maybe could use different controllers for emulators etc
@@ -158,10 +159,18 @@ void setup()
 
   syncBtn.setDebounceTime(50);
 
-  controllerLEDTunoff.setCallback([]() -> void
-                                  { myGamepad->setColorLED(0, 0, 0); });
+  controllerLEDTunoff.setCallback([]() -> void { myGamepad->setColorLED(0, 0, 0); });
 
   controllerLEDTunoff.setTimeout(4000);
+
+  shutdownTimer.setCallback([]() -> void { 
+    PSP_press_start();
+    delay(100);
+    PSP_release_start();
+    
+    myGamepad->disconnect(); 
+  });
+  shutdownTimer.setTimeout(3000);
 
   if (!VAR_standby_mode && !VAR_disable_auto_boot)
   {
@@ -196,9 +205,20 @@ void loop()
   if (myGamepad && myGamepad->isConnected())
   {
 
+    if (myGamepad->miscSystem() && !shutdownTimer.isRunning()) {
+      shutdownTimer.start();
+    } else if (!myGamepad->miscSystem() && shutdownTimer.isRunning()) {
+      shutdownTimer.stop();
+
+      PSP_press_home();
+      delay(100);
+      PSP_release_home();
+    }
+
     // config mode
     if (myGamepad->thumbR())
     {
+      //myGamepad->disconnect();      
       if (myGamepad->dpad() == CTR_DPAD_UP)
       {
         MAPPINGS_next_mapping();

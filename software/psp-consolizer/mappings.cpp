@@ -1,8 +1,8 @@
 #include "mappings.h"
 
-uint8_t defaultMappingsLength = 14;
-pinMap defaultMappings[14] = {
-    {PSP_HOME, CTR_MISC_BUTTON_SYSTEM, CTR_TYPE_SYSTEM},
+uint8_t defaultMappingsLength = 13;
+pinMap defaultMappings[13] = {
+    //{PSP_HOME, CTR_MISC_BUTTON_SYSTEM, CTR_TYPE_SYSTEM},
     {PSP_START, CTR_MISC_BUTTON_HOME, CTR_TYPE_SYSTEM},
     {PSP_SELECT, CTR_MISC_BUTTON_BACK, CTR_TYPE_SYSTEM},
 
@@ -22,9 +22,9 @@ pinMap defaultMappings[14] = {
     {PSP_LS, CTR_BUTTON_TS, CTR_TYPE_LS},
 };
 
-uint8_t FPSMappingsLength = 19;
-pinMap FPSMappings[19] = {
-    {PSP_HOME, CTR_MISC_BUTTON_SYSTEM, CTR_TYPE_SYSTEM},
+uint8_t FPSMappingsLength = 18;
+pinMap FPSMappings[18] = {
+    //{PSP_HOME, CTR_MISC_BUTTON_SYSTEM, CTR_TYPE_SYSTEM},
     {PSP_START, CTR_MISC_BUTTON_HOME, CTR_TYPE_SYSTEM},
     {PSP_SELECT, CTR_MISC_BUTTON_BACK, CTR_TYPE_SYSTEM},
 
@@ -50,9 +50,9 @@ pinMap FPSMappings[19] = {
     {PSP_SQUARE, CTR_DPAD_LEFT, CTR_TYPE_DPAD},
 };
 
-uint8_t PS1MappingsLength = 21;
-pinMap PS1Mappings[21] = {
-    {PSP_HOME, CTR_MISC_BUTTON_SYSTEM, CTR_TYPE_SYSTEM},
+uint8_t PS1MappingsLength = 20;
+pinMap PS1Mappings[20] = {
+    //{PSP_HOME, CTR_MISC_BUTTON_SYSTEM, CTR_TYPE_SYSTEM},
     {PSP_START, CTR_MISC_BUTTON_HOME, CTR_TYPE_SYSTEM},
     {PSP_LS_LEFT, CTR_BUTTON_THUMB_R, CTR_TYPE_BUTTONS},
     {PSP_SELECT, CTR_MISC_BUTTON_BACK, CTR_TYPE_SYSTEM},

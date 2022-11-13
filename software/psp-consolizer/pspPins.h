@@ -34,6 +34,8 @@ void PSP_power_off();
 void PSP_toggle_screen();
 void PSP_press_screen();
 void PSP_release_screen();
+void PSP_press_home();
+void PSP_press_start();
 void PSP_set_ls(uint8_t x, uint8_t y);
 uint8_t PSP_map_controller(int controllerVal);
 

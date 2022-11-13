@@ -64,6 +64,10 @@ bool pinPressed[pinCount] = {
   false,
 };
 
+/** TestComment
+* Super
+* Duper
+*/
 void PSP_mark_all_for_release() {
   for(int i = 0; i < pinCount; i++) {
     if (i != PSP_POWER)
@@ -177,6 +181,24 @@ void PSP_press_screen() {
 
 void PSP_release_screen() {
   pinMode(pins[PSP_DISPLAY], INPUT);
+}
+
+void PSP_press_home() {
+  pinMode(pins[PSP_HOME], OUTPUT);
+  digitalWrite(pins[PSP_HOME], LOW);
+  
+  delay(100);
+  
+  pinMode(pins[PSP_HOME], INPUT);
+}
+
+void PSP_press_start() {
+  pinMode(pins[PSP_START], OUTPUT);
+  digitalWrite(pins[PSP_START], LOW);
+
+  delay(100);
+  
+  pinMode(pins[PSP_START], INPUT);
 }
 
 void PSP_toggle_screen(){  
