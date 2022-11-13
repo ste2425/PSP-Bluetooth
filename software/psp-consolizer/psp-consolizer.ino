@@ -165,8 +165,6 @@ void setup()
 
   shutdownTimer.setCallback([]() -> void { 
     PSP_press_start();
-    delay(100);
-    PSP_release_start();
     
     myGamepad->disconnect(); 
   });
@@ -211,8 +209,6 @@ void loop()
       shutdownTimer.stop();
 
       PSP_press_home();
-      delay(100);
-      PSP_release_home();
     }
 
     // config mode
