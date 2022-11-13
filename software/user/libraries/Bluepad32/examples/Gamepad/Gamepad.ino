@@ -154,6 +154,9 @@ void loop() {
         // Disable new gamepad connections
         Serial.println("Bluetooth new connections disabled");
         BP32.enableNewBluetoothConnections(false);
+
+        // Serial.println("Gamepad disconnected!");
+        // myGamepad->disconnect();
       }
 
       // Another way to query the buttons, is by calling buttons(), or

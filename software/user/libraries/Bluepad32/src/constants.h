@@ -13,6 +13,7 @@ enum {
   BP32_FORGET_BLUETOOTH_KEYS = 0x05,
   BP32_GET_GAMEPAD_PROPERTIES = 0x06,
   BP32_ENABLE_BLUETOOTH_CONNECTIONS = 0x07,
+  BP32_DISCONNECT_GAMEPAD = 0x08,
 };
 
 // Possible answers when the request doesn't need an answer, like in "set_xxx"

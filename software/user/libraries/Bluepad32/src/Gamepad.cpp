@@ -119,6 +119,39 @@ void Gamepad::setRumble(uint8_t force, uint8_t duration) const {
   SpiDrv::spiSlaveDeselect();
 }
 
+void Gamepad::disconnect() {
+  if (!isConnected()) {
+    WARN("gamepad not connected");
+    return;
+  }
+
+  WAIT_FOR_SLAVE_SELECT();
+  // Send Command
+  SpiDrv::sendCmd(BP32_DISCONNECT_GAMEPAD, PARAM_NUMS_1);
+  SpiDrv::sendParam((uint8_t*)&_state.idx, 1, LAST_PARAM);
+
+  // pad to multiple of 4
+  SpiDrv::readChar();
+  SpiDrv::readChar();
+
+  SpiDrv::spiSlaveDeselect();
+  // Wait the reply elaboration
+  SpiDrv::waitForSlaveReady();
+  SpiDrv::spiSlaveSelect();
+
+  // Wait for reply
+  uint8_t data, dataLen;
+  if (!SpiDrv::waitResponseCmd(BP32_DISCONNECT_GAMEPAD, PARAM_NUMS_1, &data,
+                               &dataLen)) {
+    WARN("error waitResponse");
+  }
+  SpiDrv::spiSlaveDeselect();
+
+  if (data != BP32_RESPONSE_OK || dataLen != 1) {
+    WARN("Failed to disconnect");
+  }
+}
+
 // Private functions
 
 void Gamepad::onConnected() {
