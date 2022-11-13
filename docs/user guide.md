@@ -91,6 +91,16 @@ To change the mappings press in the right analog stick and press up on the DPAD.
 
 <div class="page"/>
 
+# Changing LED brightness.
+
+Some controllers have a built in LED (Sony DualShock 3/4 DualSense 5 and maybe others). The brightness of this LED can be cycled by clicking in the right analog stick and pressing down on the DPAD.
+
+It will cycle through preset brightnesses.
+
+If the LED is set to be turned off, changing buttons mappings or turning the console on will enable the LED at full brightness for 3 seconds. It will then turn off again.
+
+<div class="page"/>
+
 # FYI
 
 The Consolizer does not actually know if the PSP is on or not. It just keeps track of when it toggle power. If you turn the Arduino off and on whilst the PSP is on it will think the PSP is off when it is actually on.

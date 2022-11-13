@@ -67,6 +67,7 @@ jobs:
             main/hardware/psp-bluetooth/psp-bluetooth_cpl_jlc.csv
             installer/build/psp-consoliser-programmer 1.0.0.exe
             main/docs/build guide.pdf
+            main/docs/user guide.pdf
             main/3D models/PSP and Arduino mount.stl
 
       - name: Create Release
@@ -80,4 +81,5 @@ jobs:
             main/hardware/psp-bluetooth/psp-bluetooth_cpl_jlc.csv
             installer/build/psp-consoliser-programmer 1.0.0.exe
             main/docs/build guide.pdf
+            main/docs/user guide.pdf
             main/3D models/PSP and Arduino mount.stl
