@@ -46,7 +46,7 @@ void onConnectedGamepad(GamepadPtr gp)
 
     myGamepad->setPlayerLEDs((MAPPINGS_INDEX + 1) & 0x0f);
 
-    if (VAR_standby_mode && !VAR_disable_auto_boot)
+    if (!VAR_disable_auto_boot)
     {
       BOOT_powerOn();
     }
@@ -59,7 +59,7 @@ void onDisconnectedGamepad(GamepadPtr gp)
   {
     myGamepad = nullptr;
 
-    if (VAR_standby_mode && !VAR_disable_auto_boot)
+    if (!VAR_disable_auto_boot)
     {
       BOOT_powerOff();
     }
@@ -162,11 +162,6 @@ void setup()
                                   { myGamepad->setColorLED(0, 0, 0); });
 
   controllerLEDTunoff.setTimeout(4000);
-
-  if (!VAR_standby_mode && !VAR_disable_auto_boot)
-  {
-    BOOT_powerOn();
-  }
 }
 
 void loop()
@@ -195,11 +190,15 @@ void loop()
 
   if (myGamepad && myGamepad->isConnected())
   {
-
     // config mode
     if (myGamepad->thumbR())
     {
-      if (myGamepad->dpad() == CTR_DPAD_UP)
+      if (VAR_enable_manual_display_control && myGamepad->dpad() == CTR_DPAD_LEFT) {
+        PSP_press_button(PSP_DISPLAY);
+
+        delay(500);
+      } 
+      else if (myGamepad->dpad() == CTR_DPAD_UP)
       {
         MAPPINGS_next_mapping();
         myGamepad->setRumble(100, 10);

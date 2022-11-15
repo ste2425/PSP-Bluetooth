@@ -33,28 +33,29 @@ const int VAR_ts_btn_threshold = 250;
  * Memory card used space, custom firmware types, soft vs hard boot could all affect how long it takes before the PSP will listen
  * to the screen button.
  * 
- * Default: 10000
+ * VAR_boot_screen_wait Default: 12000
+ * VAR_boot_screen_wait_warm Default: 1500
  */
 const int VAR_boot_screen_wait = 12000;
 const int VAR_boot_screen_wait_warm = 1500;
 
-/*
- * Controls if the PSP should be put into standby mode
+/**
+ * Controls if the PSP should be auto booted. Useful for use when developing.
  * 
- * If in standby mode connecting a controller will power on the PSP, disconnecting the controller will power it off.
- * Providing power will not turn the PSP on.
- * 
- * If not in standby mode providing power will turn the PSP on.
+ * If true the PSP will not be powered on/off when a controller is connected/disconected 
+ *
+ * Defualt: false
  */
-const bool VAR_standby_mode = true;
+const bool VAR_disable_auto_boot = true;
+
 
 /**
- * Controls if the PSP should be auto booted at all. Useful for use when developing.
- * 
- * Will take control over VAR_standby_mode
- * 
- * If true the PSP will never be auto powered on or off. 
- */
-const bool VAR_disable_auto_boot = false;
+* If enabled the display button can be manually controlled
+*
+* Clicking the right analog stick in and pressing DPAD left will press the display button
+*
+* Defualt: false
+*/
+const bool VAR_enable_manual_display_control = true;
 
 #endif
