@@ -12,8 +12,6 @@ void BOOT_powerOn() {
   booting = true;
   
   bool coldBoot = PSP_power_on();
-
-  LED_blinkSlow();
   
   waitForScreenTimer.setTimeout(coldBoot ? VAR_boot_screen_wait : VAR_boot_screen_wait_warm);
 
@@ -25,7 +23,6 @@ void BOOT_powerOff() {
       return;
       
     PSP_power_off();
-    LED_off();
     waitForScreenTimer.stop();
 }
 
@@ -43,7 +40,6 @@ void BOOT_setup() {
 
   waitForScreenRelease.setCallback([]() -> void {
     PSP_release_screen();
-    LED_solid();
     
     booting = false;
   });

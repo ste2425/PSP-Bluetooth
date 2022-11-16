@@ -25,6 +25,8 @@ extern const uint8_t PSP_LS_RIGHT;
 extern const uint8_t PSP_LS_UP;
 extern const uint8_t PSP_LS_DOWN;
 extern const uint8_t PSP_LS;
+extern const uint8_t PSP_VOL_DOWN;
+extern const uint8_t PSP_VOL_UP;
 
 void PSP_mark_all_for_release();
 void PSP_release_unused();

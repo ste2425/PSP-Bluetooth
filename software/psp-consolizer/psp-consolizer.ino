@@ -152,7 +152,6 @@ void setup()
   BP32.enableNewBluetoothConnections(false);
 
   DIGIPOT_setup();
-  LED_setup();
   CTRSYNC_setup();
   BOOT_setup();
 

@@ -1,7 +1,7 @@
 #include "mappings.h"
 
-uint8_t defaultMappingsLength = 14;
-pinMap defaultMappings[14] = {
+uint8_t defaultMappingsLength = 18;
+pinMap defaultMappings[18] = {
     {PSP_HOME, CTR_MISC_BUTTON_SYSTEM, CTR_TYPE_SYSTEM},
     {PSP_START, CTR_MISC_BUTTON_HOME, CTR_TYPE_SYSTEM},
     {PSP_SELECT, CTR_MISC_BUTTON_BACK, CTR_TYPE_SYSTEM},
@@ -20,6 +20,12 @@ pinMap defaultMappings[14] = {
     {PSP_TRIANGLE, CTR_BUTTON_Y, CTR_TYPE_BUTTONS},
 
     {PSP_LS, CTR_BUTTON_TS, CTR_TYPE_LS},
+
+    {PSP_VOL_DOWN, CTR_BUTTON_BRAKE, CTR_TYPE_TRIGGER}, // On xbox controllers the bottom buttons are handled different
+    {PSP_VOL_UP, CTR_BUTTON_THROTTLE, CTR_TYPE_TRIGGER}, // brake&throttle handle this
+
+    {PSP_VOL_DOWN, CTR_BUTTON_TRIGGER_L, CTR_TYPE_BUTTONS}, // Other controllers they are handles with these two
+    {PSP_VOL_UP, CTR_BUTTON_TRIGGER_R, CTR_TYPE_BUTTONS},
 };
 
 uint8_t FPSMappingsLength = 19;

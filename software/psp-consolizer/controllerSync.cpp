@@ -17,14 +17,12 @@ void CTRSYNC_start() {
 
   BP32.forgetBluetoothKeys();
   BP32.enableNewBluetoothConnections(true);
-  LED_blinkFast();
 
   syncTimer.start();
 }
 
 void CTRSYNC_stop() {
   syncTimer.stop();
-  LED_solid();
   BP32.enableNewBluetoothConnections(false); 
   syncActive = false;
 }

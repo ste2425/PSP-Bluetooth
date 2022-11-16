@@ -21,8 +21,10 @@ const uint8_t PSP_LS_RIGHT = 16;
 const uint8_t PSP_LS_UP = 17;
 const uint8_t PSP_LS_DOWN = 18;
 const uint8_t PSP_LS = 19;
+const uint8_t PSP_VOL_DOWN = 20;
+const uint8_t PSP_VOL_UP = 21;
 
-const uint8_t pinCount = 14;
+const uint8_t pinCount = 16;
 bool pspPoweredOn = false;
 
 bool XAxisToBeReset = false;
@@ -43,7 +45,9 @@ uint8_t pins[pinCount] = {
   2, //cross
   3, // circle
   19, // square
-  4, // triangle
+  4, // triangle,
+  1, // vol down
+  0, // vol up
 };
 
 // State tracking for each PSP button press
