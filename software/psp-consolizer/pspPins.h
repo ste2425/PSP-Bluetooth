@@ -31,8 +31,6 @@ extern const uint8_t PSP_VOL_UP;
 void PSP_mark_all_for_release();
 void PSP_release_unused();
 void PSP_press_button(uint8_t pspButton);
-bool PSP_power_on();
-void PSP_power_off();
 void PSP_toggle_screen();
 void PSP_press_screen();
 void PSP_release_screen();

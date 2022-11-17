@@ -15,17 +15,16 @@ const uint8_t PSP_CROSS = 10;
 const uint8_t PSP_CIRCLE = 11;
 const uint8_t PSP_SQUARE = 12;
 const uint8_t PSP_TRIANGLE = 13;
-const uint8_t PSP_POWER = 14;
-const uint8_t PSP_LS_LEFT = 15;
-const uint8_t PSP_LS_RIGHT = 16;
-const uint8_t PSP_LS_UP = 17;
-const uint8_t PSP_LS_DOWN = 18;
-const uint8_t PSP_LS = 19;
-const uint8_t PSP_VOL_DOWN = 20;
-const uint8_t PSP_VOL_UP = 21;
+const uint8_t PSP_VOL_UP = 14;
+const uint8_t PSP_VOL_DOWN = 15;
+
+const uint8_t PSP_LS_LEFT = 16;
+const uint8_t PSP_LS_RIGHT = 17;
+const uint8_t PSP_LS_UP = 18;
+const uint8_t PSP_LS_DOWN = 19;
+const uint8_t PSP_LS = 20;
 
 const uint8_t pinCount = 16;
-bool pspPoweredOn = false;
 
 bool XAxisToBeReset = false;
 bool YAxisToBeReset = false;
@@ -46,8 +45,8 @@ uint8_t pins[pinCount] = {
   3, // circle
   19, // square
   4, // triangle,
-  1, // vol down
-  0, // vol up
+  1, // vol down,
+  21, // vol up
 };
 
 // State tracking for each PSP button press
@@ -66,12 +65,13 @@ bool pinPressed[pinCount] = {
   false,
   false,
   false,
+  false,
+  false,
 };
 
 void PSP_mark_all_for_release() {
   for(int i = 0; i < pinCount; i++) {
-    if (i != PSP_POWER)
-      pinPressed[i] = false;
+    pinPressed[i] = false;
   }
 
   XAxisToBeReset = true;
@@ -140,37 +140,6 @@ void PSP_press_button (uint8_t pspButton) {
       
     pinMode(pins[pspButton], OUTPUT);
     digitalWrite(pins[pspButton], LOW);
-  }
-}
-
-bool coldBoot = true;
-
-void toggle_power() {  
-  pinMode(21, OUTPUT);
-  digitalWrite(21, LOW);
-  delay(500);
-  pinMode(21, INPUT);
-}
-
-bool PSP_power_on() {
-  bool isColdBoot = coldBoot;
-
-  coldBoot = false;
-  
-  if (!pspPoweredOn) {
-    pspPoweredOn = true;
-
-    toggle_power();
-  }
-
-  return isColdBoot;
-}
-
-void PSP_power_off() {
-  if (pspPoweredOn) {
-    pspPoweredOn = false;
-
-    toggle_power();
   }
 }
 

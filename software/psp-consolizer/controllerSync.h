@@ -4,7 +4,6 @@
 #include <Arduino.h>
 #include <Bluepad32.h>
 #include <timer.h>
-#include "led.h"
 
 void CTRSYNC_start();
 void CTRSYNC_stop();

@@ -3,9 +3,8 @@
 #include <timer.h>
 #include <timerManager.h>
 #include "mappings.h"
-#include "led.h"
 #include "controllerSync.h"
-#include "boot.h"
+#include "variables.h"
 
 uint8_t LEDScale = 10;
 
@@ -45,11 +44,6 @@ void onConnectedGamepad(GamepadPtr gp)
     }
 
     myGamepad->setPlayerLEDs((MAPPINGS_INDEX + 1) & 0x0f);
-
-    if (!VAR_disable_auto_boot)
-    {
-      BOOT_powerOn();
-    }
   }
 }
 
@@ -58,11 +52,6 @@ void onDisconnectedGamepad(GamepadPtr gp)
   if (myGamepad != nullptr && myGamepad == gp)
   {
     myGamepad = nullptr;
-
-    if (!VAR_disable_auto_boot)
-    {
-      BOOT_powerOff();
-    }
   }
 }
 
@@ -153,7 +142,6 @@ void setup()
 
   DIGIPOT_setup();
   CTRSYNC_setup();
-  BOOT_setup();
 
   syncBtn.setDebounceTime(50);
 
@@ -181,9 +169,6 @@ void loop()
       CTRSYNC_stop();
     }
   }
-
-  if (BOOT_isBooting())
-    return;
 
   PSP_mark_all_for_release();
 

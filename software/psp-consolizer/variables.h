@@ -40,16 +40,6 @@ const int VAR_boot_screen_wait = 12000;
 const int VAR_boot_screen_wait_warm = 1500;
 
 /**
- * Controls if the PSP should be auto booted. Useful for use when developing.
- * 
- * If true the PSP will not be powered on/off when a controller is connected/disconected 
- *
- * Defualt: false
- */
-const bool VAR_disable_auto_boot = true;
-
-
-/**
 * If enabled the display button can be manually controlled
 *
 * Clicking the right analog stick in and pressing DPAD left will press the display button
