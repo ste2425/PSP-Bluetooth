@@ -51,10 +51,6 @@ jobs:
           copy bluepad\bluepad32-nina-v3.5.1\bluepad32-nina-full-v3.5.1.bin installer\bluepad32-nina.bin
           Get-Content installer\config.json -Raw | ConvertFrom-Json | ForEach-Object {  $_.commitMessage = '${{ github.event.head_commit.message }}'; $_.commitsha = '${{ github.event.head_commit.id }}'; $_.expectedFirmwareVersionText = 'Bluepad32 for NINA v3.5.1'; $_ } | ConvertTo-Json | Set-Content installer\config.json
 
-      - name: log
-        run: |
-          echo '${{ toJSON(github.event) }}'
-
       - name: Run yarn package
         run: yarn package
         working-directory: installer
