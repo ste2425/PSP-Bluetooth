@@ -4,6 +4,10 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
+      - name: log
+        run: |
+          echo '${{ toJSON(github.event) }}'
+
       - name: Download Bluepad 32
         uses: robinraju/release-downloader@v1.5
         with:
@@ -44,16 +48,12 @@ jobs:
       - name: Run yarn install
         run: yarn
         working-directory: installer
-      #lol
+
       - name: Copy binaries
         run: |
           copy main\software\psp-consolizer\build\arduino.samd.nano_33_iot\psp-consolizer.ino.bin installer\PSP-Bluetooth-Controller.ino.bin
           copy bluepad\bluepad32-nina-v3.5.1\bluepad32-nina-full-v3.5.1.bin installer\bluepad32-nina.bin
           Get-Content installer\config.json -Raw | ConvertFrom-Json | ForEach-Object {  $_.commitMessage = '${{ github.event.head_commit.message }}'; $_.commitsha = '${{ join(github.event.commits.*.message, ', ') }}'; $_.expectedFirmwareVersionText = 'Bluepad32 for NINA v3.5.1'; $_ } | ConvertTo-Json | Set-Content installer\config.json
-
-      - name: log
-        run: |
-          Get-Content installer\config.json
 
       - name: Run yarn package
         run: yarn package
