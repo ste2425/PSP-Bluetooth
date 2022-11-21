@@ -225,6 +225,12 @@ Next is the job of assembling the board. The following components will be needed
 - Jumpers and pins (see Jumpers below)
 - TV out cable
 
+## Note about FFC Connectors
+
+If you choose to have JLCPCB assemble your Consolizer then ignore this.
+
+If you assemble it yourself be sure to use FFC connectors with the contacts facing up. Pin one on the PSP's connectors is the opposite side to pin one on the Consolizer so the combination of cables chosen (Type A) and the connector itself allows us to flip the pin numbers. (This was lazy design on my part, easier to flip than re-arrange the board layout)
+
 ## Mounting Arduino & MCP4251
 
 The Arduino and MCP4251 can be mounted permanently or be removable. The MCP4251 can be soldered directly to the PCB or using a DIP socket.
@@ -236,6 +242,8 @@ The Arduino can be mounted directly to the PCB using its castellated pins or via
 The Arduino is powered via its **vin** pin. Iv'e heard conflicting reports that powering it via this pin and USB at the same time (when programming) will cause damage. Others also say if you only USB it will back feed the **vin** pin, in our case powering up the PSP.
 
 As a result there is a jumper **PWR TGL 1** and solder jumper **JP1**. If you know what your doing, unlike me, you can permanently solder **JP1**. You can also use a jumper pin instead (like me) and simply remove the jumper when programming the Arduino, disconnecting the **vin** pin from the Arduino.
+
+<div class="page"/>
 
 ## LED
 
@@ -430,9 +438,7 @@ They are connected in order, with the black wire in the top image being connecte
 
 The PSP is now fully connected and you should be complete.
 
-The first time you turn Consolizer on you will need to press the sync button to sync a controller. Pressing this button will cause the Consolizer to forget any previously connected controller.
-
-If a controller is connected it will not disconnect.
+Have a read of the User Guide within this release for information on how to pair a controller and what config options there are.
 
 ![.center.large](./guide%20images/done.JPG)
 
