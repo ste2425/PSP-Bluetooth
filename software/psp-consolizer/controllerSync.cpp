@@ -25,7 +25,7 @@ void CTRSYNC_start() {
 void CTRSYNC_stop() {
   syncTimer.stop();
   LED_solid();
-  BP32.enableNewBluetoothConnections(false); 
+  BP32.enableNewBluetoothConnections(true); 
   syncActive = false;
 }
 

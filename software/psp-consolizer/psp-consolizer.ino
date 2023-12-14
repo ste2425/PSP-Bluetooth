@@ -149,9 +149,9 @@ void setup()
 {
   BP32.setup(&onConnectedGamepad, &onDisconnectedGamepad);
 
-  BP32.enableNewBluetoothConnections(false);
+  //BP32.enableNewBluetoothConnections(true);
 
-  DIGIPOT_setup();
+  //DIGIPOT_setup();
   LED_setup();
   CTRSYNC_setup();
   BOOT_setup();
