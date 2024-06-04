@@ -8,7 +8,7 @@ GeneralConfig generalCfg_getConfig()
 
     GeneralConfig config;
 
-    config.BLEEnabled = preferences.getBool("BLEEnabled", false);
+    config.BLEEnabled = false; //preferences.getBool("BLEEnabled", false);
 
     preferences.end();
 

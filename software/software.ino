@@ -1,4 +1,4 @@
-// #include "pspBluetoothApp.h"
+#include "src/pspBluetoothApp.h"
 #include "src/bleApp.h"
 
 #include "Arduino.h"
@@ -22,8 +22,8 @@ void setup()
 
   if (gCfg.BLEEnabled)
     bleApp_setup();
-  // else
-  //   pspBluetooth_setup();
+  else
+    pspBluetooth_setup();
 }
 
 void loop()
@@ -41,7 +41,8 @@ void loop()
 
   if (gCfg.BLEEnabled)
     bleApp_loop();
-  // else
-  //    pspBluetooth_loop();
-  delay(150);
+  else
+    pspBluetooth_loop();
+
+  //delay(150);
 }

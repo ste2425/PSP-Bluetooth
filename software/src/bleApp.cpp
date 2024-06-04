@@ -7,5 +7,5 @@ void bleApp_setup()
 
 void bleApp_loop()
 {
-    Serial.println("LOOP");
+    //Serial.println("LOOP");
 }

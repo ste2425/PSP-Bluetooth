@@ -7,10 +7,10 @@ static Preferences preferences;
 // to protect the PSP however, but for now they are avoided.
 uint8_t defaultGPIO[15] = {
     4, //dpadup
-    13, //dpaddown
+    18, //dpaddown
     16, //dpadleft
     17, //dpadright
-    18, //cross
+    13, //cross
     19, //triangle
     21, //square
     22, //circle
@@ -29,21 +29,21 @@ GPIOPinConfig gpioCfg_getConfig()
 
     GPIOPinConfig config;
 
-    config.DPadUp = preferences.getChar((const char*)PSPDPadUp, defaultGPIO[PSPDPadUp]);
-    config.DPadDown = preferences.getChar((const char*)PSPDPadDown, defaultGPIO[PSPDPadDown]);
-    config.DpadLeft = preferences.getChar((const char*)PSPDPadLeft, defaultGPIO[PSPDPadLeft]);
-    config.DpadRight = preferences.getChar((const char*)PSPDPadRight, defaultGPIO[PSPDPadRight]);
-    config.Cross = preferences.getChar((const char*)PSPCross, defaultGPIO[PSPCross]);
-    config.Triangle = preferences.getChar((const char*)PSPTriangle, defaultGPIO[PSPTriangle]);
-    config.Square = preferences.getChar((const char*)PSPSquare, defaultGPIO[PSPSquare]);
-    config.circle = preferences.getChar((const char*)PSPCircle, defaultGPIO[PSPCircle]);
-    config.L1 = preferences.getChar((const char*)PSPL1, defaultGPIO[PSPL1]);
-    config.R1 = preferences.getChar((const char*)PSPR1, defaultGPIO[PSPR1]);
-    config.Start = preferences.getChar((const char*)PSPStart, defaultGPIO[PSPStart]);
-    config.Select = preferences.getChar((const char*)PSPSelect, defaultGPIO[PSPSelect]);
-    config.Home = preferences.getChar((const char*)PSPHome, defaultGPIO[PSPHome]);
-    config.Screen = preferences.getChar((const char*)PSPScreen, defaultGPIO[PSPScreen]);
-    config.ModeChange = preferences.getChar((const char*)BTNModeChange, defaultGPIO[BTNModeChange]);
+    config.DPadUp = preferences.getChar("dpadup", defaultGPIO[PSPDPadUp]);
+    config.DPadDown = preferences.getChar("dpaddown", defaultGPIO[PSPDPadDown]);
+    config.DpadLeft = preferences.getChar("dpadleft", defaultGPIO[PSPDPadLeft]);
+    config.DpadRight = preferences.getChar("dpadright", defaultGPIO[PSPDPadRight]);
+    config.Cross = preferences.getChar("crossbtn", defaultGPIO[PSPCross]);
+    config.Triangle = preferences.getChar("trianglebtn", defaultGPIO[PSPTriangle]);
+    config.Square = preferences.getChar("squarebtn", defaultGPIO[PSPSquare]);
+    config.circle = preferences.getChar("circlebtn", defaultGPIO[PSPCircle]);
+    config.L1 = preferences.getChar("l1btn", defaultGPIO[PSPL1]);
+    config.R1 = preferences.getChar("r1btn", defaultGPIO[PSPR1]);
+    config.Start = preferences.getChar("startbtn", defaultGPIO[PSPStart]);
+    config.Select = preferences.getChar("selectbtn", defaultGPIO[PSPSelect]);
+    config.Home = preferences.getChar("homebtn", defaultGPIO[PSPHome]);
+    config.Screen = preferences.getChar("screenbtn", defaultGPIO[PSPScreen]);
+    config.ModeChange = preferences.getChar("modechangebtn", defaultGPIO[BTNModeChange]);
 
     preferences.end();
 

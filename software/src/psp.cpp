@@ -35,7 +35,7 @@ bool YAxisToBeReset = false;
 uint8_t pins[pinCount];
 
 // State tracking for each PSP button press
-bool pinPressed[pinCount] = {
+static bool pinPressed[pinCount] = {
   false,
   false,
   false,
