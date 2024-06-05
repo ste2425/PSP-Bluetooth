@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Hello, world!</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="" />
+  <link rel="icon" href="favicon.png">
+</head>
+<body>
+  <h1>Hello, world!</h1>
+
+  <input type="text" id="message" />
+  <button type="button" id="send">Send</button>
+  <button type="button" id="connect">Connect</button>
+  <div id="output"></div>
+
+  <script>
+    const decoder = new TextDecoder();
+
+    document.addEventListener('DOMContentLoaded', () => {
+      let writer;
+
+
+      const socket = new WebSocket(`wss://${location.host}/ws`);
+      socket.binaryType = 'arraybuffer';
+
+      const button = document.querySelector('#connect'),
+        output = document.querySelector('#output');
+
+        socket.onopen = function(e) {
+        console.log("[open] Connection established");
+      };
+
+      socket.onmessage = async function(event) {
+        writer.write(event.data);
+        const p = document.createElement('p');
+        //p.textContent = `WS: ${await event.data.text()}`;
+        //output.appendChild(p);
+    };
+
+      function log(text) {
+        const el = document.createElement('p');
+
+        el.textContent = text;
+
+        output.appendChild(el);
+      }
+
+      button.addEventListener('click', async () => {
+        const port = await navigator.serial.requestPort();
+
+        await port.open({ baudRate: 115200 });
+        
+        writer = port.writable.getWriter();
+
+        for await (const chunk of port.readable) {
+          log(`From ESP: ${decoder.decode(chunk)}`);
+          socket.send(chunk);
+        }
+      });
+    });
+  </script>
+
+  <!--<div>
+    document.addEventListener('DOMContentLoaded', () => {
+      const button = document.querySelector('#connect');
+        let socket = new WebSocket(`wss://${location.hostname}:8080`);
+
+        socket.onopen = function(e) {
+  alert("[open] Connection established");
+  alert("Sending to server");
+  socket.send("My name is John");
+};
+
+document.querySelector('#send').addEventListener('click', () => {
+  const text = document.querySelector('#').value;
+
+  socket.send(text);
+});
+
+socket.onmessage = async function(event) {
+  console.log(event);
+  const p = document.createElement('p');
+  p.textContent = await event.data.text();
+  document.querySelector('#output').appendChild(p);
+};
+
+socket.onclose = function(event) {
+  if (event.wasClean) {
+    alert(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
+  } else {
+    // e.g. server process killed or network down
+    // event.code is usually 1006 in this case
+    alert('[close] Connection died');
+  }
+};
+
+socket.onerror = function(error) {
+  alert(`[error]`);
+};
+
+
+
+navigator.serial.addEventListener("connect", (e) => {
+  // Connect to `e.target` or add it to a list of available ports.
+  console.log('Connect');
+});
+
+navigator.serial.addEventListener("disconnect", (e) => {
+  // Remove `e.target` from the list of available ports.
+  console.log('disconnect')
+});
+
+navigator.serial.getPorts().then((ports) => {
+  // Initialize the list of available ports with `ports` on page load.
+});
+
+button.addEventListener("click", async () => {
+  
+  const port = await navigator.serial.requestPort();
+  const info = port.getInfo();
+
+  console.log('LOL', info);
+  await port.open({ baudRate: 9600, stopBits: 1, dataBits: 8, parity: 'none', flowControl: 'none' });
+
+  const textDecoder = new TextDecoderStream();
+const readableStreamClosed = port.readable.pipeTo(textDecoder.writable);
+const reader = textDecoder.readable.getReader();
+
+// Listen to data coming from the serial device.
+while (true) {
+  const { value, done } = await reader.read();
+  if (done) {
+    // Allow the serial port to be closed later.
+    reader.releaseLock();
+    break;
+  }
+  console.log(value, value == '\n')
+}
+});
+
+
+
+
+
+    });
+  </div>-->
+</body>
+</html>
