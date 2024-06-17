@@ -4,6 +4,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: pwd
+        run: echo $PWD
       - name: Install Dependencies
         run: ./install.sh
-        working-directory: ./software/scripts
+        working-directory: /software/scripts
