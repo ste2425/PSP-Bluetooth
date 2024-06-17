@@ -45,5 +45,9 @@ jobs:
             This release has been based of the `develop` branch and a new release created for every commit to the develop branch.
 
             If you want to test the latest and greatest this is what you want.
+
+            Changes:
+
+            ${{ github.event.head_commit.message }}
           tag_name: internal-${{github.run_number}}
           target_commitish: develop
