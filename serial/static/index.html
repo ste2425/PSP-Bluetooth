@@ -13,14 +13,18 @@
   <h1>Hello, world!</h1>
 
   <input type="text" id="message" />
-  <button type="button" id="send">Send</button>
+  <button type="button" id="send" disabled>Send</button>
   <button type="button" id="connect">Connect</button>
-  <button type="button" id="disconnect">Disconnect</button>
-  <button type="button" id="consoleStart">Console Start</button>
-  <button type="button" id="consoleStop">Console Stop</button>
+  <button type="button" id="disconnect" disabled>Disconnect</button>
+  <button type="button" id="consoleStart" disabled>Console Start</button>
+  <button type="button" id="consoleStop" disabled>Console Stop</button>
+  <button type="button" id="clearLog">Clear log</button>
+  <button type="button" id="programBtn" disabled>Program</button>
+  <progress id="progress" max="100" value="0"></progress>
   <pre id="output"></pre>
 
-  <script src="./esp.js" type="module"></script>
+  <script src="./main.js" type="module"></script>
+  <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.js"></script>
 </body>
 
 </html>

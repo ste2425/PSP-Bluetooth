@@ -1,77 +1,115 @@
-import { ESPLoader, Transport } from './esptool.js'
+import serialDevice from './serialDevice.js';
+import { ESPLoader, Transport } from './esptool.js';
+    
+const decoder = new TextDecoder();
 
-function main() {
-    const output = document.querySelector('#output'),
-        connectBtn = document.querySelector('#connect'),
-        disconnectBtn = document.querySelector('#disconnect'),
-        consoleStartBtn = document.querySelector('#consoleStart'),
-        consoleStopBtn = document.querySelector('#consoleStop');
+export class ESPManager {
+    #device;
+    #transport;
+    #espLoader;
+    #isConsoleClosed = true;
+    #onDisconnect;
+    #reader;
 
-    /** Serial Device */
-    let device,
-        transport,
-        esploader,
-        isConsoleClosed = true;
+    async resetDevice() {
+        if (!this.#transport)
+            return;
 
-    function wrap(fn) {
-        return (...args) => fn(...args).catch(e => espLoaderTerminal.writeLine(e.toString()));
+        await this.#transport.setDTR(false);
+        await new Promise((resolve) => setTimeout(resolve, 100));
+        await this.#transport.setDTR(true);
     }
 
-    const espLoaderTerminal = {
-        clean() {
-        },
-        writeLine(data) {
-            output.textContent += `${data}\n`;
-        },
-        write(data) {
-            output.textContent += data;
-        }
-    };
+    async setup(onDisconnect = () => {}) {
+        this.#onDisconnect = onDisconnect;
 
-    connectBtn.addEventListener('click', wrap(async (e) => {
-        if (!device) {
-            device = await navigator.serial.requestPort({});
-            transport = new Transport(device, true);
-        }
+        this.#device = await serialDevice.connect();
+        this.#device.addEventListener('disconnect', this.#deviceDisconnect);
 
+        this.#transport = new Transport(this.#device, false);
+    }
+
+    async connect(options) {
         const flashOptions = {
-            transport,
-            baudrate: 115200,
-            terminal: espLoaderTerminal,
+            transport: this.#transport,
+            ...options
         };
-        esploader = new ESPLoader(flashOptions);
+        this.#espLoader = new ESPLoader(flashOptions);
     
-        const chip = await esploader.main();
+        return await this.#espLoader.main();
+    }
 
-        espLoaderTerminal.writeLine(`Connected to: ${chip}`);
-    }));
+    async disconnect() {        
+        await serialDevice.releaseReaders();
 
-    disconnectBtn.addEventListener('click', wrap(async (e) => {
-        if (transport) await transport.disconnect();
+        await this.#transport.disconnect();
 
-        transport = device = esploader = undefined;
+        this.#deviceDisconnect();
+    }
 
-        espLoaderTerminal.writeLine("Disconnected...");
-    }));
+    async program(options) {
+        const flashOptions = {
+            ...options,
+            reportProgress: (fileIndex, written, total) => {
+                options.reportProgress((written / total) * 100);
+            },
+            calculateMD5Hash: (image) => CryptoJS.MD5(CryptoJS.enc.Latin1.parse(image))
+        };
+        await this.#espLoader.writeFlash(flashOptions);
+    }
 
-    consoleStartBtn.addEventListener('click', wrap(async () => {
-        if (!device) {
-            device = await navigator.serial.requestPort({});
-            transport = new Transport(device, true);
-        }
+    async beginReading(onData) {
+        this.#isConsoleClosed = false;
 
-        await transport.connect(115200);
-        isConsoleClosed = false;
+        while(this.#device.readable && !this.#isConsoleClosed) {
+            this.#reader = this.#device.readable.getReader();
 
-        while (true && !isConsoleClosed) {
-            const val = await transport.rawRead();
-            if (typeof val !== "undefined") {
-              term.write(val);
-            } else {
-              break;
+            try {
+                while(true) {
+                    const { value, done } = await this.#reader.read();
+                    if (done) {
+                      // reader.cancel() has been called.
+                      break;
+                    }
+                    
+                    onData(decoder.decode(value));
+                }
+            } catch(e) {
+                console.log('Non vol', e);
+            } finally {
+                this.#reader.releaseLock();
+                this.#reader = undefined;
             }
-          }
-    }));
-}
+        }
+    
+        /*while (true && !this.#isConsoleClosed) {
+            const val = await this.#transport.rawRead();
+            if (val) {
+                onData(decoder.decode(val));
+            } else {
+                break;
+            }
+        }*/
+    }
 
-document.addEventListener('DOMContentLoaded', main);
+    async stopReading() {
+        this.#isConsoleClosed = true;
+
+        await serialDevice.releaseReaders();
+    }
+
+    get isReading() {
+        return !this.#isConsoleClosed;
+    }
+
+    #deviceDisconnect() {
+        console.log('DISCONNECT');
+        this.#device = undefined;
+        this.#transport = undefined;
+        this.#espLoader = undefined;
+
+        this.#isConsoleClosed = true;
+
+        this.#onDisconnect();
+    }
+}
