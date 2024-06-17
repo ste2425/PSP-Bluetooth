@@ -38,7 +38,7 @@ jobs:
         with:
           files: pspBluetooth.bin
           prerelease: true
-          name: PSP Bluetooth [Internal] [Develop]
+          name: PSP Bluetooth Internal (Develop ${{github.run_number}})
           generate_release_notes: true
-          tag_name: latest-develop
+          tag_name: internal-${{github.run_number}}
           target_commitish: develop
