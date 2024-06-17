@@ -1,4 +1,4 @@
-name: build-installer
+name: Build-PSP-Bluetooth
 on: [push]
 jobs:
   build:
