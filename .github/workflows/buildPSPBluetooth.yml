@@ -6,4 +6,4 @@ jobs:
     steps:
       - name: Install Dependencies
         run: ./install.sh
-        working-directory: software/scripts
+        working-directory: ./software/scripts
