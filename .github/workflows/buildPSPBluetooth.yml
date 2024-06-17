@@ -4,14 +4,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - uses: arduino/setup-arduino-cli@v1
+        name: Install Arduino CLI
       - uses: actions/checkout@v3
         name: checkout PSP-Bluetooth
         with:
           path: develop
-      - name: pwd
-        run: echo $PWD
-      - name: ls
-        run: ls -a develop
       - name: Install Dependencies
         run: ./install.sh
         working-directory: develop/software/scripts
