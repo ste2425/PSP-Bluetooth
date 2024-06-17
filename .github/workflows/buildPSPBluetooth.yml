@@ -20,3 +20,7 @@ jobs:
         working-directory: develop/software/scripts
         env:
           GITHUB_ACTION: true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bin
+          path: develop/software/bin/
