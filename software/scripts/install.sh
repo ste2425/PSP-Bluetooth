@@ -4,8 +4,6 @@
 SCRIPTS_DIR="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 YAML_NAME="../arduino-cli.yaml"
 
-echo "Hello $GITHUB_ACTION"
-
 if [ -n "${GITHUB_ACTION}" ]; then
     echo "Using runner yaml"
     YAML_NAME="../arduino-cli-runner.yaml"

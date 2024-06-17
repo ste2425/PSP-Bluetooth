@@ -8,7 +8,7 @@ BIN_DIR="$SCRIPTS_DIR/../bin"
 PROJECT_BIR="$SCRIPTS_DIR/../"
 YAML_NAME="../arduino-cli.yaml"
 
-if [ x"${GITHUB_ACTION}" == "true" ]; then
+if [ -n "${GITHUB_ACTION}" ]; then
     echo "Using runner yaml"
     YAML_NAME="../arduino-cli-runner.yaml"
 fi
