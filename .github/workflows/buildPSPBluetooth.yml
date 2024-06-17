@@ -40,3 +40,5 @@ jobs:
           prerelease: true
           name: PSP Bluetooth [Internal] [Develop]
           generate_release_notes: true
+          tag_name: latest-develop
+          target_commitish: develop
