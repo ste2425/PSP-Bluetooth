@@ -21,7 +21,7 @@ cd $ESP_DIR
 
 # wonder if esptool is packaged? Maybe i should use that
 python3 ./esptool.py --chip esp32 merge_bin \
-  -o $BIN_DIR/merged-firmware.bin \
+  -o $BIN_DIR/pspBluetooth.bin \
   --flash_mode dio \
   --flash_freq keep \
   --flash_size 4MB \

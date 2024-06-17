@@ -32,11 +32,11 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: pspBluetooth.bin
-          path: develop/software/bin/merged-firmware.bin
+          path: develop/software/bin/pspBluetooth.bin
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
-          files: pspBluetooth.bin
+          files: develop/software/bin/pspBluetooth.bin
           prerelease: true
           name: PSP Bluetooth Internal (Develop ${{github.run_number}})
           generate_release_notes: true
