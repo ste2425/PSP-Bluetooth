@@ -33,3 +33,10 @@ jobs:
         with:
           name: pspBluetooth.bin
           path: develop/software/bin/merged-firmware.bin
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: pspBluetooth.bin
+          prerelease: true
+          name: PSP Bluetooth [Internal] [Develop]
+          generate_release_notes: true
