@@ -6,6 +6,11 @@ BIN_DIR="$SCRIPTS_DIR/../bin"
 PROJECT_BIR="$SCRIPTS_DIR/../"
 ESP_DIR="~/.arduino15/packages/esp32/tools/esptool_py/4.5.1"
 
+if [ -n "${GITHUB_ACTION}" ]; then
+  echo "Using DIR"
+  ESP_DIR="/home/runner/.arduino15/packages/esp32/tools/esptool_py/4.5.1"
+fi
+
 echo "Merging"
 
 echo "   Bin DIR: $BIN_DIR"
