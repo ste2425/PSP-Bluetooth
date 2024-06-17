@@ -15,3 +15,4 @@ jobs:
         working-directory: develop/software/scripts
       - name: Build
         run: arduino-cli compile --log --fqbn esp32-bluepad32:esp32:esp32 --output-dir ../bin ../
+        working-directory: develop/software/scripts
