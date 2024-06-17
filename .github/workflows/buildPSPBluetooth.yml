@@ -20,7 +20,16 @@ jobs:
         working-directory: develop/software/scripts
         env:
           GITHUB_ACTION: true
+      - name: Merge binaries
+        run: ./merge.sh
+        working-directory: develop/software/scripts
+        env:
+          GITHUB_ACTION: true
       - uses: actions/upload-artifact@v4
         with:
-          name: bin
+          name: binFolder
           path: develop/software/bin/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pspBluetooth.bin
+          path: develop/software/bin/merged-firmware.bin

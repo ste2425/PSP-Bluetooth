@@ -4,6 +4,7 @@
 SCRIPTS_DIR="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 BIN_DIR="$SCRIPTS_DIR/../bin"
 PROJECT_BIR="$SCRIPTS_DIR/../"
+ESP_DIR="~/.arduino15/packages/esp32/tools/esptool_py/4.5.1"
 
 echo "Merging"
 
@@ -11,7 +12,7 @@ echo "   Bin DIR: $BIN_DIR"
 echo "   Project DIR: $PROJECT_BIR"
 
 # This feels hacky but cant think of a better way
-cd ~/.arduino15/packages/esp32/tools/esptool_py/4.5.1
+cd $ESP_DIR
 
 # wonder if esptool is packaged? Maybe i should use that
 python3 ./esptool.py --chip esp32 merge_bin \
