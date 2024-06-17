@@ -13,6 +13,10 @@ jobs:
       - name: Install Dependencies
         run: ./install.sh
         working-directory: develop/software/scripts
+        env:
+          GITHUB_ACTION: true
       - name: Build
-        run: arduino-cli compile --log --fqbn esp32-bluepad32:esp32:esp32 --output-dir ../bin --additional-urls "https://raw.githubusercontent.com/ricardoquesada/esp32-arduino-lib-builder/master/bluepad32_files/package_esp32_bluepad32_index.json,https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json" ../
+        run: ./compile.sh
         working-directory: develop/software/scripts
+        env:
+          GITHUB_ACTION: true
