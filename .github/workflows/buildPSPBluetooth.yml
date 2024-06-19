@@ -3,6 +3,10 @@ on:
   push:
     paths:
       - software/**
+
+permissions:
+  contents: write
+  
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -28,6 +32,9 @@ jobs:
         working-directory: develop/software/scripts
         env:
           GITHUB_ACTION: true
+      - name: Move binary
+        run: cp develop/software/bin/pspBluetooth.bin develop/releaseBinaries/pspBluetooth.bin
+      - uses: stefanzweifel/git-auto-commit-action@v5
       - uses: actions/upload-artifact@v4
         with:
           name: binFolder
