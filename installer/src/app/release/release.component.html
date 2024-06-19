@@ -1,0 +1,23 @@
+<div class="release">
+  <div class="release-heading">
+    <h4>{{name}}</h4>
+    <button (click)="programESP()" mat-flat-button color="accent" style="color: white;">Program</button>
+  </div>
+
+  <div class="release-body">
+    <markdown [data]="description"></markdown>
+
+    <div>Artifacts:</div>
+    <ul>
+      @for (artifact of artifacts; track artifact.id) {
+        <li>{{artifact.name}}</li>
+      } @empty {
+        <li>No artifacts...</li>
+      }
+    </ul>
+  </div>
+
+  <p class="release-footer">
+    Relased on: {{ createdDate | date }} <a href="{{releaseUrl}}" class="release-link">View in GitHub</a>
+  </p>
+</div>

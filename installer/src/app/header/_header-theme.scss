@@ -1,0 +1,38 @@
+// _alert-theme.scss
+
+@use "sass:map";
+@use "@angular/material" as mat;
+
+@mixin color($theme) {
+    // Get the color config from the theme.
+    $color-config: mat.get-color-config($theme);
+
+    // Get the primary color palette from the color-config.
+    $primary-palette: map.get($color-config, "primary");
+    $is-dark-theme: map.get($theme, is-dark);
+    $exportBackgroundOpacity: if($is-dark-theme, 0.12, 0.06);
+
+    app-header {
+        background: mat.get-color-from-palette($primary-palette, 300, $exportBackgroundOpacity );
+        border-color: mat.get-color-from-palette($primary-palette, 300);
+    }
+}
+
+@mixin typography($typography-config) {
+}
+
+// rest remains same
+
+@mixin theme($theme) {
+    $color-config: mat.get-color-config($theme);
+
+    @if $color-config !=null {
+        @include color($theme);
+    }
+
+    $typography-config: mat.get-typography-config($theme);
+
+    @if $typography-config !=null {
+        @include typography($typography-config);
+    }
+}

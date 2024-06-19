@@ -1,0 +1,20 @@
+<header>
+    <h1>PSP Bluetooth</h1>
+    <button mat-icon-button aria-label="Change theme" [matMenuTriggerFor]="themeMenu">
+        <mat-icon>{{ (isDark$ | async) === true ? "dark_mode" : "light_mode" }}</mat-icon>
+    </button>
+    <mat-menu #themeMenu="matMenu">
+        <button mat-menu-item (click)="changeTheme('auto')">System</button>
+        <button mat-menu-item (click)="changeTheme('light')">Light</button>
+        <button mat-menu-item (click)="changeTheme('dark')">Dark</button>
+    </mat-menu>
+
+    <a mat-button extended href="https://github.com/ste2425/PSP-Bluetooth" class="header-hide-small">
+        <mat-icon svgIcon="app-github" aria-hidden="false" aria-label="Example thumbs up SVG icon"></mat-icon>
+        Github
+    </a>
+
+    <a mat-icon-button extended href="https://github.com/ste2425/PSP-Bluetooth" class="header-show-small">
+        <mat-icon svgIcon="app-github" aria-hidden="false" aria-label="Example thumbs up SVG icon"></mat-icon>
+    </a>
+</header>

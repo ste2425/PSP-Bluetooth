@@ -1,0 +1,19 @@
+name: buildPSPBluetoothWebProgrammer
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:]
+      - uses: actions/checkout@v3
+        name: checkout PSP-Bluetooth
+        with:
+          path: develop
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install Dependencies
+        run: npm install
+        working-directory: develop/installer
+      - name: Build app
+        run: npm run build -- --configuration production
+        working-directory: develop/installer

@@ -1,0 +1,21 @@
+<h2 mat-dialog-title>Programming your ESP32</h2>
+
+<mat-dialog-content class="mat-typography">
+  <div class="description-message">
+    <p>
+      You are about to program your ESP32 with version <strong>XYZ</strong>
+    </p>
+    <p>
+      This will first download the release binaries from GitHub then flash them. Continue?
+    </p>
+  </div>
+
+  <pre style="    white-space: break-spaces;">
+    {{terminalOutput}}
+  </pre>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button color="secondary" mat-button (click)="close()" [disabled]="programming">Cancel</button>
+  <button color="accent" mat-button cdkFocusInitial (click)="program()" [disabled]="programming">Begin</button>
+</mat-dialog-actions>

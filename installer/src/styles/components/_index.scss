@@ -1,0 +1,12 @@
+// src/styles/components/_index.scss
+
+@use "../../app/release/release-theme" as release;
+@use "../../app/header/header-theme" as header;
+@use "../../app/programmer/programmer-theme" as programmer;
+
+
+@mixin theme($theme) {
+    @include release.theme($theme);
+    @include header.theme($theme);
+    @include programmer.theme($theme);
+}
