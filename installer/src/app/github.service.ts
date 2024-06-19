@@ -38,7 +38,7 @@ export class GithubService {
     const headers = {
       Accept: 'application/octet-stream'
     };
-    const $req = this.httpClient.get(`https://api.github.com/repos/ste2425/PSP-Bluetooth/releases/assets/${assetId}`, { headers, responseType: 'arraybuffer' });
+    const $req = this.httpClient.get('https://github.com/ste2425/PSP-Bluetooth/releases/download/internal-28/pspBluetooth.bin', { headers, responseType: 'arraybuffer' });
 
     const data = await firstValueFrom($req);
 
