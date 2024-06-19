@@ -1,20 +1,26 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
-import { EspService } from '../esp.service';
+import { EspService, ProgramOptions } from '../esp.service';
 import { GithubService } from '../github.service';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import { firstValueFrom } from 'rxjs';
 
 export interface IProgrammerDialogData
 {
   binaryUrl: string,
-  assetId: string
+  assetId: string,
+  tag: string
 }
 
 @Component({
   selector: 'app-programmer',
   standalone: true,
-  imports: [MatDialogModule, MatButtonModule, MatCardModule],
+  imports: [MatDialogModule, MatButtonModule, MatCardModule, MatExpansionModule, MatIconModule, MatFormFieldModule, MatInputModule],
   templateUrl: './programmer.component.html',
   styleUrl: './programmer.component.scss'
 })
@@ -29,10 +35,23 @@ export class ProgrammerComponent {
   programming = false;
   terminalOutput = '';
 
+  confirmed = false;
+
   terminal = {
     clean: () => this.terminalOutput = '',
     writeLine: (value: string) => this.terminalOutput += `${value}\n`,
     write: (value: string) => this.terminalOutput += value
+  }
+
+  disableNext() {
+    return this.programming;
+  }
+
+  next() {
+    if (!this.confirmed) {
+      this.confirmed = true;
+      this.program();
+    }
   }
 
   async close() {
@@ -55,10 +74,9 @@ export class ProgrammerComponent {
       this.programming = true;
       this.terminal.writeLine('Downloading binary...');
 
-      const binaryString = await this.gihubService.downloadBinary(this.data.assetId);
-      this.terminal.writeLine(binaryString);
+      const binaryData = await firstValueFrom(this.gihubService.getReleaseBinary(this.data.tag));
 
-      this.terminal.writeLine('Downloaded.');
+      this.terminal.writeLine(`Downloaded, size: ${binaryData.size}`);
 
       this.terminal.writeLine('Getting connection to ESP...');
 
@@ -75,6 +93,29 @@ export class ProgrammerComponent {
       } else {
         this.terminal.writeLine('Already connected to device, moving on.');
       }
+
+      this.terminal.writeLine('Programming...');
+
+      const flashOptions: ProgramOptions = {
+        fileArray: [{
+            address: 0,
+            data: binaryData.data
+        }],
+        flashSize: "keep",
+        eraseAll: false,
+        compress: true,
+        reportProgress: (percentageComplete: number) => {
+          console.log('PROGRESS', percentageComplete);
+        },
+        flashMode: 'keep',
+        flashFreq: 'keep'
+    };
+
+      await this.esp.program(flashOptions);
+
+      await this.esp.disconnect();
+
+      this.terminal.writeLine('Complete.');
     } catch (e) {
       console.log('ERROR', e);
 

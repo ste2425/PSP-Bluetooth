@@ -1,3 +1,7 @@
+:host:not(:first-of-type) .release {
+  margin-top: 10px;
+}
+
 .release {
   max-width: 65%;
   padding: 1rem 1rem;

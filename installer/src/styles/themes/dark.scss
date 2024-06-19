@@ -9,5 +9,8 @@
     @include mat.menu-color(themes.$installer-dark-theme);
     @include mat.dialog-color(themes.$installer-dark-theme);
     @include mat.card-color(themes.$installer-dark-theme);
+    @include mat.expansion-color(themes.$installer-dark-theme);
+    @include mat.form-field-color(themes.$installer-dark-theme);
+    @include mat.progress-spinner-color(themes.$installer-dark-theme);
     @include components.theme(themes.$installer-dark-theme);
 }

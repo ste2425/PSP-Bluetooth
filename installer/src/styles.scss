@@ -28,3 +28,18 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.center {
+  display: flex; 
+  justify-content: center;
+}
+
+.dialog-width {
+  width: 60%;
+}
+
+@media (max-width: 720px) {
+  .dialog-width {
+    width: 100%;
+  }
+}

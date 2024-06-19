@@ -8,17 +8,19 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatCardModule} from '@angular/material/card';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { GithubService, IRelease } from './github.service';
+import { map, startWith, take } from 'rxjs';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [MatDividerModule, MatProgressBarModule, MatCardModule, HeaderComponent, ReleaseComponent, CommonModule, RouterOutlet, MatButtonModule],
+  imports: [MatProgressSpinnerModule, MatDividerModule, MatProgressBarModule, MatCardModule, HeaderComponent, ReleaseComponent, CommonModule, RouterOutlet, MatButtonModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
   constructor(public githubService: GithubService) {}
   
-  title = 'installer';
+  title = 'Timmy';
   $releases = this.githubService.getReleases();
 }

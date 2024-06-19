@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { firstValueFrom, map } from 'rxjs';
+import { delay, firstValueFrom, map } from 'rxjs';
 import { Octokit } from "@octokit/core"
 
 export interface IArtifact {
@@ -32,17 +32,19 @@ export class GithubService {
   getReleases() {
     return this.httpClient.get<IRelease[]>('https://api.github.com/repos/ste2425/PSP-Bluetooth/releases')
       .pipe(map(releases => releases.filter(x => x.tag_name.startsWith('internal-'))))
+      .pipe(delay(1500));
   }
 
-  async downloadBinary(assetId: string): Promise<string> {
+  getReleaseBinary(releaseTag: string) {
     const headers = {
       Accept: 'application/octet-stream'
     };
-    const $req = this.httpClient.get('https://github.com/ste2425/PSP-Bluetooth/releases/download/internal-28/pspBluetooth.bin', { headers, responseType: 'arraybuffer' });
 
-    const data = await firstValueFrom($req);
-
-    return this.#bufferToString(data);
+    return this.httpClient.get(`https://raw.githubusercontent.com/ste2425/PSP-Bluetooth/${releaseTag}/releaseBinaries/pspBluetooth.bin`, { headers, responseType: 'arraybuffer' })
+      .pipe(map(data => ({
+        data: this.#bufferToString(data),
+        size: data.byteLength
+      })));
   }
 
   #bufferToString(buffer: ArrayBuffer) {

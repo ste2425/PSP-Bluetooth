@@ -5,7 +5,7 @@ const handler = require('serve-handler'),
   ws = require('ws'),
   debounce = require('debounce');
 
-const binaryPath = path.join(__dirname, '../software/bin/merged-firmware.bin'),
+const binaryPath = path.join(__dirname, '../software/bin/pspBluetooth.bin'),
   sockets = [];
   
 const certOptions = {

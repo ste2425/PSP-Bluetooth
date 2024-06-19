@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { SerialService } from './serial.service';
 import { ESPLoader, FlashOptions, LoaderOptions, Transport } from 'esptool-js';
 
+export type ProgramOptions = Omit<FlashOptions, 'reportProgress' | 'calculateMD5Hash'> & { reportProgress: (percentage: number) => void }
+
 @Injectable({
   providedIn: 'root'
 })
@@ -61,7 +63,7 @@ export class EspService {
     this.#deviceDisconnect();
   }
 
-  async program(options: Omit<FlashOptions, 'reportProgress' | 'calculateMD5Hash'> & { reportProgress: (percentage: number) => {} }) {
+  async program(options: ProgramOptions) {
     if (!this.#espLoader)
       return;
 

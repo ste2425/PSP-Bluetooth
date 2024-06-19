@@ -5,7 +5,7 @@ import { MarkdownComponent } from 'ngx-markdown';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list';
-import { IArtifact } from '../github.service';
+import { IArtifact, IRelease } from '../github.service';
 import {
   MatDialog,
   MAT_DIALOG_DATA,
@@ -35,14 +35,33 @@ export class ReleaseComponent
 {
   constructor(private dialog: MatDialog) {}
 
-  @Input() name = '';
-  @Input() description = '';
-  @Input() createdDate = '';
-  @Input() releaseUrl = '';
-  @Input() artifacts: IArtifact[] = [];
+  @Input() release: IRelease | undefined;
+
+  get name() {
+    return this.release?.name;
+  }
+
+  get description() {
+    return this.release?.body;
+  }
+
+  get createdDate() {
+    return this.release?.created_at;
+  }
+
+  get releaseUrl() {
+    return this.release?.html_url;
+  }
+
+  get artifacts() {
+    return this.release?.assets || [];
+  }
 
   programESP() {
-    const asset = this.artifacts.find(x => x.name === 'pspBluetooth.bin');
+    if (!this.release)
+      return;
+
+    const asset = this.release.assets.find(x => x.name === 'pspBluetooth.bin');
 
     if (!asset)
       return;
@@ -50,9 +69,10 @@ export class ReleaseComponent
     this.dialog.open(ProgrammerComponent, {
       data: {
         binaryUrl: asset.browser_download_url,
-        assetId: asset.id
+        assetId: asset.id,
+        tag: this.release.tag_name
       },
-      panelClass: 'mat-app-background'
+      panelClass: 'dialog-width'
     });
   }
  }

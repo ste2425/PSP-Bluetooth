@@ -10,8 +10,17 @@
 
   <hr />
 
-  @for (release of $releases | async; track release.id) {
-    <app-release [artifacts]="release.assets" [name]="release.name" [description]="release.body" [createdDate]="release.created_at" [releaseUrl]="release.html_url"></app-release>
+ 
+  @if($releases | async; as releases) { 
+    @for (release of releases; track release.id) {
+      <app-release [release]="release"></app-release>
+    } @empty {
+      <p>There are no relases currently.</p>
+    }
+  } @else {
+    <div class="center">
+      <mat-spinner></mat-spinner>
+    </div>
   }
 
 </main>

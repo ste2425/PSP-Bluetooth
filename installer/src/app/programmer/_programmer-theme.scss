@@ -28,6 +28,10 @@
     }
   }
 
+  .panel-content {
+    border-top: 1px solid mat.get-theme-color($theme, accent, A100);
+  }
+
   mat-dialog-actions {
   }
 }

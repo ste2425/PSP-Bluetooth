@@ -4,7 +4,7 @@
 SCRIPTS_DIR="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 BIN_DIR="$SCRIPTS_DIR/../bin"
 PROJECT_BIR="$SCRIPTS_DIR/../"
-ESP_DIR="~/.arduino15/packages/esp32/tools/esptool_py/4.5.1"
+ESP_DIR="/home/stephen/.arduino15/packages/esp32/tools/esptool_py/4.5.1"
 
 if [ -n "${GITHUB_ACTION}" ]; then
   echo "Using DIR"
