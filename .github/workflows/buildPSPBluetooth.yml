@@ -1,5 +1,8 @@
 name: Build-PSP-Bluetooth
 on: [push]
+  push:
+    paths:
+      - software/**
 jobs:
   build:
     runs-on: ubuntu-latest

@@ -1,9 +1,12 @@
 name: buildPSPBluetoothWebProgrammer
 on: [push]
+  push:
+    paths:
+      - installer/**
 jobs:
   build:
     runs-on: ubuntu-latest
-    steps:]
+    steps:
       - uses: actions/checkout@v3
         name: checkout PSP-Bluetooth
         with:
