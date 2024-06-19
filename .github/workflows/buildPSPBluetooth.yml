@@ -1,5 +1,5 @@
 name: Build-PSP-Bluetooth
-on
+on:
   push:
     paths:
       - software/**
