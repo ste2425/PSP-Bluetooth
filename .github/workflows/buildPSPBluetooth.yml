@@ -37,7 +37,7 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           repository: develop
-          file_pattern: 'releaseBinaries/*.bin'
+          file_pattern: develop/releaseBinaries/*.bin
       - uses: actions/upload-artifact@v4
         with:
           name: binFolder
