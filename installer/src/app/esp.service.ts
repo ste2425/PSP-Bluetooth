@@ -21,7 +21,7 @@ export class EspService {
     return this.#isConnected;
   }
 
-  constructor(private serialDevice: SerialService) { }
+  constructor(private serialDevice: SerialService) {}
 
   async resetDevice() { }
 

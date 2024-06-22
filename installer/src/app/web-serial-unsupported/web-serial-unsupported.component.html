@@ -1,0 +1,20 @@
+<h2 mat-dialog-title>Web Serial is not supported</h2>
+
+<mat-dialog-content class="mat-typography">
+    <div class="description-message">
+        <p>
+            Unfortunatly your browser does not support 
+            <a mat-button href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Serial_API" target="_blank">Web Serial</a>
+        </p>
+
+        <p>Web serial is the technology that allows a web browser to communicate with serial devices such as the ESP32. However it is a very new technology only available in secure contexts (<strong>https</strong>) and small number of browsers.</p>
+    
+        <p>Current browser support can be seen 
+            <a mat-button href="https://caniuse.com/web-serial" target="_blank">Here</a></p>
+    </div>
+  
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button color="primary" mat-button mat-dialog-close cdkFocusInitial>OK</button>
+</mat-dialog-actions>

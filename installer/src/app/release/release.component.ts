@@ -8,14 +8,10 @@ import {MatListModule} from '@angular/material/list';
 import { IArtifact, IRelease } from '../github.service';
 import {
   MatDialog,
-  MAT_DIALOG_DATA,
-  MatDialogRef,
-  MatDialogTitle,
-  MatDialogContent,
-  MatDialogActions,
-  MatDialogClose,
+  MatDialogModule
 } from '@angular/material/dialog';
 import { ProgrammerComponent } from '../programmer/programmer.component';
+import { SerialService } from '../serial.service';
 
 export interface ReleaseArtifact {
   name: string,
@@ -27,13 +23,13 @@ export interface ReleaseArtifact {
 @Component({
   selector: 'app-release',
   standalone: true,
-  imports: [MatIconModule, MatDividerModule, MatListModule, MarkdownComponent, CommonModule, MatButtonModule],
+  imports: [MatIconModule, MatDividerModule, MatListModule, MarkdownComponent, CommonModule, MatButtonModule, MatDialogModule],
   templateUrl: './release.component.html',
   styleUrl: './release.component.scss'
 })
 export class ReleaseComponent
 {
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog, private serialService: SerialService) {}
 
   @Input() release: IRelease | undefined;
 
@@ -55,6 +51,10 @@ export class ReleaseComponent
 
   get artifacts() {
     return this.release?.assets || [];
+  }
+
+  get programDisabled() {
+    return !this.serialService.isSupported();
   }
 
   programESP() {

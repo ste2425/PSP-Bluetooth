@@ -1,0 +1,14 @@
+.buttons-container, .terminal {
+    padding: 10px;
+}
+
+.terminal {
+    display: flex;
+    justify-content: center;
+
+    pre {
+        width: 75%;
+        min-height: 100px;
+        padding: 10px;
+    }
+}

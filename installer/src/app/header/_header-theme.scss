@@ -1,6 +1,7 @@
 // _alert-theme.scss
 
 @use "sass:map";
+@use 'sass:color';
 @use "@angular/material" as mat;
 
 @mixin color($theme) {
@@ -11,10 +12,19 @@
     $primary-palette: map.get($color-config, "primary");
     $is-dark-theme: map.get($theme, is-dark);
     $exportBackgroundOpacity: if($is-dark-theme, 0.12, 0.06);
+    $color: if($is-dark-theme, white, black);
 
     app-header {
         background: mat.get-color-from-palette($primary-palette, 300, $exportBackgroundOpacity );
-        border-color: mat.get-color-from-palette($primary-palette, 300);
+        border-bottom: 1px solid mat.get-theme-color($theme, primary, A100);
+
+        a.active {
+            background: rgba(mat.get-theme-color($theme, primary), 0.15);
+        }
+
+        a * {
+            color: $color;
+        }
     }
 }
 

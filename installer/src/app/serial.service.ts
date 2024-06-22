@@ -6,6 +6,10 @@ import { Injectable } from '@angular/core';
 export class SerialService {
   #readers: ReadableStreamReader<any>[] = [];
 
+  isSupported() {
+    return 'serial' in navigator;
+  }
+
   async connect() {
     const ports = await navigator.serial.getPorts();
     
@@ -27,7 +31,14 @@ export class SerialService {
   }
 
   async releaseReaders() {
+    if (!this.#readers.length)
+      return;
 
+    this.#readers.forEach(r => r.releaseLock());
+    this.#readers.length = 0;
+
+    // Probably not needed, but we give it a little time to release
+    await new Promise(r => setTimeout(r, 500));
   }
 
   // We need to proxy the reader too so we know when it was closed

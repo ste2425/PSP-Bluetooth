@@ -1,0 +1,12 @@
+<h2>Serial Monitor</h2>
+
+<p>From here you can read serial data output.</p>
+
+<div class="buttons-container">
+    <button color="accent" mat-button (click)="connect()" [disabled]="conncted">Connect</button>
+    <button  mat-button (click)="disconnect()" [disabled]="!conncted">Disconnect</button>
+</div>
+
+<div class="terminal">  
+    <pre>{{terminalOutput}}</pre>
+</div>

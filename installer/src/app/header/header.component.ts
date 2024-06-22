@@ -5,6 +5,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { CommonModule } from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
 import { DomSanitizer } from '@angular/platform-browser';
+import { RouterLink, RouterLinkActive } from '@angular/router';
+import {MatListModule} from '@angular/material/list';
 
 const GITHUB_ICON =
   `
@@ -18,7 +20,7 @@ const GITHUB_ICON =
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [MatIconModule, MatMenuModule, CommonModule, MatButtonModule],
+  imports: [MatListModule, MatIconModule, MatMenuModule, CommonModule, MatButtonModule, RouterLink, RouterLinkActive],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
