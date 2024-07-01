@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { EspService } from '../esp.service';
 import {MatButtonModule} from '@angular/material/button';
+import { ESPConnectionFactoryService, ESPSerialConnection } from '../services/espconnection-factory.service';
 
 @Component({
   selector: 'app-serial-page',
@@ -10,13 +10,15 @@ import {MatButtonModule} from '@angular/material/button';
   styleUrl: './serial-page.component.scss'
 })
 export class SerialPageComponent {
-  constructor(private espService: EspService) {}
+  constructor(private espFactory: ESPConnectionFactoryService) {}
 
   terminalOutput = '';
 
   get conncted () {
-    return this.espService.isConnected;
+    return !!this.#connection?.connected;
   }
+
+  #connection: ESPSerialConnection | undefined;
 
   terminal = {
     clean: () => this.terminalOutput = '',
@@ -24,36 +26,40 @@ export class SerialPageComponent {
     write: (value: string) => this.terminalOutput += value
   }
 
-  async disconnect() {
-    await this.espService.stopReading();
-
-    this.terminal.writeLine('Stop');
-
-    await this.espService.disconnect();
-
-    this.terminal.writeLine('Disonnected');
-  }
-
   async connect() {
     try {
-      await this.espService.setup(() => this.terminal.writeLine('Disconnected'));
+      this.#connection = await this.espFactory.serialConnection();
+  
+      await this.#connection.connect();
+  
+      this.terminal.writeLine('Connected.');
+  
+      await this.#connection.startReading((v) => this.terminal.write(v));
 
-      const chip = await this.espService.connect({
-        baudrate: 115200,
-        //romBaudrate: 115200,
-        terminal: this.terminal
-      } as any);
-
-      this.terminal.writeLine(`Connected, chip: ${chip}`);
-
-      await this.espService.beginReading((d) => this.terminal.writeLine(d));
-
-      this.terminal.writeLine('Connect Resolved');
+      this.terminal.writeLine('Finished reading.');
     } catch(e) {
       console.error(e);
 
       if (e instanceof Error)
         this.terminal.writeLine(e.toString());
     }
+  }
+
+  async disconnect() {
+    if (!this.#connection)
+      return;
+
+    try {
+      await this.#connection.disconnect();
+    } catch(e) {
+      console.error(e);
+
+      if (e instanceof Error)
+        this.terminal.writeLine(e.toString());
+    }
+  }
+
+  ngOnDestroy() {
+    this.disconnect();
   }
 }

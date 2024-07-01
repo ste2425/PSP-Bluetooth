@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { GithubService } from '../github.service';
-import { SerialService } from '../serial.service';
 import { CommonModule } from '@angular/common';
 import { ReleaseComponent } from '../release/release.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { SerialConnectionFactoryService } from '../services/serial-connection-factory.service';
 
 @Component({
   selector: 'app-programmer-page',
@@ -19,7 +19,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 export class ProgrammerPageComponent {
   constructor(
     public githubService: GithubService,
-    public serialService: SerialService
+    public serialService: SerialConnectionFactoryService
   ) {}
   
   $releases = this.githubService.getReleases();

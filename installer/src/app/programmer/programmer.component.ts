@@ -1,20 +1,27 @@
-import { Component, Inject } from '@angular/core';
+import { Component, HostListener, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
-import {MatButtonModule} from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
-import {MatCardModule} from '@angular/material/card';
-import { EspService, ProgramOptions } from '../esp.service';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
 import { GithubService } from '../github.service';
-import {MatExpansionModule} from '@angular/material/expansion';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { firstValueFrom } from 'rxjs';
+import { ESPConnectionFactoryService, ESPProgrammingConnection } from '../services/espconnection-factory.service';
 
-export interface IProgrammerDialogData
-{
+export interface IProgrammerDialogData {
   binaryUrl: string,
   assetId: string,
   tag: string
+}
+
+enum ProgrammerState {
+  WarningPrompt,
+  ProgramPrompt,
+  ProgrammingActive,
+  ProgrammingSuccess,
+  ProgrammingError
 }
 
 @Component({
@@ -28,50 +35,84 @@ export class ProgrammerComponent {
   constructor(
     public dialogRef: MatDialogRef<ProgrammerComponent>,
     @Inject(MAT_DIALOG_DATA) public data: IProgrammerDialogData,
-    private esp: EspService,
+    private espFactory: ESPConnectionFactoryService,
     private gihubService: GithubService
-  ) {}
+  ) { }
 
-  programming = false;
+  state = ProgrammerState.WarningPrompt;
+  programmingStates = ProgrammerState;
+
+  #espConnection?: ESPProgrammingConnection;
+
   terminalOutput = '';
 
-  confirmed = false;
-
   terminal = {
-    clean: () => this.terminalOutput = '',
+    clean: () => { },
     writeLine: (value: string) => this.terminalOutput += `${value}\n`,
     write: (value: string) => this.terminalOutput += value
   }
 
-  disableNext() {
-    return this.programming;
-  }
-
-  next() {
-    if (!this.confirmed) {
-      this.confirmed = true;
-      this.program();
-    }
+  get closeDisabled() {
+    return this.state === ProgrammerState.ProgrammingActive;
   }
 
   async close() {
-    if (this.esp.isConnected) {
-      this.terminal.writeLine('Disconnecting from ESP, please wait...');
-
-      this.programming = true;
-  
-      await this.esp.disconnect();
-
-      // give enough time to make it look like were busy
-      await new Promise(r => setTimeout(r, 3000));
-    }
+    await this.disconnect();
 
     this.dialogRef.close();
   }
 
+  @HostListener('window:beforeunload', ['$event'])
+  unloadNotification($event: BeforeUnloadEvent) {
+    if (this.state === ProgrammerState.ProgrammingActive) {
+      $event.preventDefault();
+      $event.returnValue = "Navigating away whilst programming the ESP could lead soft bricking your ESP.";
+    }
+  }
+
+  get disableNext() {
+    return this.state === ProgrammerState.ProgrammingActive || this.state === ProgrammerState.ProgrammingSuccess;
+  }
+
+  get nextText() {
+    return this.state === ProgrammerState.WarningPrompt ?
+      'Next' :
+      'Program';
+  }
+
+  next() {
+    switch(this.state) {
+      case ProgrammerState.WarningPrompt:
+        this.state = this.programmingStates.ProgramPrompt;
+      break;
+      case ProgrammerState.ProgramPrompt:
+      case ProgrammerState.ProgrammingError:
+        this.program();
+      break;
+    }
+  }
+
+  async disconnect(clean: boolean = false) {
+    if (this.#espConnection)
+      await this.#espConnection.disconnect(clean);
+
+    this.#espConnection = undefined;
+  }
+
   async program() {
     try {
-      this.programming = true;
+      this.state = ProgrammerState.ProgrammingActive;
+      this.dialogRef.disableClose = true;
+
+      if (!this.#espConnection)
+        this.#espConnection = await this.espFactory.programmingConnection();
+
+      this.terminal.writeLine('\n\n----\nDo not close your browser as this will abort the flash');
+      this.terminal.writeLine('This could lead to your ESP refusing to flash.')
+      this.terminal.writeLine('Waiting 10 seconds so you actually read this...\n----\n\n');
+
+      await new Promise((r) => setTimeout(r, 10000));
+
       this.terminal.writeLine('Downloading binary...');
 
       const binaryData = await firstValueFrom(this.gihubService.getReleaseBinary(this.data.tag));
@@ -80,15 +121,22 @@ export class ProgrammerComponent {
 
       this.terminal.writeLine('Getting connection to ESP...');
 
-      if (!this.esp.isConnected) {
-        await this.esp.setup(() => console.log('DISCONNECT'));
-  
-        const chip = await this.esp.connect({
-          baudrate: 115200,
-          //romBaudrate: 115200,
+      if (!this.#espConnection.connected) {
+        let timeout: any;
+
+        const timeoutPromise = new Promise((res, rej) => 
+          timeout = setTimeout(() => rej(new Error('Connect timeout')), 60000));
+        
+        const connectPromise = this.#espConnection.connect({
+          baudrate: 921600,
           terminal: this.terminal
         } as any);
   
+        // if the timeout resolves first it will reject, so chip can only ever be a string
+        const chip = await Promise.any([timeoutPromise, connectPromise]) as string;
+
+        clearTimeout(timeout);
+
         this.terminal.writeLine(`Connected: ${chip}`);
       } else {
         this.terminal.writeLine('Already connected to device, moving on.');
@@ -96,34 +144,41 @@ export class ProgrammerComponent {
 
       this.terminal.writeLine('Programming...');
 
-      const flashOptions: ProgramOptions = {
+      const flashOptions = {
         fileArray: [{
-            address: 0,
-            data: binaryData.data
+          address: 0,
+          data: binaryData.data
         }],
         flashSize: "keep",
         eraseAll: false,
         compress: true,
         reportProgress: (percentageComplete: number) => {
           console.log('PROGRESS', percentageComplete);
-        },
-        flashMode: 'keep',
-        flashFreq: 'keep'
-    };
+        }
+      } as any;
 
-      await this.esp.program(flashOptions);
-
-      await this.esp.disconnect();
+      await this.#espConnection.program(flashOptions);
 
       this.terminal.writeLine('Complete.');
+
+      await this.disconnect();
+
+      this.terminal.writeLine('Disconnected');
+
+      this.state = ProgrammerState.ProgrammingSuccess;
     } catch (e) {
       console.log('ERROR', e);
 
-      if (e instanceof Error)
-        this.terminal.writeLine(e.toString());
+      this.state = ProgrammerState.ProgrammingError;
+
+      await this.disconnect(true);
+
+      if (e instanceof Error){
+        console.log('Writing to log', e.toString());
+        this.terminal.writeLine(`\n${e.toString()}`);
+      }
     } finally {
-      this.programming = false;
+      this.dialogRef.disableClose = false;
     }
   }
-
 }

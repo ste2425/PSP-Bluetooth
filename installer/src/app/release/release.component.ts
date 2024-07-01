@@ -11,7 +11,7 @@ import {
   MatDialogModule
 } from '@angular/material/dialog';
 import { ProgrammerComponent } from '../programmer/programmer.component';
-import { SerialService } from '../serial.service';
+import { SerialConnectionFactoryService } from '../services/serial-connection-factory.service';
 
 export interface ReleaseArtifact {
   name: string,
@@ -29,7 +29,7 @@ export interface ReleaseArtifact {
 })
 export class ReleaseComponent
 {
-  constructor(private dialog: MatDialog, private serialService: SerialService) {}
+  constructor(private dialog: MatDialog, private serialService: SerialConnectionFactoryService) {}
 
   @Input() release: IRelease | undefined;
 
