@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="height: 100%; margin: 0">
 
 <head>
   <meta charset="UTF-8" />
@@ -9,19 +9,18 @@
   <link rel="icon" href="favicon.png">
 </head>
 
-<body>
-  <h1>Hello, world!</h1>
-
-  <input type="text" id="message" />
-  <button type="button" id="send" disabled>Send</button>
-  <button type="button" id="connect">Connect</button>
-  <button type="button" id="disconnect" disabled>Disconnect</button>
-  <button type="button" id="consoleStart" disabled>Console Start</button>
-  <button type="button" id="consoleStop" disabled>Console Stop</button>
-  <button type="button" id="clearLog">Clear log</button>
-  <button type="button" id="programBtn" disabled>Program</button>
-  <progress id="progress" max="100" value="0"></progress>
-  <pre id="output"></pre>
+<body style="height: 100%; margin: 0">
+  <div style="height: 100%; display: flex; flex-direction: column">
+    <h1>Hello, world!</h1>
+    <div>
+      <button type="button" id="connect">Connect</button>
+      <button type="button" id="clearLog">Clear log</button>
+      <progress id="progress" max="100" value="0"></progress>
+    </div>
+    <div style="flex-grow: 1; overflow: auto;" id="scrollContainer">
+      <pre id="output"></pre>
+    </div>
+  </div>
 
   <script src="./main.js" type="module"></script>
   <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.js"></script>

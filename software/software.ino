@@ -25,7 +25,7 @@ void setup()
   else
     pspBluetooth_setup();
 
-  Serial.println("Super Duper");
+  Serial.println("sssss");
 }
 
 void loop()

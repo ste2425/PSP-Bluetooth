@@ -1,8 +1,11 @@
-import { ESPManager } from './esp.js';
 import { bufferToString } from './utils.js';
+import { ESPConnectionFactoryService } from './services/espconnection-factory.service.js';
+import { SerialConnectionFactoryService } from './services/serial-connection-factory.service.js';
 
 function main() {
-    const esp = new ESPManager();
+    const espServiceFactory = new ESPConnectionFactoryService(new SerialConnectionFactoryService());
+    let espSerialService,
+        espProgrammingService;
     function wrap(fn) {
         return (...args) => fn(...args).catch(e => {
             console.error(e, fn.toString());
@@ -11,48 +14,40 @@ function main() {
     }
 
     async function program() {
-        if (!connectBtn.hasAttribute('disabled'))
-            return espLoaderTerminal.writeLine('Connect device to program.');
-
-        const readWhenDone = esp.isReading;
-
-        espLoaderTerminal.writeLine('Stopping reading');
-        await esp.stopReading();
-
-        espLoaderTerminal.writeLine('ESP Disconnect');
-        await esp.disconnect();
-
-        espLoaderTerminal.writeLine('ESP Setup');
-        await esp.setup();
-
-        espLoaderTerminal.writeLine('ESP Connect');
-        await esp.connect({
-            baudrate: 115200,
-            terminal: espLoaderTerminal
-        });
-
-        [programBtn, disconnectBtn, consoleStartBtn, consoleStopBtn]
-            .forEach(x => x.setAttribute('disabled', 'disabled'));
-
-        espLoaderTerminal.clean();
-
-        espLoaderTerminal.writeLine('Programming ESP32...')
-
-        espLoaderTerminal.writeLine('Downloading binary');
-
-        const req = await fetch('/download'),
-            blob = await req.blob(),
-            binaryData = await blob.arrayBuffer();
-
-        espLoaderTerminal.writeLine(`Got binary, size is: ${blob.size}`);
-
-        espLoaderTerminal.writeLine('Decoding to a string');
-
-        const binaryString = bufferToString(binaryData);
-
-        espLoaderTerminal.writeLine('Done, programming...');
-
         try {
+            if (espSerialService.connected) {            
+                espLoaderTerminal.writeLine('Disconnecting from serial');
+
+                await espSerialService.disconnect();
+            } else {
+                espLoaderTerminal.writeLine('Serial not connected');
+            }
+            
+            espLoaderTerminal.writeLine('connecting programmer');
+
+            espProgrammingService = await espServiceFactory.programmingConnection();
+
+            await espProgrammingService.connect({
+                baudrate: 921600,
+                terminal: espLoaderTerminal
+            });
+
+            espLoaderTerminal.writeLine('connected');
+
+            espLoaderTerminal.writeLine('Downloading binary');
+
+            const req = await fetch('/download'),
+                blob = await req.blob(),
+                binaryData = await blob.arrayBuffer();
+
+            espLoaderTerminal.writeLine(`Got binary, size is: ${blob.size}`);
+
+            espLoaderTerminal.writeLine('Decoding to a string');
+
+            const binaryString = bufferToString(binaryData);
+
+            espLoaderTerminal.writeLine('Done, programming...');
+
             const flashOptions = {
                 fileArray: [{
                     address: 0,
@@ -61,27 +56,36 @@ function main() {
                 flashSize: "keep",
                 eraseAll: false,
                 compress: true,
-                reportProgress: (percentageComplete) => {
-                    progressBar.value = percentageComplete;
+                reportProgress: (fileIndex, written, total) => {
+                    progressBar.value = (written / total) * 100;
                 }
             };
 
-            await esp.program(flashOptions);
+            await espProgrammingService.program(flashOptions);
+            
+            await espProgrammingService.disconnect();
+
+            espLoaderTerminal.writeLine('Disconnected');
+
+            progressBar.value = 0;
+
+            await new Promise(res => setTimeout(res, 2000));
+
+            espSerialService = await espServiceFactory.serialConnection();
+
+            espLoaderTerminal.writeLine('Connecting to device');
+
+            await espSerialService.connect();
+
+            espSerialService.startReading(d => espLoaderTerminal.write(d));
+
+            await espSerialService.reset();
         } catch (e) {
             console.error(e);
             espLoaderTerminal.writeLine(`Error: ${e.toString()}`);
-        } finally {
-            if (readWhenDone) {
-                esp.beginReading((d) => espLoaderTerminal.write(d));
 
-                //await esp.resetDevice();
-                consoleStopBtn.removeAttribute('disabled');
-            } else {
-                consoleStartBtn.removeAttribute('disabled');
-            }
-
-            [programBtn, disconnectBtn]
-                .forEach(x => x.removeAttribute('disabled'));
+            if (espProgrammingService.connected)
+                await espProgrammingService.disconnect();
         }
     }
 
@@ -98,12 +102,9 @@ function main() {
 
     const output = document.querySelector('#output'),
         connectBtn = document.querySelector('#connect'),
-        disconnectBtn = document.querySelector('#disconnect'),
-        consoleStartBtn = document.querySelector('#consoleStart'),
-        consoleStopBtn = document.querySelector('#consoleStop'),
-        programBtn = document.querySelector('#programBtn'),
         clearLog = document.querySelector('#clearLog'),
-        progressBar = document.querySelector('#progress');
+        progressBar = document.querySelector('#progress'),
+        scrollContainer = document.querySelector('#scrollContainer');
 
     const espLoaderTerminal = {
         clean(commit) {
@@ -117,6 +118,7 @@ function main() {
         },
         write(data) {
             output.textContent += data;
+            scrollContainer.scrollTop = scrollContainer.scrollHeight;
         }
     };
 
@@ -126,68 +128,24 @@ function main() {
         try {
             connectBtn.setAttribute('disabled', 'disabled');
 
-            await esp.setup(() => {
-                [consoleStartBtn, consoleStopBtn, programBtn, disconnectBtn]
-                    .forEach(x => x.setAttribute('disabled', 'disabled'));
+            espLoaderTerminal.writeLine('Creating connection instance');
 
-                connectBtn.removeAttribute('disabled');
-            });
+            espSerialService = await espServiceFactory.serialConnection();
 
-            const chip = await esp.connect({
-                baudrate: 115200,
-                terminal: espLoaderTerminal
-            });
+            espLoaderTerminal.writeLine('Connecting to device');
 
-            espLoaderTerminal.writeLine(`Connected to: ${chip}`);
+            await espSerialService.connect();
 
-            [disconnectBtn, consoleStartBtn, programBtn]
-                .forEach(x => x.removeAttribute('disabled'));
+            await espSerialService.startReading(d => espLoaderTerminal.write(d));
         } catch (e) {
             connectBtn.removeAttribute('disabled');
+
+            espLoaderTerminal.writeLine('Error connecting');
+            espLoaderTerminal.writeLine(e.toString());
 
             throw e;
         }
     }));
-
-    disconnectBtn.addEventListener('click', wrap(async () => {
-        [consoleStartBtn, consoleStopBtn, programBtn, disconnectBtn]
-            .forEach(x => x.setAttribute('disabled', 'disabled'));
-
-        await esp.disconnect();
-
-        connectBtn.removeAttribute('disabled');
-    }));
-
-    consoleStartBtn.addEventListener('click', wrap(async () => {
-        consoleStartBtn.setAttribute('disabled', 'disabled');
-        consoleStopBtn.removeAttribute('disabled');
-
-        espLoaderTerminal.writeLine('Listening for serail data...\n');
-
-        esp.beginReading((d) => espLoaderTerminal.write(d));
-    }));
-
-    consoleStopBtn.addEventListener('click', async () => {
-        consoleStopBtn.setAttribute('disabled', 'disabled');
-
-        await esp.stopReading();
-
-        espLoaderTerminal.writeLine('ESP Disconnect');
-        await esp.disconnect();
-
-        espLoaderTerminal.writeLine('ESP Setup');
-        await esp.setup();
-
-        espLoaderTerminal.writeLine('ESP Connect');
-        await esp.connect({
-            baudrate: 115200,
-            terminal: espLoaderTerminal
-        });
-
-        consoleStartBtn.removeAttribute('disabled');
-    });
-
-    programBtn.addEventListener('click', wrap(program));
 }
 
 document.addEventListener('DOMContentLoaded', main);
