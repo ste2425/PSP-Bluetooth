@@ -17,10 +17,10 @@
         "new": "cpp"
     },
     "C_Cpp.default.includePath": [
-        "~/.arduino15/packages/esp32-bluepad32/hardware/esp32/4.0.4/tools/sdk/esp32/include/bluepad32/include",
-        "~/.arduino15/packages/esp32-bluepad32/hardware/esp32/4.0.4/tools/sdk/esp32/include/bluepad32_arduino/include",
-        "~/.arduino15/packages/esp32-bluepad32/hardware/esp32/4.0.4/tools/sdk/esp32/qio_qspi/include", // This was needed for BluePad32 including sdkconfig.h
-        "~/.arduino15/packages/esp32-bluepad32/hardware/esp32/4.0.4/cores/esp32", // This was needed for Bluepad32 including Arduino.h
+        "~/.arduino15/packages/esp32-bluepad32/hardware/esp32/4.1.0/tools/sdk/esp32/include/bluepad32/include",
+        "~/.arduino15/packages/esp32-bluepad32/hardware/esp32/4.1.0/tools/sdk/esp32/include/bluepad32_arduino/include",
+        "~/.arduino15/packages/esp32-bluepad32/hardware/esp32/4.1.0/tools/sdk/esp32/qio_qspi/include", // This was needed for BluePad32 including sdkconfig.h
+        "~/.arduino15/packages/esp32-bluepad32/hardware/esp32/4.1.0/cores/esp32", // This was needed for Bluepad32 including Arduino.h
         "~/Arduino/libraries/ezButton/src"
     ]
 }

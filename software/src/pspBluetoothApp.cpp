@@ -1,13 +1,43 @@
 #include "pspBluetoothApp.h"
 
 static ControllerPtr myControllers[BP32_MAX_GAMEPADS];
+static uint8_t mappingLength = 10;
 
-// TODO - Move this
-enum CTR_dpad {
-  CTR_DPAD_UP = 1 << 0,
-  CTR_DPAD_DOWN = 1 << 1,
-  CTR_DPAD_RIGHT = 1 << 2,
-  CTR_DPAD_LEFT = 1 << 3,
+enum CTR_accessor_type {
+    CTR_Accessor_Button = 1,
+    CTR_Accessor_Dpad = 2,
+};
+uint8_t mappings[30][3] = {
+    {
+        DPAD_UP, CTR_Accessor_Dpad, 5
+    },
+    {
+        DPAD_DOWN, CTR_Accessor_Dpad, 6
+    },
+    {
+        DPAD_RIGHT, CTR_Accessor_Dpad, 7
+    },
+    {
+        DPAD_LEFT, CTR_Accessor_Dpad, 8
+    },
+    {
+        BUTTON_A, CTR_Accessor_Button, 10
+    },
+    {
+        BUTTON_B, CTR_Accessor_Button, 11
+    },
+    {
+        BUTTON_X, CTR_Accessor_Button, 12
+    },
+    {
+        BUTTON_Y, CTR_Accessor_Button, 13
+    },
+    {
+        BUTTON_SHOULDER_L, CTR_Accessor_Button, 4
+    },
+    {
+        BUTTON_SHOULDER_R, CTR_Accessor_Button, 9
+    }
 };
 
 // This callback gets called any time a new gamepad is connected.
@@ -61,7 +91,30 @@ void onDisconnectedController(ControllerPtr ctl) {
 }
 
 void processGamepad(ControllerPtr ctl) {
-    if (ctl->l1())
+    for (uint8_t i = 0; i < mappingLength; i++) {
+        uint8_t mask = mappings[i][0],
+            accessor = mappings[i][1],
+            pspPin = mappings[i][2];
+
+        uint8_t pressed = 0;
+
+        switch (accessor) {
+            case CTR_Accessor_Dpad:
+
+            if (ctl->dpad() & mask)
+                PSP_press_button(pspPin);
+
+            break;
+            case CTR_Accessor_Button:
+
+            if (ctl->buttons() & mask)
+                PSP_press_button(pspPin);
+
+            break;
+        }
+    }
+
+    /*if (ctl->l1())
         PSP_press_button(PSP_L1);
 
     if(ctl->r1())
@@ -89,7 +142,7 @@ void processGamepad(ControllerPtr ctl) {
         PSP_press_button(PSP_DLEFT);
 
     if(ctl->dpad() & CTR_DPAD_RIGHT)
-        PSP_press_button(PSP_DRIGHT);
+        PSP_press_button(PSP_DRIGHT);*/
 }
 
 void processControllers() {
