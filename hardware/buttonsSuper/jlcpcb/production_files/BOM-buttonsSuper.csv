@@ -1,0 +1,11 @@
+Comment,Designator,Footprint,LCSC
+5034801000,P1,FPC-SMD_5034801000,C127355
+K2-1187SQ-E4SW-06,"CIRCLE1,CROSS1,DOWN1,L1,LEFT1,R1,RIGHT1,SQUARE1,TRIANGLE1,UP1",KEY-SMD_4P-L5.2-W5.2-P3.70-LS6.4_1,C477942
+PSP-analog,C6,PSP-analog,
+flex-conector_14,C4,flex_long_14,
+flex-conector_8_1,C3,flex_long_8,
+flex-conector_10,C7,flex_long_10,
+flex-conector_10,C1,flex_short_10,
+flex-conector_10,C2,flex_short_10,
+flex-conector_10,C5,flex_long_10,
+flex-conector_10,C8,flex_short_10,

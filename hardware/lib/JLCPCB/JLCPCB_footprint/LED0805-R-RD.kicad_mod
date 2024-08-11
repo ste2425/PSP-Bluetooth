@@ -1,0 +1,231 @@
+(footprint "LED0805-R-RD"
+	(version 20240108)
+	(generator "pcbnew")
+	(generator_version "8.0")
+	(layer "F.Cu")
+	(descr "LED0805-R-RD footprint")
+	(tags "LED0805-R-RD footprint C84256")
+	(property "Reference" "REF**"
+		(at -0.11557 -3.014732 0)
+		(layer "F.SilkS")
+		(uuid "00be1d0f-630c-419e-b335-999d59d5cfea")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "LED0805-R-RD"
+		(at -0.11557 3.042672 0)
+		(layer "F.Fab")
+		(uuid "c972fbcd-527f-41b3-b584-5bbee9a59cec")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Footprint" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "faa50110-b8c7-46ca-bf62-2ba8a782ed40")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "d778aeb8-1131-477d-87cd-4fec0f61aa91")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "01f1b35b-4171-4299-ab19-8b7d3d30055d")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr smd)
+	(fp_line
+		(start -2.223774 -0.633731)
+		(end -1.842774 -1.014732)
+		(stroke
+			(width 0.254)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "f940faea-47af-4ba5-b910-ce2ae15f740b")
+	)
+	(fp_line
+		(start -2.223774 0.636271)
+		(end -2.223774 -0.633731)
+		(stroke
+			(width 0.254)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "00df8d62-e0db-4a70-af04-2be2aff4ea2b")
+	)
+	(fp_line
+		(start -1.842774 -1.014732)
+		(end -0.318771 -1.014732)
+		(stroke
+			(width 0.254)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "d4de4e4c-c28a-4bd3-a6ec-7312c7c6524d")
+	)
+	(fp_line
+		(start -1.817374 1.042672)
+		(end -2.223774 0.636271)
+		(stroke
+			(width 0.254)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "73588c2e-c7da-4324-9f4c-11cc1c0de6b1")
+	)
+	(fp_line
+		(start -0.344171 1.042672)
+		(end -1.817374 1.042672)
+		(stroke
+			(width 0.254)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "774212f4-2225-4d18-b781-a9f2794e0931")
+	)
+	(fp_line
+		(start -0.3 0)
+		(end -0.2 0.100254)
+		(stroke
+			(width 0.254)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "4b4032f4-99e1-495c-aa80-4045c9a98ee9")
+	)
+	(fp_line
+		(start -0.2 -0.1)
+		(end -0.3 0)
+		(stroke
+			(width 0.254)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "e74d5537-86ef-4db7-b770-443996ac067c")
+	)
+	(fp_line
+		(start -0.2 0.100254)
+		(end 0.2 0.500254)
+		(stroke
+			(width 0.254)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "5bb7445a-17a1-4f84-b1a0-2d55efe4991c")
+	)
+	(fp_line
+		(start 0.2 -0.5)
+		(end -0.2 -0.1)
+		(stroke
+			(width 0.254)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "5e12f0c4-03cb-4b7f-8cac-342ef997c45e")
+	)
+	(fp_line
+		(start 0.2 -0.5)
+		(end 0.2 0.500254)
+		(stroke
+			(width 0.254)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "9673d9ea-3a5f-4624-8482-2689655ff2b8")
+	)
+	(fp_line
+		(start 0.443231 1.017272)
+		(end 1.992634 1.017272)
+		(stroke
+			(width 0.254)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "94e58d9e-c9d5-4413-9839-a8772ba317f8")
+	)
+	(fp_line
+		(start 1.992634 -1.014732)
+		(end 0.443231 -1.014732)
+		(stroke
+			(width 0.254)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "b8ba515f-c3ac-4e9c-a8dd-49a9b74b0b9f")
+	)
+	(fp_line
+		(start 1.992634 1.017272)
+		(end 1.992634 -1.014732)
+		(stroke
+			(width 0.254)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "6e268a30-ad0c-48a1-b4f2-46bcedbe3e00")
+	)
+	(fp_text user "REF**"
+		(at -0.11557 5.042672 0)
+		(layer "F.Fab")
+		(uuid "c361a488-86b8-4fe2-8bca-c309b2c207ec")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "1" smd rect
+		(at 1.050292 0 180)
+		(size 1 1.399543)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "b66eb699-dfa2-4d73-8d8f-31dfe8f8eedc")
+	)
+	(pad "2" smd rect
+		(at -1.050292 0 180)
+		(size 1 1.399543)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "ccbf297d-da31-4572-a170-1d283227b1bc")
+	)
+	(model "D:/PSP-Consolizer-Internal-main/PSP-Consolizer-Internal-main/hardware/lib/JLCPCB/JLCPCB_footprint/packages3d/LED0805-R-RD.step"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
+)
