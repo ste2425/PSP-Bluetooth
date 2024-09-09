@@ -1,0 +1,15 @@
+(kicad_sch
+	(version 20231120)
+	(generator "eeschema")
+	(generator_version "8.0")
+	(uuid "b66a9d42-2bb6-4d02-ac93-228ff0cc2e77")
+	(paper "A4")
+	(title_block
+		(title "PSP-Bluetooth")
+		(date "2024-07-25")
+		(rev "0.1")
+		(comment 2 "https://github.com/ste2425/PSP-Bluetooth")
+		(comment 4 "UNDER REVIEW - SUBJECT TO CHANGE")
+	)
+	(lib_symbols)
+)

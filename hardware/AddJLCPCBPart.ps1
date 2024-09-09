@@ -1,5 +1,7 @@
 $path = "$PSScriptRoot/lib/JLCPCB"
 
+echo $path
+
 while ($true)
 {
     $partNumbers = Read-Host -Prompt 'Input JLCPCB part numbers'
