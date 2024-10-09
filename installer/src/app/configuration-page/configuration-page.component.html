@@ -1,0 +1,24 @@
+<h2>PSP Bluetooth Configuration</h2>
+
+<p>From here you can connect to the PSP Bluetooth module to configure button mappings.</p>
+
+<div class="buttons-container">
+    <button color="accent" mat-button (click)="connect()" [disabled]="connected">Connect</button>
+    <button color="accent" mat-button (click)="readValue()" [disabled]="!connected">Read</button>
+    <button color="accent" mat-button (click)="saveValue()" [disabled]="!connected">Write</button>
+
+    
+    <button color="accent" mat-button (click)="otaCommand(OTACommand.startUpload)" [disabled]="!connected">start</button>
+    
+    <button color="accent" mat-button (click)="otaCommand(OTACommand.uploadFinished)" [disabled]="!connected">done</button>
+    
+    <button color="accent" mat-button (click)="otaCommand(OTACommand.applyUpdate)" [disabled]="!connected">apply</button>
+</div>
+
+
+<textarea [(ngModel)]="configuration" matInput
+    cdkAutosizeMinRows="3"></textarea>
+
+<div class="terminal">  
+    <pre>{{terminalOutput}}</pre>
+</div>

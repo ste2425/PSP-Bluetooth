@@ -129,6 +129,148 @@
 				)
 			)
 		)
+		(symbol "JLCPCB_schematic:1N5819WS"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "D"
+				(at 0 1.27 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "1N5819WS"
+				(at 0 -2.54 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "JLCPCB_footprint:SOD-323_L1.8-W1.3-LS2.5-RD"
+				(at 0 -10.16 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+						(italic yes)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "https://item.szlcsc.com/295156.html"
+				(at -2.286 0.127 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+					(hide yes)
+				)
+			)
+			(property "Description" "shotkey diode"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "LCSC" "C191023"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "C191023"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "1N5819WS_0_1"
+				(polyline
+					(pts
+						(xy -1.27 0) (xy -1.27 -2.032) (xy -0.762 -2.032) (xy -0.762 -1.778)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.27 0) (xy -1.27 2.032) (xy -1.778 2.032) (xy -1.778 1.778)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 1.524) (xy -1.27 0) (xy 1.27 -1.778) (xy 1.27 1.524)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(pin unspecified line
+					(at -5.08 0 0)
+					(length 3.81)
+					(name "K"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+				)
+				(pin unspecified line
+					(at 5.08 0 180)
+					(length 3.81)
+					(name "A"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+				)
+			)
+		)
 		(symbol "JLCPCB_schematic:MCP23008-E/ML"
 			(exclude_from_sim no)
 			(in_bom yes)
@@ -806,6 +948,12 @@
 		)
 	)
 	(junction
+		(at 111.76 128.27)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "24e823bd-5648-4ca5-b4c3-4fc1838d288b")
+	)
+	(junction
 		(at 63.5 92.71)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -859,6 +1007,16 @@
 	)
 	(wire
 		(pts
+			(xy 199.39 114.3) (xy 199.39 128.27)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "00c43cb8-76f6-4416-a242-08494ba075f8")
+	)
+	(wire
+		(pts
 			(xy 73.66 86.36) (xy 87.63 86.36)
 		)
 		(stroke
@@ -869,6 +1027,16 @@
 	)
 	(wire
 		(pts
+			(xy 203.2 114.3) (xy 199.39 114.3)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0e55eb6d-ba37-43d9-82cd-1babe42a160f")
+	)
+	(wire
+		(pts
 			(xy 63.5 92.71) (xy 63.5 88.9)
 		)
 		(stroke
@@ -876,6 +1044,16 @@
 			(type default)
 		)
 		(uuid "19329734-5c6c-46ca-90c7-cb3caa0ef337")
+	)
+	(wire
+		(pts
+			(xy 199.39 128.27) (xy 111.76 128.27)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1f9f9035-51b6-4e51-be0e-f6cb38ef1ff1")
 	)
 	(wire
 		(pts
@@ -929,6 +1107,16 @@
 	)
 	(wire
 		(pts
+			(xy 105.41 110.49) (xy 105.41 119.38)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "669031c9-e462-43f2-8c72-29d160965f0d")
+	)
+	(wire
+		(pts
 			(xy 105.41 80.01) (xy 90.17 80.01)
 		)
 		(stroke
@@ -946,6 +1134,16 @@
 			(type default)
 		)
 		(uuid "7a924a0d-8d30-4214-8a1b-d7e11b330323")
+	)
+	(wire
+		(pts
+			(xy 105.41 119.38) (xy 111.76 119.38)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "84a102a9-7fef-40ff-92db-1c389ceac589")
 	)
 	(wire
 		(pts
@@ -976,6 +1174,16 @@
 			(type default)
 		)
 		(uuid "dbac315f-b339-40d8-9a65-f02ba8b27946")
+	)
+	(wire
+		(pts
+			(xy 111.76 119.38) (xy 111.76 128.27)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f73ef4ec-4d25-4abd-a2c8-b63ae2c1c7d1")
 	)
 	(wire
 		(pts
@@ -1286,6 +1494,28 @@
 					(size 1.27 1.27)
 				)
 				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "GPIO_GND"
+		(shape input)
+		(at 101.6 128.27 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "6cb090de-5740-4216-9146-a370adc9a214")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 89.3014 128.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
 				(hide yes)
 			)
 		)
@@ -1734,73 +1964,6 @@
 		)
 	)
 	(symbol
-		(lib_id "power:GND")
-		(at 203.2 114.3 270)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "565c48d4-6a30-48be-9367-7e8c0ff6155f")
-		(property "Reference" "#PWR050"
-			(at 196.85 114.3 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 199.39 114.2999 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" ""
-			(at 203.2 114.3 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 203.2 114.3 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 203.2 114.3 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "fea6763b-b4f4-4ea4-93ea-6d77f745b74e")
-		)
-		(instances
-			(project "esp32"
-				(path "/3a9f3299-35f4-4d62-9438-2986d1fa401f/69246014-e69c-483a-8e99-10eb89618c95"
-					(reference "#PWR050")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "JLCPCB_schematic:0805W8F4701T5E")
 		(at 73.66 80.01 90)
 		(unit 1)
@@ -2076,6 +2239,86 @@
 			(project "esp32"
 				(path "/3a9f3299-35f4-4d62-9438-2986d1fa401f/69246014-e69c-483a-8e99-10eb89618c95"
 					(reference "#PWR049")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "JLCPCB_schematic:1N5819WS")
+		(at 106.68 128.27 0)
+		(mirror x)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "bf295ee4-caac-498b-a08b-5045461f39da")
+		(property "Reference" "D13"
+			(at 106.426 134.62 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "1N5819WS"
+			(at 106.426 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "JLCPCB_footprint:SOD-323_L1.8-W1.3-LS2.5-RD"
+			(at 106.68 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+					(italic yes)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://item.szlcsc.com/295156.html"
+			(at 104.394 128.397 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Description" "shotkey diode"
+			(at 106.68 128.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C191023"
+			(at 106.68 128.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "99c667e8-25e4-4d85-9582-c12d27420811")
+		)
+		(pin "2"
+			(uuid "8decca87-fee2-4a19-ac31-1a9a94025277")
+		)
+		(instances
+			(project "esp32"
+				(path "/3a9f3299-35f4-4d62-9438-2986d1fa401f/69246014-e69c-483a-8e99-10eb89618c95"
+					(reference "D13")
 					(unit 1)
 				)
 			)
@@ -2480,73 +2723,6 @@
 			(project "esp32"
 				(path "/3a9f3299-35f4-4d62-9438-2986d1fa401f/69246014-e69c-483a-8e99-10eb89618c95"
 					(reference "U1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 105.41 110.49 270)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "eed74cd9-7fd1-45af-a7fd-e9d59c396f55")
-		(property "Reference" "#PWR042"
-			(at 99.06 110.49 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 101.6 110.4899 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" ""
-			(at 105.41 110.49 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 105.41 110.49 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 105.41 110.49 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "b95e5067-5c3f-45f1-b6b4-10545474b559")
-		)
-		(instances
-			(project "esp32"
-				(path "/3a9f3299-35f4-4d62-9438-2986d1fa401f/69246014-e69c-483a-8e99-10eb89618c95"
-					(reference "#PWR042")
 					(unit 1)
 				)
 			)

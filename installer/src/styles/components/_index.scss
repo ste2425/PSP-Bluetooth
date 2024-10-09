@@ -4,6 +4,7 @@
 @use "../../app/header/header-theme" as header;
 @use "../../app/programmer/programmer-theme" as programmer;
 @use "../../app/serial-page/serial-page-theme" as serialPage;
+@use "../../app/configuration-page/configuration-page-theme" as configurationPage;
 
 
 @mixin theme($theme) {
@@ -11,4 +12,5 @@
     @include header.theme($theme);
     @include programmer.theme($theme);
     @include serialPage.theme($theme);
+    @include configurationPage.theme($theme);
 }

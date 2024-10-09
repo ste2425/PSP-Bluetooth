@@ -32,11 +32,27 @@ export class HeaderComponent {
     iconRegistry.addSvgIconLiteral('app-github', sanitizer.bypassSecurityTrustHtml(GITHUB_ICON));
   }
   
+  routes = [
+    {
+      path: '/',
+      label: 'Home'
+    },
+    {
+      path: '/configuration',
+      label: 'Configuration'
+    },
+    {
+      path: '/program',
+      label: 'Program'
+    }, {
+      path: '/serial',
+      label: 'Serial'
+    }
+  ]
+
   isDark$ = this.themeManager.isDark$;
 
   changeTheme(theme: string) {
     this.themeManager.changeTheme(theme);
   }
 }
-
-

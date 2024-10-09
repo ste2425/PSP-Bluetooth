@@ -4032,6 +4032,28 @@
 			)
 		)
 	)
+	(global_label "GPIO_GND"
+		(shape input)
+		(at 115.57 95.25 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "281eaf1b-8ab3-4057-be0d-3f799a97618a")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 127.8686 95.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "ESP_I2C_SDA"
 		(shape input)
 		(at 130.81 80.01 0)
@@ -4182,28 +4204,6 @@
 					(size 1.27 1.27)
 				)
 				(justify left)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "ESP_I3C_SDA"
-		(shape input)
-		(at 31.75 71.12 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "80b75fa2-ae75-4661-b0f4-badf31e2b7f0")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 16.5487 71.12 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
 				(hide yes)
 			)
 		)
@@ -5260,74 +5260,6 @@
 			(project ""
 				(path "/3a9f3299-35f4-4d62-9438-2986d1fa401f/4d61521e-d26b-4a87-9dc4-97977e5f7fed"
 					(reference "RESET1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 115.57 95.25 270)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "4e4a7ce8-d31a-4701-9b72-7834f0180666")
-		(property "Reference" "TP10"
-			(at 120.65 93.9799 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "TestPoint"
-			(at 120.65 96.5199 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_1.5x1.5mm"
-			(at 115.57 100.33 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 115.57 100.33 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "test point"
-			(at 115.57 95.25 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "4d17dacd-ff15-4a04-87d2-a4bf3e20da51")
-		)
-		(instances
-			(project "esp32"
-				(path "/3a9f3299-35f4-4d62-9438-2986d1fa401f/4d61521e-d26b-4a87-9dc4-97977e5f7fed"
-					(reference "TP10")
 					(unit 1)
 				)
 			)

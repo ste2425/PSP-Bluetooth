@@ -7,6 +7,8 @@
     justify-content: center;
 
     pre {
+        word-wrap: break-word;
+        white-space: pre-line;
         width: 75%;
         min-height: 100px;
         padding: 10px;

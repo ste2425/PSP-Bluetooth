@@ -1,5 +1,0 @@
-(sym_lib_table
-  (version 7)
-  (lib (name "JLCPCB_schematic")(type "KiCad")(uri "${KIPRJMOD}/../../lib/JLCPCB/symbol/JLCPCB_schematic.kicad_sym")(options "")(descr ""))
-  (lib (name "consolizer")(type "KiCad")(uri "${KIPRJMOD}/../../lib/consolizer.kicad_sym")(options "")(descr ""))
-)
