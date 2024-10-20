@@ -2769,7 +2769,7 @@
 		)
 		(uuid "c74946db-5539-4f6b-869e-023c96703422")
 	)
-	(text "Do these diodes mean i could safely \nconnect USB to the board and 5v\nfrom the PSP charger at the same time?"
+	(text "Do these diodes mean i could safely \nconnect USB to the board and 5v\nfrom the PSP charger at the same time?\nFuture me question"
 		(exclude_from_sim no)
 		(at 39.624 58.674 0)
 		(effects

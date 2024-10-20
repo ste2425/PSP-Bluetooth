@@ -3798,7 +3798,7 @@
 		)
 		(uuid "0e977194-a8c8-467b-87b1-1ee92d74d3b2")
 	)
-	(text "PSPPower and PSPScreen detect connect to PSP."
+	(text "PSPPower and PSPScreen detect connect to PSP.\nNot found anywhere on the PSP itself that could\nexpose such signals. But they are here ready"
 		(exclude_from_sim no)
 		(at 241.046 158.75 0)
 		(effects

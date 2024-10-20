@@ -3326,6 +3326,16 @@
 		)
 		(uuid "ffc4aca9-70c5-46a5-aa11-173582251632")
 	)
+	(text "I use diodes everywhere to try and protect PSP\nincase i send a pin high. No idea if itll work or even needed."
+		(exclude_from_sim no)
+		(at 125.222 39.624 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "253d213c-3bb7-421a-b3f9-28f311f2e6a9")
+	)
 	(text "PSP button connectors"
 		(exclude_from_sim no)
 		(at 78.486 28.194 0)
@@ -3361,7 +3371,7 @@
 		)
 		(uuid "9efbea10-fa02-4b49-8c31-dc75ca74403c")
 	)
-	(text "Connector to PSP analog stick. \nPins 1 and 2 connect to the PSP motherboard. \nPins 9 and 10 connect to PSP analog stick.\nBoth the digital potentiometer and PSP analog stick\nconnect to the PSP motherboard.\n\nWe need to use a plugin to correct the analog stick.\n\nHowever we could use a analog multiplexer instead in the future"
+	(text "Connector to PSP analog stick. \nPins 1 and 2 connect to the PSP motherboard. \nPins 9 and 10 connect to PSP analog stick.\n\nSo the analog sticks (real and digi pot) are\nnot connected in parallel a analog mux is used\nto toggle between one or the other"
 		(exclude_from_sim no)
 		(at 244.602 139.954 0)
 		(effects

@@ -12,14 +12,4 @@
 		(comment 4 "UNDER REVIEW - SUBJECT TO CHANGE")
 	)
 	(lib_symbols)
-	(text "V0.2:\nModified power caps. Repalced 1500uf for 22uf and 10 uf.\n\nRemoved current limiting resistors for PSPpower and PSP screen on detect,\nAdded diodes instead."
-		(exclude_from_sim no)
-		(at 52.578 23.114 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "f0e3d11b-fd39-4df2-a414-1940be8e2ddd")
-	)
 )
