@@ -1,7 +1,7 @@
-#ifndef CONSTANTS_H
-#define CONSTANTS_H
+#pragma once
 
-#define GeneralNamespace "PSP-Preferences"
-#define GPIONamespace "PSP-Preferences"
+#define PSP_BLUETOOTH_VERSION "PSP Bluetooth Module v<DEVELOPMENT>"
 
-#endif
+#define PSP_POWER_CONTROLLER_CONNECTED true
+
+#define PSP_POWEROFF_CONTROLLER_DISCONNECTED true

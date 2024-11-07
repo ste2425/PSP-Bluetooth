@@ -5,10 +5,10 @@ build_cache:
     ttl: 720h0m0s
 daemon:
     port: "50051"
-directories:
-    data: /home/stephen/.arduino15
-    downloads: /home/stephen/.arduino15/staging
-    user: /home/stephen/Arduino
+#directories:
+#    data: /home/stephen/.arduino15
+#    downloads: /home/stephen/.arduino15/staging
+#    user: /home/stephen/Arduino
 library:
     enable_unsafe_install: false
 logging:
