@@ -9,7 +9,7 @@
 #include "bt_service.gatt.h"
 #include "Arduino.h"
 #include <LittleFS.h>
-#include "fileutility.h"
+#include "fileUtility.h"
 #include "constants.h"
 
 void uni_bt_service_init(void);
