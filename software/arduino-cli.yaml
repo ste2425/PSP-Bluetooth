@@ -10,7 +10,7 @@ daemon:
 #    downloads: /home/stephen/.arduino15/staging
 #    user: /home/stephen/Arduino
 library:
-    enable_unsafe_install: false
+    enable_unsafe_install: true
 logging:
     file: ""
     format: text
