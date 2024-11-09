@@ -7,6 +7,10 @@
 	<script>
 		const url = location.href.toLowerCase();
 
+		// pages bound to the final route wont get hit in github pages if the route ends with /
+		if (url.endsWith('/'))
+			url = url.substring(0, str.length - 1);
+
 		const urls = {
 			'https://ste2425.github.io/psp-bluetooth': 'https://ste2425.github.io/PSP-Bluetooth',
 			'default': 'https://ste2425.github.io/PSP-Bluetooth',
@@ -16,6 +20,9 @@
 		};
 
 		const dest = urls[url] || urls.default;
+
+		console.log('PSP BLuetooth 404 redirecting to', dest);
+
 		window.location.href = dest;
 	</script>
 </body>
