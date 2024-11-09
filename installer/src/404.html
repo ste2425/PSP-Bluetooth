@@ -9,7 +9,7 @@
 
 		// pages bound to the final route wont get hit in github pages if the route ends with /
 		if (url.endsWith('/'))
-			url = url.substring(0, str.length - 1);
+			url = url.substring(0, url.length - 1);
 
 		const urls = {
 			'https://ste2425.github.io/psp-bluetooth': 'https://ste2425.github.io/PSP-Bluetooth',
