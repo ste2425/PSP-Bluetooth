@@ -5,7 +5,7 @@
 </head>
 <body>
 	<script>
-		const url = location.href.toLowerCase();
+		let url = location.href.toLowerCase();
 
 		// pages bound to the final route wont get hit in github pages if the route ends with /
 		if (url.endsWith('/'))
