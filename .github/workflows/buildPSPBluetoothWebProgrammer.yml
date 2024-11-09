@@ -38,6 +38,9 @@ jobs:
       - name: Create Configuration Static Page
         working-directory: develop/installer/dist/installer/browser
         run: cp index.html configuration.html
+      - name: Copy 404 Page
+        working-directory: develop/installer
+        run: cp src/404.html dist/installer/browser/404.html
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact

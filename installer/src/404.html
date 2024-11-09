@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>PSP Bluetooth</title>
+</head>
+<body>
+	<script>
+		const url = location.href.toLowerCase();
+
+		const urls = {
+			'https://ste2425.github.io/psp-bluetooth': 'https://ste2425.github.io/PSP-Bluetooth',
+			'default': 'https://ste2425.github.io/PSP-Bluetooth',
+			'https://ste2425.github.io/psp-bluetooth/configuration': 'https://ste2425.github.io/PSP-Bluetooth/configuration',
+			'https://ste2425.github.io/psp-bluetooth/program': 'https://ste2425.github.io/PSP-Bluetooth/program',
+			'https://ste2425.github.io/psp-bluetooth/serial': 'https://ste2425.github.io/PSP-Bluetooth/serial'
+		};
+
+		const dest = urls[url] || urls.default;
+		window.location.href = dest;
+	</script>
+</body>
+</html>
