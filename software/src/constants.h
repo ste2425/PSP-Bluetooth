@@ -1,6 +1,6 @@
 #pragma once
 
-#define PSP_BLUETOOTH_VERSION "PSP Bluetooth Module v<DEVELOPMENT>"
+#define PSP_BLUETOOTH_VERSION "PSP Bluetooth Version v<DEVELOPMENT> OTA TEST"
 
 #define PSP_POWER_CONTROLLER_CONNECTED true
 

@@ -16,6 +16,25 @@ echo "Merging"
 echo "   Bin DIR: $BIN_DIR"
 echo "   Project DIR: $PROJECT_BIR"
 
+UNAME=$(uname)
+
+if [[ "$UNAME" == CYGWIN* || "$UNAME" == MINGW* ]] ; then
+  echo "Detected windows. Using exe"
+
+  cd "C:/Users/steco/AppData/Local/Arduino15/packages/esp32/tools/esptool_py/4.5.1"
+  
+  ./esptool.exe --chip esp32 merge_bin \
+    -o $BIN_DIR/pspBluetooth.bin \
+    --flash_mode dio \
+    --flash_freq keep \
+    --flash_size 4MB \
+    0x1000 $BIN_DIR/software.ino.bootloader.bin \
+    0x8000 $BIN_DIR/software.ino.partitions.bin \
+    0x10000 $BIN_DIR/software.ino.bin
+
+  exit 1
+fi
+
 # This feels hacky but cant think of a better way
 cd $ESP_DIR
 

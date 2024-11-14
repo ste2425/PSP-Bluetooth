@@ -11,6 +11,11 @@
 #include <LittleFS.h>
 #include "fileUtility.h"
 #include "constants.h"
+#include "interop.h"
+
+// for OTA
+#include "esp_ota_ops.h"
+#include "esp_system.h"
 
 void uni_bt_service_init(void);
 void uni_bt_service_deinit(void);
