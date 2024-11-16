@@ -7,34 +7,7 @@
 #include <LittleFS.h>
 #include "src/fileUtility.h"
 #include "src/bt_service.h"
-
-enum {
-    CMD_BLE_SERVICE_ENABLE,
-    CMD_BLE_SERVICE_DISABLE
-};
-
-static btstack_context_callback_registration_t cmd_callback_registration;
-
-static void cmd_callback(void* context) {
-    unsigned long ctx = (unsigned long)context;
-    uint16_t cmd = ctx & 0xffff;
-    switch (cmd) {
-        case CMD_BLE_SERVICE_ENABLE:
-            uni_bt_service_set_enabled(true);
-            break;
-        case CMD_BLE_SERVICE_DISABLE:
-            uni_bt_service_set_enabled(false);
-            break;
-    }
-}
-
-void uni_bt_enable_service_safe(bool enabled) {
-    cmd_callback_registration.callback = &cmd_callback;
-    cmd_callback_registration.context =
-        (void*)(enabled ? (intptr_t)CMD_BLE_SERVICE_ENABLE : (intptr_t)CMD_BLE_SERVICE_DISABLE);
-    btstack_run_loop_execute_on_main_thread(&cmd_callback_registration);
-}
-
+#include "src/interop.h"
 
 ControllerPtr myControllers[BP32_MAX_GAMEPADS];
 
@@ -122,18 +95,17 @@ void handleButtonMapping(ControllerMapping *mapping) {
 }
 
 void processGamepad(ControllerPtr ctl) {
+    MappingMeta *meta = MAPPINGS_current;
     if (bitRead(ctl->buttons(), 8)) {
       MAPPINGS_next();
       delay(200);
       
-      MappingMeta *meta = MAPPINGS_current;
       ctl->setColorLED(meta->colour[0], meta->colour[1], meta->colour[2]);
       ctl->setPlayerLEDs(meta->mappingNumer & 0x0f);
     } else {
       for (uint8_t i = 0; i < 30; i++) {
-        MappingMeta *meta = MAPPINGS_current;
         ControllerMapping *mapping = &meta->mappings[i];
-  
+
         if (mapping->PSPButton == 99)
           continue;
         
@@ -224,7 +196,7 @@ void processControllers() {
 }
 
 // Arduino setup function. Runs in CPU 1
-void setup() {  
+void setup() { 
     Serial.begin(115200);
 
     // Setup the Bluepad32 callbacks
@@ -251,7 +223,7 @@ void setup() {
     PSPState_setup();
     MAPPINGS_setup();
 
-    //uni_bt_enable_service_safe(true);
+    enableBLEService(true);
 }
 
 // Arduino loop function. Runs in CPU 1.

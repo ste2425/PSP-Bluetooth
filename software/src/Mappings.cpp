@@ -51,12 +51,14 @@ void MAPPINGS_setup() {
       uint8_t arrayLen = m.size();
   
       for (int i = 0; i < 30; i++) {
-        if (arrayLen < 30) {
+        if (i < arrayLen) {
           test[mI].mappings[i] = {
             m[i][0], m[i][1], m[i][2]
           };
         } else {
-          test[mI].mappings[i] = {99};
+          test[mI].mappings[i] = {
+            99, 0, 0
+          };
         }
       }
     } else {

@@ -1,3 +1,3 @@
 #!/bin/bash
 
-arduino-cli monitor -p /dev/ttyUSB0 --config baudrate=115200
+arduino-cli monitor -p COM9 --config baudrate=115200
