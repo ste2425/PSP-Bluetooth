@@ -32,10 +32,10 @@ jobs:
         working-directory: develop/software/scripts
         env:
           GITHUB_ACTION: true
-      - name: Move binary
-        run: cp develop/software/bin/pspBluetooth.bin develop/releaseBinaries/pspBluetooth.bin
+      #- name: Move binary
+      #  run: cp develop/software/bin/pspBluetooth.bin develop/releaseBinaries/pspBluetooth.bin
       - name: Move OTA Binary
-        run: cp develop/software/bin/software.ino.bin develop/releaseBinaries/pspBluetooth-ota.bin
+        run: cp develop/software/bin/software.ino.bin develop/software/bin/pspBluetooth-ota.ino.bin
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           repository: develop
@@ -43,14 +43,12 @@ jobs:
         with:
           name: binFolder
           path: develop/software/bin/
-      - uses: actions/upload-artifact@v4
-        with:
-          name: pspBluetooth.bin
-          path: develop/software/bin/pspBluetooth.bin
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
-          files: develop/software/bin/pspBluetooth.bin
+          files: 
+           - develop/software/bin/pspBluetooth.bin
+           - develop/software/bin/pspBluetooth-ota.bin
           prerelease: true
           name: PSP Bluetooth Internal (Develop ${{github.run_number}})
           body: |
