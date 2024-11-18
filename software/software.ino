@@ -226,7 +226,6 @@ void setup() {
     enableBLEService(true);
 }
 
-// Arduino loop function. Runs in CPU 1.
 void loop() {  
   //must be run first
   LED_loop();
