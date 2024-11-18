@@ -32,10 +32,12 @@ jobs:
         working-directory: develop/software/scripts
         env:
           GITHUB_ACTION: true
-      #- name: Move binary
-      #  run: cp develop/software/bin/pspBluetooth.bin develop/releaseBinaries/pspBluetooth.bin
-      - name: Move OTA Binary
+      - name: Create OTA Binary
         run: cp develop/software/bin/software.ino.bin develop/software/bin/pspBluetooth-ota.bin
+      - name: Move binary to Release
+        run: cp develop/software/bin/pspBluetooth.bin develop/releaseBinaries/pspBluetooth.bin
+      - name: Move OTA binary to Release
+        run: cp develop/software/bin/pspBluetooth-ota.bin develop/releaseBinaries/pspBluetooth-ota.bin
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           repository: develop
