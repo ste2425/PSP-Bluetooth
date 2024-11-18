@@ -232,8 +232,6 @@ void loop() {
   LED_loop();
   BUTTON_loop();
   
-    // This call fetches all the controllers' data.
-    // Call this function in your main loop.
     bool dataUpdated = BP32.update();
     if (dataUpdated) {
         PSPState_markAllReleased();

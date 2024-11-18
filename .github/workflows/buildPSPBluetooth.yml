@@ -46,9 +46,9 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
-          files: 
-           - develop/software/bin/pspBluetooth.bin
-           - develop/software/bin/pspBluetooth-ota.bin
+          files: |
+            develop/software/bin/pspBluetooth.bin
+            develop/software/bin/pspBluetooth-ota.bin
           prerelease: true
           name: PSP Bluetooth Internal (Develop ${{github.run_number}})
           body: |
