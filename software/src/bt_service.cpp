@@ -171,6 +171,8 @@ static void att_packet_handler(uint8_t packet_type, uint16_t channel, uint8_t* p
             break;
         case ATT_EVENT_DISCONNECTED:
             Serial.println("BLE Service: client disconnected");
+            //this runs when controller disconnects too, maybe should remove it?
+            esp_ota_abort(otaHandler);
             break;
         default:
             Serial.println("BLE Service: Unsupported ATT_EVENT");
