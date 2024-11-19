@@ -22,6 +22,9 @@ jobs:
         working-directory: develop/software/scripts
         env:
           GITHUB_ACTION: true
+      - name: Inject Version
+        run: sed -i -e 's/<DEVELOPMENT>/internal-${{github.run_number}}/g' constants.h
+        working-directory: develop/software/src
       - name: Build
         run: ./compile.sh
         working-directory: develop/software/scripts

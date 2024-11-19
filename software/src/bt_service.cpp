@@ -66,6 +66,7 @@ static int att_write_callback(hci_con_handle_t con_handle,
                     
                     if (ESP_OK != esp_ota_begin(esp_ota_get_next_update_partition(NULL), OTA_SIZE_UNKNOWN, &otaHandler)) {
                         Serial.println("Error starting OTA");
+                        esp_ota_abort(otaHandler);
 
                         return ATT_ERROR_UNLIKELY_ERROR;
                     }
@@ -75,6 +76,7 @@ static int att_write_callback(hci_con_handle_t con_handle,
                     
                     if (ESP_OK != esp_ota_end(otaHandler)) {
                         Serial.println("Unable to end OTA");
+                        esp_ota_abort(otaHandler);
 
                         return ATT_ERROR_UNLIKELY_ERROR;
                     }
@@ -91,6 +93,7 @@ static int att_write_callback(hci_con_handle_t con_handle,
                     else
                     {
                         Serial.println("Error applying OTA");
+                        esp_ota_abort(otaHandler);
 
                         return ATT_ERROR_UNLIKELY_ERROR;
                     }
@@ -111,7 +114,7 @@ static int att_write_callback(hci_con_handle_t con_handle,
                 Serial.println("Writing OTA data");
                 if (ESP_OK != esp_ota_write(otaHandler, buffer, buffer_size)) {
                     Serial.println("Error Writing OTA data");
-
+                    esp_ota_abort(otaHandler);
                     return ATT_ERROR_UNLIKELY_ERROR;
                 }
             }
