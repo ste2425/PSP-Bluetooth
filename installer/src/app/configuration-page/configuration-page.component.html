@@ -3,10 +3,13 @@
 <p>From here you can connect to the PSP Bluetooth module to configure button mappings.</p>
 
 <div class="buttons-container">
+    <progress min="0" max="{{otaLength}}" value="{{otaCompleted}}"></progress>
+    {{otaLength}} - {{otaCompleted}}
     <button color="accent" mat-button (click)="connect()" [disabled]="connected">Connect</button>
     <button color="accent" mat-button (click)="readValue()" [disabled]="!connected">Read</button>
     <button color="accent" mat-button (click)="saveValue()" [disabled]="!connected">Write</button>
 
+    <input type="file" (change)="onOtaSelected($event)" />
     
     <button color="accent" mat-button (click)="otaCommand(OTACommand.startUpload)" [disabled]="!connected">start</button>
     

@@ -1,7 +1,11 @@
 <div class="release">
   <div class="release-heading">
     <h4>{{name}}</h4>
-    <button (click)="programESP()" mat-flat-button color="accent" style="color: white;" [disabled]="programDisabled">Program</button>
+    <button mat-flat-button color="accent" mat-button [matMenuTriggerFor]="menu">Program</button>
+    <mat-menu #menu="matMenu">
+      <button [disabled]="programDisabled" (click)="programESP()" mat-menu-item>Serial</button>
+      <button [disabled]="otaDisabled" (click)="programOTA()" mat-menu-item>OTA</button>
+    </mat-menu>
   </div>
 
   <div class="release-body">

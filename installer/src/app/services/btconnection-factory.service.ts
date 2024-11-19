@@ -6,6 +6,7 @@ const VERSION_UUID = '4627c4a4-ac01-46b9-b688-afc5c1bf7f63';
 const MAPPINGS_UUID = '4627c4a4-ac03-46b9-b688-afc5c1bf7f63';
 const EXPECTED_VERSION_PREFIX = 'PSP Bluetooth Version';
 const OTA_COMMANDS_UUID = '4627c4a4-ac04-46b9-b688-afc5c1bf7f63';
+const OTA_DATA_UUID = '4627c4a4-ac05-46b9-b688-afc5c1bf7f63';
 
 export enum OTACommand {
     startUpload = 0,
@@ -57,6 +58,11 @@ export class PSPBluetooth {
         return this.primaryService?.getCharacteristic(uuid);
     }
 
+    async sendOTAData(data: ArrayBuffer | DataView) {
+
+        await this.#writeValue(OTA_DATA_UUID, data);
+    }
+
     async sendOTACommand(command: OTACommand) {
         const value = new Uint8Array([command]);
 
@@ -90,25 +96,34 @@ export class PSPBluetooth {
       const decoder = new TextDecoder();
       return decoder.decode(value).replaceAll('\0', '');
     }
+
+    disconnect() {
+        if (this.connected)
+            this.device.gatt?.disconnect();
+    }
 }
 
 @Injectable({
     providedIn: 'root'
 })
 export class BTConnectionFactoryService {
-
     async connect(logger: ILogger): Promise<PSPBluetooth> {
+        logger.writeLine('Connecting to device...');
 
         const device = await navigator.bluetooth.requestDevice({
             acceptAllDevices: true,
             optionalServices: [PRIMARY_SERVICE_UUID]
         });
 
-        logger.writeLine('Connected to device.');
+        //logger.writeLine('Connected to device.');
+
+        //logger.writeLine('Connecting to GATT Service...');
 
         await device.gatt?.connect();
 
-        logger.writeLine('Connected to GATT Service');
+        //logger.writeLine('Connected to GATT Service');
+
+        //logger.writeLine('Connecting to primary service...');
 
         const primaryService = await device.gatt?.getPrimaryService(PRIMARY_SERVICE_UUID);
 

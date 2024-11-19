@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/materia
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import { GithubService } from '../github.service';
+import { GithubService, ReleaseType } from '../github.service';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -115,7 +115,7 @@ export class ProgrammerComponent {
 
       this.terminal.writeLine('Downloading binary...');
 
-      const binaryData = await firstValueFrom(this.gihubService.getReleaseBinary(this.data.tag));
+      const binaryData = await firstValueFrom(this.gihubService.getReleaseBinary(this.data.tag, ReleaseType.Serial));
 
       this.terminal.writeLine(`Downloaded, size: ${binaryData.size}`);
 

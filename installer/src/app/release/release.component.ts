@@ -12,6 +12,8 @@ import {
 } from '@angular/material/dialog';
 import { ProgrammerComponent } from '../programmer/programmer.component';
 import { SerialConnectionFactoryService } from '../services/serial-connection-factory.service';
+import { MatMenuModule } from '@angular/material/menu';
+import { OTAProgrammerComponent } from '../otaprogrammer/otaprogrammer.component';
 
 export interface ReleaseArtifact {
   name: string,
@@ -23,7 +25,7 @@ export interface ReleaseArtifact {
 @Component({
   selector: 'app-release',
   standalone: true,
-  imports: [MatIconModule, MatDividerModule, MatListModule, MarkdownComponent, CommonModule, MatButtonModule, MatDialogModule],
+  imports: [MatMenuModule, MatIconModule, MatDividerModule, MatListModule, MarkdownComponent, CommonModule, MatButtonModule, MatDialogModule],
   templateUrl: './release.component.html',
   styleUrl: './release.component.scss'
 })
@@ -57,6 +59,10 @@ export class ReleaseComponent
     return !this.serialService.isSupported();
   }
 
+  get otaDisabled() {
+    return !this.artifacts.some(a => a.name.endsWith('-ota.bin'));
+  }
+
   programESP() {
     if (!this.release)
       return;
@@ -67,6 +73,25 @@ export class ReleaseComponent
       return;
 
     this.dialog.open(ProgrammerComponent, {
+      data: {
+        binaryUrl: asset.browser_download_url,
+        assetId: asset.id,
+        tag: this.release.tag_name
+      },
+      panelClass: 'dialog-width'
+    });
+  }
+
+  programOTA() {
+    if (!this.release)
+      return;
+
+    const asset = this.release.assets.find(x => x.name === 'pspBluetooth-ota.bin');
+
+    if (!asset)
+      return;
+
+    this.dialog.open(OTAProgrammerComponent, {
       data: {
         binaryUrl: asset.browser_download_url,
         assetId: asset.id,

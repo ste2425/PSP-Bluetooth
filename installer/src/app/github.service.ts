@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { delay, firstValueFrom, map } from 'rxjs';
-import { Octokit } from "@octokit/core"
+import { delay, map } from 'rxjs';
 
 export interface IArtifact {
   url: string,
@@ -22,6 +21,11 @@ export interface IRelease {
   assets: IArtifact[]
 }
 
+export enum ReleaseType {
+  Serial,
+  OTA
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -35,15 +39,18 @@ export class GithubService {
       .pipe(delay(1500));
   }
 
-  getReleaseBinary(releaseTag: string) {
+  getReleaseBinary(releaseTag: string, type: ReleaseType) {
     const headers = {
       Accept: 'application/octet-stream'
     };
 
-    return this.httpClient.get(`https://raw.githubusercontent.com/ste2425/PSP-Bluetooth/${releaseTag}/releaseBinaries/pspBluetooth.bin`, { headers, responseType: 'arraybuffer' })
+    const binary = type === ReleaseType.Serial ? 'pspBluetooth.bin' : 'pspBluetooth-ota.bin';
+
+    return this.httpClient.get(`https://raw.githubusercontent.com/ste2425/PSP-Bluetooth/${releaseTag}/releaseBinaries/${binary}`, { headers, responseType: 'arraybuffer' })
       .pipe(map(data => ({
         data: this.#bufferToString(data),
-        size: data.byteLength
+        size: data.byteLength,
+        buffer: data
       })));
   }
 

@@ -23,6 +23,67 @@ export class ConfigurationPageComponent {
 
   btDevice?: PSPBluetooth;
 
+  otaLength = 0;
+  otaCompleted = 0;
+
+  async beginOta(data: ArrayBuffer) {
+    this.terminal.writeLine('Starting update');
+    await this.btDevice?.sendOTACommand(OTACommand.startUpload);
+
+    await new Promise((res) => setTimeout(res, 100));
+
+    while (this.otaCompleted < this.otaLength) {
+      const remaining = this.otaLength - this.otaCompleted;
+      const toTake = remaining > 244 ? 244 : remaining; 
+
+      const dataToSend = new DataView(data, this.otaCompleted, toTake);
+
+      await this.btDevice?.sendOTAData(dataToSend);
+
+      this.otaCompleted += toTake;
+
+      this.terminal.writeLine(`Sent: ${this.otaCompleted}`);
+      
+      await new Promise((res) => setTimeout(res, 100));
+    }
+
+    this.terminal.writeLine('Uploaded');
+    await this.btDevice?.sendOTACommand(OTACommand.uploadFinished);
+    
+    await new Promise((res) => setTimeout(res, 100));
+
+    this.terminal.writeLine('Applying');
+    await this.btDevice?.sendOTACommand(OTACommand.applyUpdate);
+
+    this.terminal.writeLine('DONE');
+  }
+
+  onOtaSelected(event: Event) {
+    if (!(event.target instanceof HTMLInputElement))
+      return;
+
+    const target: HTMLInputElement = event.target,
+      file = target.files?.[0];
+
+    if (!file)
+      return;
+
+    const fileReader = new FileReader();
+
+    fileReader.onload = () => {
+      const data = fileReader.result;
+
+      if (!(data instanceof ArrayBuffer))
+        return;
+
+      this.otaLength = data.byteLength;
+
+      this.beginOta(data);
+    }
+
+    fileReader.readAsArrayBuffer(file);
+  }
+
   get connected() {
     return !!this.btDevice?.connected;
   }

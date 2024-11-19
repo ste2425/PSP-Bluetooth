@@ -23,6 +23,7 @@
   @include mat.icon-color(themes.$installer-dark-theme);
   @include mat.menu-color(themes.$installer-dark-theme);
   @include mat.dialog-color(themes.$installer-dark-theme);
+  @include mat.progress-bar-color(themes.$installer-dark-theme);
   @include components.theme(themes.$installer-dark-theme);
 }
 
