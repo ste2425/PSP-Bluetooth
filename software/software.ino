@@ -195,11 +195,9 @@ void processControllers() {
     }
 }
 
-// Arduino setup function. Runs in CPU 1
 void setup() { 
     Serial.begin(115200);
 
-    // Setup the Bluepad32 callbacks
     BP32.setup(&onConnectedController, &onDisconnectedController);
 
     BP32.forgetBluetoothKeys();
