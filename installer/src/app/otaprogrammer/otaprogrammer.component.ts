@@ -152,7 +152,7 @@ export class OTAProgrammerComponent implements OnDestroy {
         this.programProgress = Math.round((sent / otaSize) * 100);
       }
       
-      this.logger.writeLine('Update has been uploaded. Instructing the PSP Bluetooth Mod to reboot andapply the update. Please wait...');
+      this.logger.writeLine('Update has been uploaded. Instructing the PSP Bluetooth Mod to reboot and apply the update. Please wait...');
 
       
     this.connection?.sendOTACommand(OTACommand.applyUpdate)
@@ -167,7 +167,7 @@ export class OTAProgrammerComponent implements OnDestroy {
     await new Promise(res => setTimeout(res, 5000));
 
     await this.connection.reconnect();
-    
+
     this.newVersion = await this.connection?.version() || '';
     
     this.state = OTAProgrammerState.ProgrammingSuccess;
