@@ -34,27 +34,6 @@
     </p>
   </div>
   }
-  @case (programmingStates.ApplyUpdatePrompt) {
-  <div class="description-message">
-    <p>
-      The update has been sent to the PSP Bluetooth board. It is now being applied, please wait...
-    </p>
-
-    @if (!reconnectDisabled) {
-      <div class="reconnect-container">
-        <button color="accent" mat-button (click)="reConnect()">Reconnect</button>
-      </div>
-    }
-
-    <div class="warning terminal-output">
-      <h3>The board will disconnect</h3>
-      <p>
-        Once the update has been applied the PSP Bluetooth board will restart. You will be prompted to reconnect
-        shortly.
-      </p>
-    </div>
-  </div>
-  }
   @case (programmingStates.ProgrammingActive) {
   <pre class="terminal-output">
         {{terminalOutput}}

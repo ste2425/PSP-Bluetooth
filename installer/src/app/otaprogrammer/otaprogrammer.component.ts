@@ -6,7 +6,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { BTConnectionFactoryService, OTACommand, PSPBluetooth } from '../services/btconnection-factory.service';
+import { BTConnectionAbortedError, BTConnectionFactoryService, BTConnectionGATTConnectionError, BTConnectionPrimaryServiceError, BTConnectionVersionMissmatchError, OTACommand, PSPBluetooth } from '../services/btconnection-factory.service';
 import { ILogger } from '../ILogger';
 import { firstValueFrom } from 'rxjs';
 import { GithubService, ReleaseType } from '../github.service';
@@ -15,7 +15,6 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 enum OTAProgrammerState {
   WarningPrompt,
   ProgramPrompt,
-  ApplyUpdatePrompt,
   ProgrammingActive,
   ProgrammingSuccess,
   ProgrammingError
@@ -81,11 +80,13 @@ export class OTAProgrammerComponent implements OnDestroy {
     return this.dialogRef.disableClose;
   };
 
-  get disableNext() {
+  /*get disableNext() {
     return this.state === OTAProgrammerState.ProgrammingActive ||
       this.state === OTAProgrammerState.ApplyUpdatePrompt ||
       this.state === OTAProgrammerState.ProgrammingSuccess;
-  }
+  }*/
+
+      disableNext = false;
 
   nextText = 'Next';
 
@@ -95,20 +96,6 @@ export class OTAProgrammerComponent implements OnDestroy {
   }
 
   reconnectDisabled = true;
-
-  async reConnect() {    
-    try {
-      this.connection = await this.btConnectionFactory.connect(this.logger);
-
-      this.newVersion = await this.connection?.version() || '';
-  
-      this.state = OTAProgrammerState.ProgrammingSuccess;
-      this.dialogRef.disableClose = false;
-    } catch(e) {
-      if (e instanceof Error)
-        this.logger.writeLine(e.message);
-    }
-  }
 
   async next () {
     switch(this.state) {
@@ -120,26 +107,7 @@ export class OTAProgrammerComponent implements OnDestroy {
         this.state = OTAProgrammerState.ProgrammingActive;
         this.#program();
       break;
-      case OTAProgrammerState.ProgrammingActive:
-        this.state = OTAProgrammerState.ApplyUpdatePrompt;
-      break;
     }
-  }
-
-  async #applyUpdate() {
-    if (this.state !== OTAProgrammerState.ProgrammingActive)
-      return;
-
-    this.state = OTAProgrammerState.ApplyUpdatePrompt;
-
-    this.connection?.sendOTACommand(OTACommand.applyUpdate)
-      .catch((e) => {
-        console.log('Apply error (this is expected)', e);
-      });
-
-    await new Promise(res => setTimeout(res, 10000));
-
-    this.reconnectDisabled = false;
   }
 
   async #program() {
@@ -148,6 +116,7 @@ export class OTAProgrammerComponent implements OnDestroy {
       this.state = OTAProgrammerState.ProgrammingActive;
 
       this.dialogRef.disableClose = true;
+      this.disableNext = true;
 
       this.connection = await this.btConnectionFactory.connect(this.logger);
       this.logger.writeLine('Connected to the BLE Server');
@@ -156,7 +125,7 @@ export class OTAProgrammerComponent implements OnDestroy {
 
       this.logger.writeLine(`Current Version: ${this.oldVersion}`);
 
-      this.logger.writeLine('Downloading binary');
+      this.logger.writeLine('Downloading binary...');
       // throw some delays in to make it look busy
       await new Promise(res => setTimeout(res, 2000));
 
@@ -183,14 +152,71 @@ export class OTAProgrammerComponent implements OnDestroy {
         this.programProgress = Math.round((sent / otaSize) * 100);
       }
       
-      this.#applyUpdate();
+      this.logger.writeLine('Update has been uploaded. Instructing the PSP Bluetooth Mod to reboot andapply the update. Please wait...');
+
+      
+    this.connection?.sendOTACommand(OTACommand.applyUpdate)
+      .catch((e) => {
+        console.log('Apply error (this is expected)', e);
+      });
+
+    await new Promise(res => setTimeout(res, 1000));
+
+    this.connection.disconnect();
+
+    await new Promise(res => setTimeout(res, 5000));
+
+    await this.connection.reconnect();
+    
+    this.newVersion = await this.connection?.version() || '';
+    
+    this.state = OTAProgrammerState.ProgrammingSuccess;
+
+    this.dialogRef.disableClose = false;
+
     } catch(e) {
-      this.logger.writeLine('Error during OTA update:');
-
-      if (e instanceof Error)
-        this.logger.writeLine(e?.message);
-
       this.state = OTAProgrammerState.ProgrammingError;
+      if (e instanceof BTConnectionVersionMissmatchError) {
+        this.logger.clean();
+        this.logger.writeLine(
+          `The device you conencted to does not appear to be the PSP Bluetooth Mod.
+When requesting version number it did not match the value expected.
+
+Recieved: ${e.recieved}
+Expected: ${e.expected}
+
+Click \'Next\' to try again`
+        );
+
+      } else if (e instanceof BTConnectionPrimaryServiceError) {
+        this.logger.clean();
+        this.logger.writeLine(
+          `The device you conencted to does not appear to be the PSP Bluetooth Mod.
+It does not have the expected Primary Service.
+
+Click \'Next\' to try again`
+        );
+      } else if (e instanceof BTConnectionAbortedError) {
+        this.logger.clean();
+        this.logger.writeLine('Bluetooth device was not selected. Click \'Next\' to try again');
+      } else if (e instanceof BTConnectionGATTConnectionError) {
+        this.logger.clean();
+        this.logger.writeLine(
+          `We couldnt connect to your device, tried three times.
+Remember Web Bluetooth is an experimental technology and can be unreliable.
+It may be best to reload your browser and try again`
+        );
+      } else {
+        this.logger.writeLine('Error during OTA update:');
+  
+        if (e instanceof Error) {          
+          this.logger.writeLine(e?.message);
+          this.logger.writeLine(e?.stack || '' );
+        }
+      }
+
+      this.dialogRef.disableClose = false;
+      this.disableNext = false;
     }
   }
 }

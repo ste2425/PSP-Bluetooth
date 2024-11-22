@@ -6,6 +6,7 @@ import { AddMappingModalComponent } from '../add-mapping-modal/add-mapping-modal
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { FormsModule } from '@angular/forms';
 import { ILogger } from '../ILogger';
+import { NotFoundError } from 'rxjs';
 
 @Component({
   selector: 'app-configuration-page',
@@ -159,8 +160,9 @@ export class ConfigurationPageComponent {
     } catch(e) {
       console.error(e);
 
-      if (e instanceof Error)
-        this.terminal.writeLine(e.toString());
+      if (e instanceof Error && e.name === 'NotFoundError')
+        alert('NOT FOUND')
+
 
     }
   }
