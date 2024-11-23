@@ -3,25 +3,60 @@
 <p>From here you can connect to the PSP Bluetooth module to configure button mappings.</p>
 
 <div class="buttons-container">
-    <progress min="0" max="{{otaLength}}" value="{{otaCompleted}}"></progress>
-    {{otaLength}} - {{otaCompleted}}
-    <button color="accent" mat-button (click)="connect()" [disabled]="connected">Connect</button>
-    <button color="accent" mat-button (click)="readValue()" [disabled]="!connected">Read</button>
-    <button color="accent" mat-button (click)="saveValue()" [disabled]="!connected">Write</button>
-
-    <input type="file" (change)="onOtaSelected($event)" />
-    
-    <button color="accent" mat-button (click)="otaCommand(OTACommand.startUpload)" [disabled]="!connected">start</button>
-    
-    <button color="accent" mat-button (click)="otaCommand(OTACommand.uploadFinished)" [disabled]="!connected">done</button>
-    
-    <button color="accent" mat-button (click)="otaCommand(OTACommand.applyUpdate)" [disabled]="!connected">apply</button>
+    <button color="accent" mat-button (click)="loadMappings()" [disabled]="loadMappingsDisabled">Load Mappings</button>
 </div>
 
+@if(wrongBoardError) {
+    <p>
+        The device you conencted to does not appear to be the PSP Bluetooth Mod.
+    </p>
 
-<textarea [(ngModel)]="configuration" matInput
-    cdkAutosizeMinRows="3"></textarea>
+    <p>
+        Please try again and select a different device.
+    </p>
+}
 
-<div class="terminal">  
-    <pre>{{terminalOutput}}</pre>
-</div>
+@if(deviceNotSelectedError) {
+    <p>
+        A device was not selected.
+    </p>
+
+    <p>
+        Please try again and select a different device.
+    </p>
+}
+
+@if (generalError) {
+    <p>
+        There was an error
+    </p>
+
+    <p>
+        {{generalError}}
+    </p>
+
+    <p>
+        Please try again.
+    </p>
+}
+
+@if (connectionError) {
+    <p>
+        We couldnt connect to your device, tried three times.
+    Remember Web Bluetooth is an experimental technology and can be unreliable.
+    </p>
+
+    <p>
+        It may be best to reload your browser and try again
+    </p>
+}
+
+@for (item of configurations; track item) {
+    <app-controller-maping [controllerMapping]="item"></app-controller-maping>
+}
+
+@if (loading) {    
+  <div class="center">
+    <mat-spinner></mat-spinner>
+  </div>
+}

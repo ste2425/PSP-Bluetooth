@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ILogger } from '../ILogger';
+import { availableControllerBitsMappedToType, availablecontrollerTypes, availablePspButtons } from './ESPValueDefinitions';
 
 const PRIMARY_SERVICE_UUID = '4627c4a4-ac00-46b9-b688-afc5c1bf7f63';
 const VERSION_UUID = '4627c4a4-ac01-46b9-b688-afc5c1bf7f63';
@@ -13,6 +14,16 @@ export enum OTACommand {
     uploadFinished = 1,
     applyUpdate = 2
 }
+
+export type ButtonMapping = [number, number, number];
+
+export interface IControllerMapping {
+    m: ButtonMapping[],
+    n: number,
+    c: [number, number, number, number],
+    cHex: string
+}
+  
 
 export class PSPBluetooth {
     constructor(private device: BluetoothDevice, private primaryService: BluetoothRemoteGATTService) { }
@@ -39,16 +50,95 @@ export class PSPBluetooth {
         return this.#readValue(VERSION_UUID);
     }
 
-    async loadButtonMappings(): Promise<Record<string, any> | undefined> {
+    async loadButtonMappings(): Promise<IControllerMapping[]> {
         const strValue = await this.#readValue(MAPPINGS_UUID);
         
         if (!strValue)
-            return undefined;
+            return [];
 
-        return JSON.parse(strValue);
+        const data = JSON.parse(strValue) as IControllerMapping[];
+
+        if (!Array.isArray(data))
+            return [];
+
+        return data.map((dataRaw) => {
+            return {
+                m: this.#validateControllerMappings(dataRaw.m),
+                n: this.#validateMappingControllerBumber(dataRaw.n),
+                c: this.#validateMappingColour(dataRaw.c),
+                get cHex() {
+                    const toHex = (c: number) => {
+                        var hex = c.toString(16);
+                        return hex.length == 1 ? "0" + hex : hex;
+                    };
+                    
+                    return `#${toHex(this.c[0])}${toHex(this.c[1])}${toHex(this.c[2])}`;
+                },
+                set cHex(value: string) {                    
+                    const r = parseInt(value.substring(1,2), 16)
+                    const g = parseInt(value.substring(3,2), 16)
+                    const b = parseInt(value.substring(5,2), 16)
+
+                    this.c[0] = r;
+                    this.c[1] = g;
+                    this.c[2] = b;
+                } 
+            }
+        })
     }
 
-    async saveButtonMappings(mappings: Record<string, any>) {
+    #validateControllerMappings(potentialMappings: any): [number, number, number][] {
+        if (!potentialMappings || !Array.isArray(potentialMappings))
+            return [];
+
+        return potentialMappings.filter((m) => {
+            //only keep a mapping if all its values are valid.
+            if (!Array.isArray(m) || m.length !== 3)
+                return false
+
+            const [pspButton, controllerBit, controllerType] = m;
+
+            if (!availablePspButtons.includes(pspButton)) {
+                console.error('Mapping PSP Button invalid: ', pspButton);
+                return false;
+            }
+            if (!availablecontrollerTypes.includes(controllerType)) {
+                console.error('Mapping Controller Type invalid: ', controllerType);
+                return false;
+            }
+            if (!availableControllerBitsMappedToType[controllerType].includes(controllerBit)) {
+                console.error('Mapping controller bits for type invalid: ', controllerType, controllerBit);
+                return false;
+            }
+
+            return true;
+        });
+    } 
+
+    #validateMappingControllerBumber(potentialNumber: any): number {
+        const number = parseInt(potentialNumber);
+
+        return isNaN(number) ? 1 : number;
+    }
+
+    #validateMappingColour(potentialColour: any): [number, number, number, number] {
+        if (!potentialColour || !Array.isArray(potentialColour))
+            return [255, 0, 0, 1];
+
+        const r = parseInt(potentialColour[0]),
+            g = parseInt(potentialColour[1]),
+            b = parseInt(potentialColour[2]),
+            brightness = parseInt(potentialColour[3]);
+
+        return [
+            isNaN(r) ? 255 : r,
+            isNaN(g) ? 0 : g,
+            isNaN(b) ? 0 : b,
+            isNaN(brightness) ? 1 : brightness,
+        ];
+    }
+
+    async saveButtonMappings(mappings: IControllerMapping[]) {
         const mappingsJson = JSON.stringify(mappings);
         
         await this.#writeValue(MAPPINGS_UUID, this.#encode(mappingsJson));
@@ -165,6 +255,10 @@ export class BTConnectionFactoryService {
         }
 
         return await doIt();
+    }
+
+    isSupported() {
+        return 'bluetooth' in navigator;
     }
 
     async connect(logger: ILogger): Promise<PSPBluetooth> {

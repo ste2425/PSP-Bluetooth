@@ -5,7 +5,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { CommonModule } from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
 import { DomSanitizer } from '@angular/platform-browser';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
 import {MatListModule} from '@angular/material/list';
 
 const GITHUB_ICON =
@@ -17,6 +17,12 @@ const GITHUB_ICON =
     </svg>
 `;
 
+interface IRoute {
+  path: string,
+  label: string,
+  experimental: boolean
+}
+
 @Component({
   selector: 'app-header',
   standalone: true,
@@ -25,28 +31,32 @@ const GITHUB_ICON =
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  constructor(private themeManager: ThemeManager, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+  constructor(private route: ActivatedRoute, private themeManager: ThemeManager, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
     // Note that we provide the icon here as a string literal here due to a limitation in
     // Stackblitz. If you want to provide the icon from a URL, you can use:
     // `iconRegistry.addSvgIcon('thumbs-up', sanitizer.bypassSecurityTrustResourceUrl('icon.svg'));`
     iconRegistry.addSvgIconLiteral('app-github', sanitizer.bypassSecurityTrustHtml(GITHUB_ICON));
   }
   
-  routes = [
+  routes: IRoute[] = [
     {
       path: '/',
-      label: 'Home'
+      label: 'Home',
+      experimental: false
     },
     {
       path: '/configuration',
-      label: 'Configuration'
+      label: 'Configuration',
+      experimental: true
     },
     {
       path: '/program',
-      label: 'Program'
+      label: 'Program',
+      experimental: false
     }, {
       path: '/serial',
-      label: 'Serial'
+      label: 'Serial',
+      experimental: false
     }
   ]
 
@@ -54,5 +64,9 @@ export class HeaderComponent {
 
   changeTheme(theme: string) {
     this.themeManager.changeTheme(theme);
+  }
+
+  displayRoute(route: IRoute) {
+    return !route.experimental || !!this.route.snapshot.queryParamMap.has('exp');
   }
 }

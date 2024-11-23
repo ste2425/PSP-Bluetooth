@@ -14,6 +14,7 @@ import { ProgrammerComponent } from '../programmer/programmer.component';
 import { SerialConnectionFactoryService } from '../services/serial-connection-factory.service';
 import { MatMenuModule } from '@angular/material/menu';
 import { OTAProgrammerComponent } from '../otaprogrammer/otaprogrammer.component';
+import { BTConnectionFactoryService } from '../services/btconnection-factory.service';
 
 export interface ReleaseArtifact {
   name: string,
@@ -31,7 +32,7 @@ export interface ReleaseArtifact {
 })
 export class ReleaseComponent
 {
-  constructor(private dialog: MatDialog, private serialService: SerialConnectionFactoryService) {}
+  constructor(private dialog: MatDialog, private serialService: SerialConnectionFactoryService, private btService: BTConnectionFactoryService) {}
 
   @Input() release: IRelease | undefined;
 
@@ -60,7 +61,7 @@ export class ReleaseComponent
   }
 
   get otaDisabled() {
-    return !this.artifacts.some(a => a.name.endsWith('-ota.bin'));
+    return !this.artifacts.some(a => a.name.endsWith('-ota.bin')) || !this.btService.isSupported();
   }
 
   programESP() {

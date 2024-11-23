@@ -1,108 +1,44 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { BTConnectionFactoryService, OTACommand, PSPBluetooth } from '../services/btconnection-factory.service';
+import { BTConnectionAbortedError, BTConnectionFactoryService, BTConnectionGATTConnectionError, BTConnectionPrimaryServiceError, BTConnectionVersionMissmatchError, IControllerMapping, OTACommand, PSPBluetooth } from '../services/btconnection-factory.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddMappingModalComponent } from '../add-mapping-modal/add-mapping-modal.component';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { FormsModule } from '@angular/forms';
-import { ILogger } from '../ILogger';
-import { NotFoundError } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { ControllerMapingComponent } from "../controller-maping/controller-maping.component";
+import { MatProgressSpinner, MatSpinner } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-configuration-page',
   standalone: true,
-  imports: [MatButtonModule, TextFieldModule, FormsModule],
+  imports: [MatProgressSpinner, MatButtonModule, TextFieldModule, FormsModule, CommonModule, ControllerMapingComponent],
   templateUrl: './configuration-page.component.html',
   styleUrl: './configuration-page.component.scss'
 })
-export class ConfigurationPageComponent {
+export class ConfigurationPageComponent implements OnDestroy {
+  loadMappingsDisabled = false;
+
+  btDevice?: PSPBluetooth;
+  wrongBoardError = false;
+  deviceNotSelectedError = false;
+  connectionError = false;
+  generalError = '';
+  loading = false;
+
+  get connected() {
+    return this.btDevice?.connected;
+  }
+
+  ngOnDestroy(): void {
+    this.btDevice?.disconnect();
+  }
+
   btConnectionFactory = inject(BTConnectionFactoryService);
   dialogService = inject(MatDialog);
   terminalOutput = '';
 
-  configuration: string = '';
-
-  btDevice?: PSPBluetooth;
-
-  otaLength = 0;
-  otaCompleted = 0;
-
-  async beginOta(data: ArrayBuffer) {
-    this.terminal.writeLine('Starting update');
-    await this.btDevice?.sendOTACommand(OTACommand.startUpload);
-
-    await new Promise((res) => setTimeout(res, 100));
-
-    while (this.otaCompleted < this.otaLength) {
-      const remaining = this.otaLength - this.otaCompleted;
-      const toTake = remaining > 244 ? 244 : remaining; 
-
-      const dataToSend = new DataView(data, this.otaCompleted, toTake);
-
-      await this.btDevice?.sendOTAData(dataToSend);
-
-      this.otaCompleted += toTake;
-
-      this.terminal.writeLine(`Sent: ${this.otaCompleted}`);
-      
-      await new Promise((res) => setTimeout(res, 100));
-    }
-
-    this.terminal.writeLine('Uploaded');
-    await this.btDevice?.sendOTACommand(OTACommand.uploadFinished);
-    
-    await new Promise((res) => setTimeout(res, 100));
-
-    this.terminal.writeLine('Applying');
-    await this.btDevice?.sendOTACommand(OTACommand.applyUpdate);
-
-    this.terminal.writeLine('DONE');
-  }
-
-  onOtaSelected(event: Event) {
-    if (!(event.target instanceof HTMLInputElement))
-      return;
-
-    const target: HTMLInputElement = event.target,
-      file = target.files?.[0];
-
-    if (!file)
-      return;
-
-    const fileReader = new FileReader();
-
-    fileReader.onload = () => {
-      const data = fileReader.result;
-
-      if (!(data instanceof ArrayBuffer))
-        return;
-
-      this.otaLength = data.byteLength;
-
-      this.beginOta(data);
-    }
-
-    fileReader.readAsArrayBuffer(file);
-  }
-
-  get connected() {
-    return !!this.btDevice?.connected;
-  }
-
-  OTACommand = OTACommand;
-
-  async otaCommand(command: OTACommand) {
-    await this.btDevice?.sendOTACommand(command);
-  }
-
-  terminal: ILogger = {
-    clean: () => this.terminalOutput = '',
-    writeLine: (value: string) => this.terminalOutput += `${value}\n`,
-    write: (value: string) => this.terminalOutput += value,
-    prettyPrint (value: Record<string, any>) {
-      this.writeLine(JSON.stringify(value, null, 2))
-    }
-  }
+  configurations: IControllerMapping[] = []
 
   addMapping() {
     const dialogRef = this.dialogService.open(AddMappingModalComponent);
@@ -112,23 +48,36 @@ export class ConfigurationPageComponent {
     });
   }
 
-  decode(value: DataView) {
-    const decoder = new TextDecoder();
-    return decoder.decode(value).replaceAll('\0', '');
-  }
-
-  async readValue() {
-    if (!this.connected || !this.btDevice)
-      return;
-
-    this.terminal.writeLine('Reading mappings');
-    const mappings = await this.btDevice.loadButtonMappings();
-
-    if (mappings) {
-      this.configuration = JSON.stringify(mappings);
-      this.terminal.writeLine('Mappings read');
-    } else {
-      this.terminal.writeLine('no mappings');
+  async loadMappings() {
+    try {
+      this.loading = true;
+      this.deviceNotSelectedError = false;
+      this.wrongBoardError = false;
+      this.connectionError = false;
+      this.generalError = '';
+      this.loadMappingsDisabled = true;
+      await this.connect();
+  
+      if (!this.btDevice)
+        throw new Error('Uh oh');
+  
+      console.log('Reading mappings');
+      const mappings = await this.btDevice.loadButtonMappings();
+  
+      if (mappings) {
+        this.configurations = mappings;
+        //this.$configurations.next(mappings);
+        console.log('Mappings read');
+      } else {
+        console.log('no mappings');
+      }
+  
+      this.loadMappingsDisabled = false;
+    } catch(e) {
+      console.log(e);
+      this.loadMappingsDisabled = false;
+    } finally {
+      this.loading = false;
     }
   }
 
@@ -136,37 +85,81 @@ export class ConfigurationPageComponent {
     if (!this.connected || !this.btDevice)
       return;
 
-    this.terminal.writeLine('Saving mappings...');
+    console.log('Saving mappings...');
 
-    await this.btDevice.saveButtonMappings(JSON.parse(this.configuration));
+    //await this.btDevice.saveButtonMappings(JSON.parse(this.configuration));
     
-    this.terminal.writeLine("Mappings written");
+    console.log("Mappings written");
   }
 
-  async connect() {
-    
-    try {      
-      this.terminal.writeLine('Connecting...');
+  async connect() {  
+      try {      
+        console.log('Connecting...');
+        
+        this.btDevice = await this.btConnectionFactory.connect({
+          write(value) {
+            this.writeLine(value);
+          },
+          writeLine(value) {
+            console.log(value);
+          },
+          clean() {},
+          prettyPrint(value) {
+            console.log(value);
+          }
+        });
+
+        console.log('Connected');
+        console.log(this.btDevice.deviceDetails());
+
+        console.log('Connected');
+
+        const version = await this.btDevice.version();
+        console.log(version);
+      } catch(e) {if (e instanceof BTConnectionVersionMissmatchError) {
+        this.wrongBoardError = true;
+        
+        console.log(
+          `The device you conencted to does not appear to be the PSP Bluetooth Mod.
+When requesting version number it did not match the value expected.
+
+Recieved: ${e.recieved}
+Expected: ${e.expected}`
+        );
+
+      } else if (e instanceof BTConnectionPrimaryServiceError) {
+        this.wrongBoardError = true;
+        console.log(
+          `The device you conencted to does not appear to be the PSP Bluetooth Mod.
+It does not have the expected Primary Service.`
+        );
+      } else if (e instanceof BTConnectionAbortedError) {
+        
+        console.log('Bluetooth device was not selected. Click \'Next\' to try again');
+        this.deviceNotSelectedError = true;
+      } else if (e instanceof BTConnectionGATTConnectionError) {
+        this.connectionError = true;
+        console.log(
+          `We couldnt connect to your device, tried three times.
+Remember Web Bluetooth is an experimental technology and can be unreliable.
+It may be best to reload your browser and try again`
+        );
+      } else {
+        console.log('Error during OTA update:');
   
-      this.btDevice = await this.btConnectionFactory.connect(this.terminal);
+        if (e instanceof Error) {    
+          this.generalError = `
+${e.message};
 
-      this.terminal.writeLine('Connected');
-      this.terminal.prettyPrint(this.btDevice.deviceDetails());
+--------
 
-      this.terminal.writeLine('Connected');
+${e.stack}`;   
+          console.log(e?.message);
+          console.log(e?.stack || '' );
+        }
+      }
 
-      const version = await this.btDevice.version();
-      this.terminal.writeLine(version);
-    } catch(e) {
-      console.error(e);
+      }
 
-      if (e instanceof Error && e.name === 'NotFoundError')
-        alert('NOT FOUND')
-
-
-    }
-  }
-
-  async disconnect() {
   }
 }
