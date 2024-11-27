@@ -41,7 +41,7 @@ See [it's readme](./software/Readme.md) for more info.
 
 This contains the software for the Web app. It as an Angular application built using Angular Material and deployed to GitHub pages via GitHub Actions.
 
-See [it's readme](./installer/Readme.md) for more info.
+See [it's readme](./installer/README.md) for more info.
 
 ### /Hardware
 
