@@ -1,0 +1,32 @@
+:host {
+  display: block;
+  padding: 10px;
+}
+
+h1 {
+  flex-grow: 1;
+}
+
+a {
+  margin-right: 10px;
+}
+
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header-show-small {
+  display: none;
+}
+
+@media (max-width: 720px) {
+  .header-hide-small {
+    display: none;
+  }
+
+  .header-show-small {
+    display: block;
+  }
+}

@@ -1,0 +1,62 @@
+<h2>PSP Bluetooth Configuration</h2>
+
+<p>From here you can connect to the PSP Bluetooth module to configure button mappings.</p>
+
+<div class="buttons-container">
+    <button color="accent" mat-button (click)="loadMappings()" [disabled]="loadMappingsDisabled">Load Mappings</button>
+</div>
+
+@if(wrongBoardError) {
+    <p>
+        The device you conencted to does not appear to be the PSP Bluetooth Mod.
+    </p>
+
+    <p>
+        Please try again and select a different device.
+    </p>
+}
+
+@if(deviceNotSelectedError) {
+    <p>
+        A device was not selected.
+    </p>
+
+    <p>
+        Please try again and select a different device.
+    </p>
+}
+
+@if (generalError) {
+    <p>
+        There was an error
+    </p>
+
+    <p>
+        {{generalError}}
+    </p>
+
+    <p>
+        Please try again.
+    </p>
+}
+
+@if (connectionError) {
+    <p>
+        We couldnt connect to your device, tried three times.
+    Remember Web Bluetooth is an experimental technology and can be unreliable.
+    </p>
+
+    <p>
+        It may be best to reload your browser and try again
+    </p>
+}
+
+@for (item of configurations; track item) {
+    <app-controller-maping [controllerMapping]="item"></app-controller-maping>
+}
+
+@if (loading) {    
+  <div class="center">
+    <mat-spinner></mat-spinner>
+  </div>
+}

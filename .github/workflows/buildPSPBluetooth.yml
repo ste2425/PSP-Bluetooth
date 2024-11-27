@@ -1,0 +1,71 @@
+name: Build-PSP-Bluetooth
+on:
+  push:
+    paths:
+      - software/**
+
+permissions:
+  contents: write
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: arduino/setup-arduino-cli@v1
+        name: Install Arduino CLI
+      - uses: actions/checkout@v3
+        name: checkout PSP-Bluetooth
+        with:
+          path: develop
+      - name: Install Dependencies
+        run: ./install.sh
+        working-directory: develop/software/scripts
+        env:
+          GITHUB_ACTION: true
+      - name: Inject Version
+        run: sed -i -e 's/<DEVELOPMENT>/internal-${{github.run_number}}/g' constants.h
+        working-directory: develop/software/src
+      - name: Build
+        run: ./compile.sh
+        working-directory: develop/software/scripts
+        env:
+          GITHUB_ACTION: true
+      - name: Merge binaries
+        run: ./merge.sh
+        working-directory: develop/software/scripts
+        env:
+          GITHUB_ACTION: true
+      - name: Create OTA Binary
+        run: cp develop/software/bin/software.ino.bin develop/software/bin/pspBluetooth-ota.bin
+      - name: Move binary to Release
+        run: cp develop/software/bin/pspBluetooth.bin develop/releaseBinaries/pspBluetooth.bin
+      - name: Move OTA binary to Release
+        run: cp develop/software/bin/pspBluetooth-ota.bin develop/releaseBinaries/pspBluetooth-ota.bin
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          repository: develop
+          file_pattern: :(exclude)**/constants.h
+      - uses: actions/upload-artifact@v4
+        with:
+          name: binFolder
+          path: develop/software/bin/
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            develop/software/bin/pspBluetooth.bin
+            develop/software/bin/pspBluetooth-ota.bin
+          prerelease: true
+          name: PSP Bluetooth Internal (Develop ${{github.run_number}})
+          body: |
+            *This is pre-release build on the PSP-Bluetooth project.*
+            
+            This release has been based of the `develop` branch and a new release created for every commit to the develop branch.
+
+            If you want to test the latest and greatest this is what you want.
+
+            Changes:
+
+            ${{ github.event.head_commit.message }}
+          tag_name: internal-${{github.run_number}}
+          target_commitish: develop

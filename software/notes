@@ -1,0 +1,27 @@
+update cli 
+
+core update index dont forget to point to config file
+
+search for cores with 
+
+install core for 
+
+
+Traceback (most recent call last):
+  File "/home/stephen/.arduino15/packages/esp32/tools/esptool_py/4.5.1/esptool.py", line 31, in <module>
+    import esptool
+  File "/home/stephen/.arduino15/packages/esp32/tools/esptool_py/4.5.1/esptool/__init__.py", line 41, in <module>
+    from esptool.cmds import (
+  File "/home/stephen/.arduino15/packages/esp32/tools/esptool_py/4.5.1/esptool/cmds.py", line 14, in <module>
+    from .bin_image import ELFFile, ImageSegment, LoadFirmwareImage
+  File "/home/stephen/.arduino15/packages/esp32/tools/esptool_py/4.5.1/esptool/bin_image.py", line 14, in <module>
+    from .loader import ESPLoader
+  File "/home/stephen/.arduino15/packages/esp32/tools/esptool_py/4.5.1/esptool/loader.py", line 30, in <module>
+    import serial
+ModuleNotFoundError: No module named 'serial'
+
+sudo apt install python3-pip
+
+sudo apt install python3-serial
+
+test

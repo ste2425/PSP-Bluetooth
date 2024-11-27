@@ -1,0 +1,10 @@
+:host {
+    display: block;
+    padding: 10px;
+
+    border: 1px solid grey;
+
+    &.active {
+        border: 1px solid red;
+    }
+}

@@ -1,0 +1,53 @@
+name: buildPSPBluetoothWebProgrammer
+on:
+  push:
+    paths:
+      - installer/**
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        name: checkout PSP-Bluetooth
+        with:
+          path: develop
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install Dependencies
+        run: npm install
+        working-directory: develop/installer
+      - name: Build app
+        run: npm run build -- --configuration production --base-href https://ste2425.github.io/PSP-Bluetooth/
+        working-directory: develop/installer
+      - name: Create Serial Static Page
+        working-directory: develop/installer/dist/installer/browser
+        run: cp index.html serial.html
+      - name: Create Program Static Page
+        working-directory: develop/installer/dist/installer/browser
+        run: cp index.html program.html
+      - name: Create Configuration Static Page
+        working-directory: develop/installer/dist/installer/browser
+        run: cp index.html configuration.html
+      - name: Copy 404 Page
+        working-directory: develop/installer
+        run: cp src/404.html dist/installer/browser/404.html
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          # Upload entire repository
+          path: './develop/installer/dist/installer/browser'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2

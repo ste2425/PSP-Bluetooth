@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "websocket-stream": "^5.5.2"
+  }
+}

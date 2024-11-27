@@ -1,0 +1,18 @@
+// src/styles/components/_index.scss
+
+@use "../../app/release/release-theme" as release;
+@use "../../app/header/header-theme" as header;
+@use "../../app/programmer/programmer-theme" as programmer;
+@use "../../app/otaprogrammer/ota-programmer-theme" as otaProgrammer;
+@use "../../app/serial-page/serial-page-theme" as serialPage;
+@use "../../app/configuration-page/configuration-page-theme" as configurationPage;
+
+
+@mixin theme($theme) {
+    @include release.theme($theme);
+    @include header.theme($theme);
+    @include programmer.theme($theme);
+    @include serialPage.theme($theme);
+    @include configurationPage.theme($theme);
+    @include otaProgrammer.theme($theme);
+}

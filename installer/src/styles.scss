@@ -1,0 +1,50 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+@use "./styles/themes/all" as themes;
+@use "./styles/components";
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+@include mat.all-component-themes(themes.$installer-light-theme);
+
+@include components.theme(
+  themes.$installer-light-theme
+);
+
+@media (prefers-color-scheme: dark) {
+  @include mat.core-color(themes.$installer-dark-theme);
+  @include mat.button-color(themes.$installer-dark-theme);
+  @include mat.icon-color(themes.$installer-dark-theme);
+  @include mat.menu-color(themes.$installer-dark-theme);
+  @include mat.dialog-color(themes.$installer-dark-theme);
+  @include mat.progress-bar-color(themes.$installer-dark-theme);
+  @include components.theme(themes.$installer-dark-theme);
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.center {
+  display: flex; 
+  justify-content: center;
+}
+
+.dialog-width {
+  width: 60%;
+}
+
+@media (max-width: 720px) {
+  .dialog-width {
+    width: 100%;
+  }
+}
+
+.d-flex {
+  display: flex;
+}

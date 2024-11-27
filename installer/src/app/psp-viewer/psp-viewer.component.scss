@@ -1,0 +1,49 @@
+:host {
+    display: block;
+}
+
+#psp-dpad-right, #psp-dpad-left, #psp-dpad-up, #psp-dpad-down {
+    &:not(.active):hover {
+        cursor: pointer;
+
+        path {
+            stroke: yellow;
+        }
+    }
+
+    &.active path {
+        stroke: green;
+    }
+}
+
+#psp-square, #psp-triangle, #psp-cross, #psp-circle {
+    &:not(.active):hover {
+        cursor: pointer;
+
+        circle:first-child {
+            stroke: yellow;
+        }
+    }
+
+    &.active circle {
+        stroke: green;
+    }
+}
+
+
+#psp-analog-up, #psp-analog-down, #psp-analog-left, #psp-analog-right, #psp-power {
+    stroke: grey;
+}
+
+#psp-l1, #psp-r1, #psp-power, #psp-home, #psp-vol-down, #psp-vol-up, #psp-vol-down, #psp-screen, #psp-music, #psp-select, #psp-start, #psp-analog, #psp-analog-up, #psp-analog-down, #psp-analog-left, #psp-analog-right {
+    &:not(.active):hover {
+        cursor: pointer;
+        stroke: yellow;
+        stroke-width: 2px;
+    }
+
+    &.active {
+        stroke: green;
+        stroke-width: 2px;
+    }
+}

@@ -1,0 +1,288 @@
+(footprint "FPC-SMD_AFC01-S14FCA-00"
+	(version 20240108)
+	(generator "pcbnew")
+	(generator_version "8.0")
+	(layer "F.Cu")
+	(descr "FPC-SMD_AFC01-S14FCA-00 footprint")
+	(tags "FPC-SMD_AFC01-S14FCA-00 footprint C262663")
+	(property "Reference" "REF**"
+		(at -0.049962 -3.340107 0)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "4a8c6b5e-c19c-4796-9ae5-17d897e38cc0")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "FPC-SMD_AFC01-S14FCA-00"
+		(at -0.049962 6.299975 0)
+		(layer "F.Fab")
+		(uuid "bb556d78-7920-4f57-8c0f-f501e779d4e4")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Footprint" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "cf5683b4-fb61-4310-af41-236b5d2d2da6")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "d2a584b6-5209-4391-95fd-096767d0a75b")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "42976b53-b978-4b09-8bde-98c08fafc11b")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr smd)
+	(fp_line
+		(start -5.799949 -1.100025)
+		(end -3.599949 -1.100025)
+		(stroke
+			(width 0.254001)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "0b91afe5-cf86-4760-b559-41ff2cb14373")
+	)
+	(fp_line
+		(start -5.799949 0.30889)
+		(end -5.799949 -1.100025)
+		(stroke
+			(width 0.254001)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "ee485b56-e9ba-4eb7-8d51-5c5f50eaec7d")
+	)
+	(fp_line
+		(start -5.799949 4.299975)
+		(end -5.799949 2.371146)
+		(stroke
+			(width 0.254001)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "c7c7a997-147d-46fc-af2f-b441d0ad6c1d")
+	)
+	(fp_line
+		(start 3.631064 -1.100025)
+		(end 5.6 -1.100025)
+		(stroke
+			(width 0.254001)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "f016bbf6-ed15-4d87-9cd8-474495b5b309")
+	)
+	(fp_line
+		(start 5.6 -1.100025)
+		(end 5.700025 -1)
+		(stroke
+			(width 0.254001)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "0c3860fd-a9b6-4878-ab67-d96e7b6ebddf")
+	)
+	(fp_line
+		(start 5.700025 -1)
+		(end 5.700025 0.30889)
+		(stroke
+			(width 0.254001)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "fcc53998-56e7-44f9-b187-c1bc27cb3adf")
+	)
+	(fp_line
+		(start 5.700025 2.371146)
+		(end 5.700025 4.299975)
+		(stroke
+			(width 0.254001)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "1c323db2-367b-4d4d-baed-500a18c614e9")
+	)
+	(fp_line
+		(start 5.700025 4.299975)
+		(end -5.799949 4.299975)
+		(stroke
+			(width 0.254001)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "6359cc4c-8bdc-47a5-a37e-ff8bfefdba9c")
+	)
+	(fp_circle
+		(center -5.700025 4.300991)
+		(end -5.670053 4.300991)
+		(stroke
+			(width 0.059995)
+			(type solid)
+		)
+		(fill none)
+		(layer "F.SilkS")
+		(uuid "1aac1924-e507-40a8-bd29-615a386eb020")
+	)
+	(fp_circle
+		(center -3.937008 -1.778258)
+		(end -3.810008 -1.778258)
+		(stroke
+			(width 0.254001)
+			(type solid)
+		)
+		(fill none)
+		(layer "F.SilkS")
+		(uuid "b4182c6b-c19a-449d-bcb0-7c15a25e264d")
+	)
+	(fp_text user "REF**"
+		(at -0.049962 8.299975 0)
+		(layer "F.Fab")
+		(uuid "78233a63-0f5c-4d14-b262-0cf88e7bfd27")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "1" smd rect
+		(at -3.249936 -1.340107 180)
+		(size 0.3 1.3)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "0c1b0644-8da1-41d1-af2b-1fc42023fb16")
+	)
+	(pad "2" smd rect
+		(at -2.750064 -1.338583 180)
+		(size 0.3 1.3)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "52676aa8-6404-40a3-b2ec-f2c0a7c1951b")
+	)
+	(pad "3" smd rect
+		(at -2.249936 -1.340107 180)
+		(size 0.3 1.3)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "8b0cc299-5b2a-4788-80e2-fc2f99b9d724")
+	)
+	(pad "4" smd rect
+		(at -1.750064 -1.340107 180)
+		(size 0.3 1.3)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "6e051024-26cb-4def-91f2-e9792c7524e6")
+	)
+	(pad "5" smd rect
+		(at -1.249936 -1.340107 180)
+		(size 0.3 1.3)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "ce448db5-d965-4687-8e0c-f4d354659123")
+	)
+	(pad "6" smd rect
+		(at -0.750064 -1.340107 180)
+		(size 0.3 1.3)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "af0e2071-5f71-4c85-9804-1d651880f8ee")
+	)
+	(pad "7" smd rect
+		(at -0.249936 -1.340107 180)
+		(size 0.3 1.3)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "d2481b51-05d0-4b01-84e9-28bbfcfa170a")
+	)
+	(pad "8" smd rect
+		(at 0.249936 -1.340107 180)
+		(size 0.3 1.3)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "b2fc43f1-8aa1-4c45-9cb0-5051c5623351")
+	)
+	(pad "9" smd rect
+		(at 0.750064 -1.340107 180)
+		(size 0.3 1.3)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "960506db-61eb-415b-9b5e-efb454239b36")
+	)
+	(pad "10" smd rect
+		(at 1.249936 -1.340107 180)
+		(size 0.3 1.3)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "a16e4bdb-54ac-4ff1-bdc2-9fa9eef28700")
+	)
+	(pad "11" smd rect
+		(at 1.750064 -1.340107 180)
+		(size 0.3 1.3)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "463ea4cf-d24e-4acb-9718-04fc70937518")
+	)
+	(pad "12" smd rect
+		(at 2.249936 -1.340107 180)
+		(size 0.3 1.3)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "10adcc27-d969-46d7-8340-28a3aea8fa17")
+	)
+	(pad "13" smd rect
+		(at 2.750064 -1.340107 180)
+		(size 0.3 1.3)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "1d5ffd64-aa93-4756-b648-53630e78f512")
+	)
+	(pad "14" smd rect
+		(at 3.249936 -1.340107 180)
+		(size 0.3 1.3)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "7b30612d-0754-4356-9b73-d2fbfaaad074")
+	)
+	(pad "15" smd rect
+		(at 4.94793 1.340107 90)
+		(size 1.6 2)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "b2059133-c3cf-43e4-b855-d8c82b96e02c")
+	)
+	(pad "16" smd rect
+		(at -4.94793 1.340107 90)
+		(size 1.6 2)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "0eec478a-eb17-4412-8ff3-b448f8df3b60")
+	)
+	(model "D:\\PSP-Consolizer-Internal-main\\PSP-Consolizer-Internal-main\\hardware/lib/JLCPCB/JLCPCB_footprint/packages3d/FPC-SMD_AFC01-S14FCA-00.step"
+		(offset
+			(xyz 0.0000253999996185 -1.32499098 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 -180)
+		)
+	)
+)

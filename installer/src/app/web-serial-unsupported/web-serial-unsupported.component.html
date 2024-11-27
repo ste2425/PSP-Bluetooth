@@ -1,0 +1,34 @@
+<h2 mat-dialog-title>Required Technologies Not Supported</h2>
+
+<mat-dialog-content class="mat-typography">
+    <div class="description-message">
+        <p>
+            Unfortunatly your browser does not support the following technologies
+        </p>
+
+        @if(!serialSupported) {
+            <h3>Web Serial</h3>
+            <p>
+                
+                <a mat-button href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Serial_API" target="_blank">Web Serial</a> 
+                is the technology that allows a web browser to communicate with serial devices such as the ESP32. 
+            </p>
+        }
+
+        @if(!btSupported) {
+            <h3>Web Bluetooth</h3>
+            <p>
+                
+                <a mat-button href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Bluetooth_API" target="_blank">Web Bluetooth</a> 
+                is the technology that allows a web browser to communicate with devices over Bluetooth.
+            </p>
+        }
+
+        <p>It is recommended to use a browser powered by <a a mat-button href="https://en.wikipedia.org/wiki/Chromium_(web_browser)" target="_blank">Chromium</a>.</p>
+    </div>
+  
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button color="primary" mat-button mat-dialog-close cdkFocusInitial>OK</button>
+</mat-dialog-actions>

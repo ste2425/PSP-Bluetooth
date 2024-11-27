@@ -1,0 +1,42 @@
+:host:not(:first-of-type) .release {
+  margin-top: 10px;
+}
+
+.release {
+  max-width: 65%;
+  padding: 1rem 1rem;
+  margin-bottom: 1rem;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 0.25rem;
+  margin: 0 auto;
+
+  .release-body {
+    padding-top: 0.5;
+  }
+
+  .release-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 0.5rem;
+
+    h4 {
+      margin: 0px;
+    }
+  }
+
+  .release-footer {
+    padding-top: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    font-size: 80%;
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 720px) {
+  .release {
+    max-width: 100%;
+  }
+}

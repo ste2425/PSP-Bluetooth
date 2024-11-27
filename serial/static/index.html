@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%; margin: 0">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Hello, world!</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="" />
+  <link rel="icon" href="favicon.png">
+</head>
+
+<body style="height: 100%; margin: 0">
+  <div style="height: 100%; display: flex; flex-direction: column">
+    <h1>Hello, world!</h1>
+    <div>
+      <button type="button" id="connect">Connect</button>
+      <button type="button" id="clearLog">Clear log</button>
+      <progress id="progress" max="100" value="0"></progress>
+    </div>
+    <div style="flex-grow: 1; overflow: auto;" id="scrollContainer">
+      <pre id="output"></pre>
+    </div>
+  </div>
+
+  <script src="./main.js" type="module"></script>
+  <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.js"></script>
+</body>
+
+</html>

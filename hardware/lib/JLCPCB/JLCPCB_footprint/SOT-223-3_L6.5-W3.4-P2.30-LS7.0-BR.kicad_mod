@@ -1,0 +1,164 @@
+(footprint "SOT-223-3_L6.5-W3.4-P2.30-LS7.0-BR"
+	(version 20240108)
+	(generator "pcbnew")
+	(generator_version "8.0")
+	(layer "F.Cu")
+	(descr "SOT-223-3_L6.5-W3.4-P2.30-LS7.0-BR footprint")
+	(tags "SOT-223-3_L6.5-W3.4-P2.30-LS7.0-BR footprint C6186")
+	(property "Reference" "REF**"
+		(at -0.000013 -5.326213 0)
+		(layer "F.SilkS")
+		(uuid "ea762a27-99c8-481c-8d09-9727ec2bafa1")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "SOT-223-3_L6.5-W3.4-P2.30-LS7.0-BR"
+		(at -0.000013 5.326213 0)
+		(layer "F.Fab")
+		(uuid "f60b231d-9843-4b11-9d8e-d3152a873456")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Footprint" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "21d827be-c4ae-49cc-b353-27741bacef12")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "849c6087-b034-4bd8-82e5-324f6fc6513e")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "68f62163-a135-49b3-8ddd-d4419816efed")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr smd)
+	(fp_line
+		(start -1.571425 -3.326213)
+		(end 1.371374 -3.326213)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "39b6010f-d21e-419d-bb5c-cafe0345469d")
+	)
+	(fp_line
+		(start -1.571425 3.326213)
+		(end -1.571425 -3.326213)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "771e8318-cbec-47d2-8726-24655f19204a")
+	)
+	(fp_line
+		(start 1.371374 -3.326213)
+		(end 1.371374 3.326213)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "c3987c5a-02b7-4e79-9f31-e939d5a00367")
+	)
+	(fp_line
+		(start 1.371374 3.326213)
+		(end -1.571425 3.326213)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "cabc5d65-300e-4898-b0d1-af1f7ea79a61")
+	)
+	(fp_circle
+		(center 3.400102 3.249936)
+		(end 3.430074 3.249936)
+		(stroke
+			(width 0.059995)
+			(type solid)
+		)
+		(fill none)
+		(layer "F.SilkS")
+		(uuid "f43c229e-4473-4c8d-92dd-c6b3b6fd2161")
+	)
+	(fp_text user "REF**"
+		(at -0.000013 7.326213 0)
+		(layer "F.Fab")
+		(uuid "bfef4dcd-62c1-459c-b36d-d56b4856d556")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "1" smd rect
+		(at 2.969952 2.299975)
+		(size 2.5 1.1)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "38ea44d9-dc50-4cd5-ae71-72f6aa02482a")
+	)
+	(pad "2" smd rect
+		(at 2.969952 0)
+		(size 2.5 1.1)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "f368e07a-d7be-4cbf-b736-0498b7643dc7")
+	)
+	(pad "3" smd rect
+		(at 2.969952 -2.299975)
+		(size 2.5 1.1)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "8d16e32d-0698-4c1a-b6bc-f12f68ef03a8")
+	)
+	(pad "4" smd rect
+		(at -2.969977 0)
+		(size 2.340005 3.6)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "93b03450-c0d9-4fee-bd09-c160b29b284a")
+	)
+	(model "D:/PSP-Consolizer-Internal-main/PSP-Consolizer-Internal-main/hardware/lib/JLCPCB/JLCPCB_footprint/packages3d/SOT-223-3_L6.5-W3.4-P2.30-LS7.0-BR.step"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 -180)
+		)
+	)
+)

@@ -1,0 +1,29 @@
+<div class="d-flex">
+    <div [ngStyle]="{
+        backgroundColor: controllerMapping?.cHex,
+        height: '50px',
+        flexGrow: 1,
+        flexBasis: 0
+    }"></div>
+    
+    <p style="flex-grow: 1; flex-basis: 0">
+        Controller Number: {{controllerMapping?.n}}
+    </p>
+</div>
+
+<div class="d-flex">
+    <div style="flex-grow: 1; flex-basis: 0">
+
+        @for (item of controllerMapping?.m; track item) {
+            <app-controller-button-mapping [mapping]="item" (click)="activeMapping = item" [ngClass]="{ active: activeMapping === item }"></app-controller-button-mapping>
+        }
+        
+    </div>
+
+    <div style="flex-grow: 1; flex-basis: 0">
+        <app-psp-viewer [currentlyActivePin]="activeMapping?.[0]" (onChange)="onChange($event)"></app-psp-viewer>
+    </div>
+</div>
+
+<mat-divider></mat-divider>
+

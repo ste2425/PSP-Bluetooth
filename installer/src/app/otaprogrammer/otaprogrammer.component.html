@@ -1,0 +1,61 @@
+<h2 mat-dialog-title>
+  Programming your PSP Bluetooth Board
+  <mat-progress-bar [mode]="progressBarMode" [value]="programProgress" [bufferValue]="0"></mat-progress-bar>
+</h2>
+
+<mat-dialog-content class="mat-typography">
+  @switch (state) {
+  @case (programmingStates.WarningPrompt) {
+  <div class="description-message">
+    <p>
+      Whilst programming your ESP it is important to <strong>not close or reload your browser</strong>.
+    </p>
+    <p>
+      If you do the OTA upload will need to restart from the begining.
+    </p>
+
+    <div class="warning terminal-output">
+      <h3>Web Bluetooth is an experimental technology</h3>
+      <p>
+        Trouble connecting to the PSP Bluetooth board is to be expected. If the web app fails to connect try again.
+        It's not uncommon to need to close and re-open the browser.
+      </p>
+    </div>
+  </div>
+  }
+  @case (programmingStates.ProgramPrompt) {
+  <div class="description-message">
+    <p>
+      You are about to program your ESP32 with version <strong>{{data.tag}}</strong>
+    </p>
+    <p>
+      This will first download the release binaries from GitHub then it will connect to your PSP Bluetooth board and
+      apply the update.
+    </p>
+  </div>
+  }
+  @case (programmingStates.ProgrammingActive) {
+  <pre class="terminal-output">
+        {{terminalOutput}}
+      </pre>
+  }
+  @case (programmingStates.ProgrammingError) {
+  <pre class="terminal-output">
+        {{terminalOutput}}
+      </pre>
+  }
+  @case (programmingStates.ProgrammingSuccess) {
+  <div class="description-message">
+    <p>
+      Your ESP has been programmed with version <strong>{{newVersion}}</strong> from version <strong>{{oldVersion}}</strong>
+    </p>
+  </div>
+  }
+  }
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button color="secondary" mat-button (click)="close()" [disabled]="closeDisabled">Close</button>
+  <button color="accent" mat-button cdkFocusInitial (click)="next()" [disabled]="disableNext">{{nextText}}</button>
+</mat-dialog-actions>
