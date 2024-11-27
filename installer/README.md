@@ -1,27 +1,47 @@
 # Installer
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.0.
+This is the source code the the Angular Web app.
 
-## Development server
+It is built in TypeScript and uses Angular Material for its UI components.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+It also uses Web Serial and Web Bluetooth API's for programming the ESP.
 
-## Code scaffolding
+Serial programming is provided by the [ESPtool-js](https://github.com/espressif/esptool-js) library provided by ESpressif.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+As such it only works on Chromium bases browsers.
 
-## Build
+# Release binaries for the web app Issue
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+See the readme [here](../releaseBinaries/Readme.md)
 
-## Running unit tests
+# Installation
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Ensure NodeJS is installed and the command `npm` is globally available.
 
-## Running end-to-end tests
+Within the `installer` folder run `npm install`.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+# Starting
 
-## Further help
+Within the `installer` folder run `npm start`. The terminal output will report the URL for the web app locally.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+# Hosting in GitHub
+
+See the `buildPSPBluetoothWebProgrammer.yml` file in the `.github/workflows` folder in the root.
+
+## Routing problem
+
+The app is hosted within GitHub and deployed using GitHub actions. There was some jiggery-pokery to make the routing work.
+
+GitHub expects a static site where every page is its own `html` file. Angular is an SPA where there is a single root `index.html` file and routing is handled via JS.
+
+These two worlds clash. If you hit the root of the site, navigate to another page say `/serial` then hit F5 you will get a `404` page from GitHub. This is because GitHub is looking for a html file called `serial.html` which obviously does not exist.
+
+### Routing Solution
+
+The solution is to duplicate, via CI, the compiled `index.html` and rename it for every route the application has.
+
+## Route Case Sensitivity Problem
+
+GitHub pages routes are case sensitive. IF the route is `/serial` but you hit `/Serial` it will get a `404`.
+
+What we do is have a `404.html` page in the root which GitHub actions hits. Some JS checks the current URL, lower cases it and compares it to a list of expected routes. If it matches it will redirect the user to that correct casing of that route.
