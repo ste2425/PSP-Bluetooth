@@ -4,20 +4,37 @@ OneButton button;
 
 void doubleClick()
 {
-  LED_on();
-  Serial.println("x2");
+  Serial.println("Delete mappings");
 
-} // doubleClick
+  FileUtility::deleteFile(LittleFS, "/mapping.json");
+}
 
 void click() {
-  LED_off();
-  LED_fadeSlow();
-  Serial.println("Click");
+  CTRMANAGER_toggleConnections();
+
+  if (CTRMANAGER_newConnectionEnabled()) {
+    LED_syncPattern();
+  } else if (INTEROP_bleServiceEnabled()) {
+    LED_blePattern();
+  } else if (PSPstate_poweredOn()) {
+    LED_on();
+  } else {
+    LED_off();
+  }
 }
 
 void longClick() {
-  LED_off();
-  Serial.println("Long click");
+  INTEROP_toggleBLEService();
+
+  if (INTEROP_bleServiceEnabled()) {
+    LED_blePattern();
+  } else if (CTRMANAGER_newConnectionEnabled()) {
+    LED_syncPattern();
+  } else if (PSPstate_poweredOn()) {
+    LED_on();
+  } else {
+    LED_off();
+  }
 }
 
 void BUTTON_loop() {

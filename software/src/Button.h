@@ -3,7 +3,10 @@
 
 #include <Arduino.h>
 #include <OneButton.h>
+#include "controllerManager.h"
+#include "interop.h"
 #include "led.h"
+#include "fileUtility.h"
 
 #define BUTTON_PIN 19
 

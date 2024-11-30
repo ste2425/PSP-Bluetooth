@@ -1,66 +1,99 @@
 #include "led.h"
 
-uint8_t currentBrightness = 0;
-uint8_t targetBrightness = 0;
-// how many steps the brighnes should change in
-uint8_t stepSize = 0;
-// how long to wait before bump next brightness step
-uint8_t tickStepSize = 0;
-// used to track time
-uint32_t previousMillis = 0;
+Timeout patternTimeout;
 
-enum LEDMode {
-  FadeSlow,
-  Off
-};
+unsigned long bootPattern[2] = { 500, 2000 };
+unsigned long syncPattern[4] = { 500, 500, 500, 2000 };
+unsigned long blePattern[6] = { 500, 500, 500, 500, 500, 2000 };
 
-uint8_t ledMode = LEDMode::Off;
+uint8_t currentTick = 0;
+bool repeat = false;
 
-void LED_fadeSlow() {
-  targetBrightness = 255;
-  stepSize = 10;
-  tickStepSize = 500;
+unsigned long *currentPattern = bootPattern;
+uint8_t patternLength = 2;
+
+bool lit = false;
+bool run = false;
+
+void onPatternTick() {
+  if (currentTick >= patternLength && !repeat) {
+    patternTimeout.stop();
+    return;
+  }
+
+  currentTick++;
+
+  if (currentTick >= patternLength) {
+    currentTick = 0;
+  }
+
+  lit = !lit;
+
+  digitalWrite(LED, lit ? HIGH : LOW);
+
+  patternTimeout.setTimeout(currentPattern[currentTick]);
+  patternTimeout.start();
+}
+
+void setPattern(unsigned long *pattern, uint8_t length, bool loop) {
+  currentTick = 0;
+  currentPattern = pattern;
+  patternLength = length;
+  lit = true;
+  repeat = loop;
+  run = true;
+
+  digitalWrite(LED, HIGH);
+}
+
+void LED_bootPattern() {
+  setPattern(bootPattern, 2, true);
+    
+  patternTimeout.setTimeout(currentPattern[currentTick]);
+  patternTimeout.start();
+}
+
+void LED_syncPattern() {
+  setPattern(syncPattern, 4, true);
+  
+  digitalWrite(LED, HIGH);
+
+  patternTimeout.setTimeout(currentPattern[currentTick]);
+  patternTimeout.start();
+}
+
+void LED_blePattern() {
+  setPattern(blePattern, 6, true);
+  
+  digitalWrite(LED, HIGH);
+
+  patternTimeout.setTimeout(currentPattern[currentTick]);
+  patternTimeout.start();
 }
 
 void LED_off() {
-  targetBrightness = 0;
-  stepSize = 0;
-  tickStepSize = 0;
+  patternTimeout.stop();
+  currentTick = 0;
 
-  LED_loop();
+  run = false;
+
+  digitalWrite(LED, LOW);
 }
 
 void LED_on() {
-  targetBrightness = 255;
-  stepSize = 0;
-  tickStepSize = 0;
+  patternTimeout.stop();
+  currentTick = 0;
 
-  LED_loop();
+  run = false;
+
+  digitalWrite(LED, HIGH);
 }
 
-void LED_loop() {  
-  uint32_t currentMillis = millis();
+void LED_loop() {
+  patternTimeout.loop();
+}
 
-  if (tickStepSize == 0 || currentMillis - previousMillis >= tickStepSize) {
-
-    previousMillis = currentMillis;
-    
-    if (currentBrightness != targetBrightness) {
-
-      // zero used to insidcate instant change
-      if (stepSize == 0) {
-        currentBrightness = targetBrightness;
-      } else {
-        // 8bit has max value of 255. Dont blindly add next step. otherwise couldnt end up wrapping back round to zero
-        uint8_t diff = targetBrightness - currentBrightness;
-
-        if (diff < stepSize)
-          currentBrightness = targetBrightness;
-        else 
-          currentBrightness += stepSize;
-      }
-      
-      analogWrite(LED, currentBrightness);
-    }
-  }
+void LED_setup() {
+    pinMode(LED, OUTPUT);
+    patternTimeout.setCallback(onPatternTick);
 }

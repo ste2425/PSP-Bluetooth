@@ -8,7 +8,6 @@ enum {
 static btstack_context_callback_registration_t cmd_callback_registration;
 
 static void cmd_callback(void* context) {
-    Serial.println("CALLBACK");
     unsigned long ctx = (unsigned long)context;
     uint16_t cmd = ctx & 0xffff;
     switch (cmd) {
@@ -21,7 +20,22 @@ static void cmd_callback(void* context) {
     }
 }
 
-void enableBLEService(bool enabled) {
+bool bleEnabled = false;
+
+bool INTEROP_bleServiceEnabled() {
+    return bleEnabled;
+}
+
+void INTEROP_toggleBLEService() {
+    if (bleEnabled) {
+        INTEROP_enableBLEService(false);
+    } else {
+        INTEROP_enableBLEService(true);
+    }
+}
+
+void INTEROP_enableBLEService(bool enabled) {
+    bleEnabled = enabled;
     cmd_callback_registration.callback = &cmd_callback;
     cmd_callback_registration.context =
         (void*)(enabled ? (intptr_t)BTSTACKCMD_BLE_SERVICE_ENABLE : (intptr_t)BTSTACKCMD_BLE_SERVICE_DISABLE);
@@ -41,6 +55,7 @@ static void arduinocmd_callback(void* arg) {
 	switch (cmd) {
 		case ARDUINOCMD_RELOAD_MAPPINGS:
 			MAPPINGS_setup();
+            CTRMANAGER_applyColours();
 		break;
 	}
 

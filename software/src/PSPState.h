@@ -40,6 +40,8 @@ void PSPState_analog(int valueX, int valueY);
 void PSPState_analogX(int value);
 void PSPState_analogY(int value);
 void PSPState_togglePower();
-void PSPState_toggleScreen();
+void PSPState_pressScreen();
+void PSPState_releaseScreen();
+bool PSPstate_poweredOn();
 
 #endif

@@ -128,11 +128,27 @@ void togglePSPPin(uint8_t pin, int delayTime) {
   }
 }
 
-void PSPState_toggleScreen() {
-  togglePSPPin(GPIOPins::Display, 6000);
+bool poweredOn = false;
+
+bool PSPstate_poweredOn() {
+  return poweredOn;
+}
+
+void PSPState_pressScreen() {
+  uint8_t pin = pspGPIO[GPIOPins::Display];
+  
+  mcpBankTwo.pinMode(pin, OUTPUT);
+  mcpBankTwo.digitalWrite(pin, LOW);
+}
+
+void PSPState_releaseScreen() {
+  uint8_t pin = pspGPIO[GPIOPins::Display];
+
+  mcpBankTwo.pinMode(pin, INPUT);
 }
 
 void PSPState_togglePower() {
+  poweredOn = !poweredOn;
   togglePSPPin(GPIOPins::Power, 800);
 }
 

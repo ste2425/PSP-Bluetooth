@@ -21,7 +21,6 @@ echo "Installing Libraries..."
 
 arduino-cli lib install ezButton --log --config-file $YAML_NAME
 arduino-cli lib install OneButton --log --config-file $YAML_NAME
-arduino-cli lib install ezLED --log --config-file $YAML_NAME
 arduino-cli lib install ArduinoJson --log --config-file $YAML_NAME
 arduino-cli lib install "Adafruit MCP23008 library" --log --config-file $YAML_NAME
 arduino-cli lib install --zip-path ../libraries/MCP_POT-0.2.2.zip --log --config-file $YAML_NAME
