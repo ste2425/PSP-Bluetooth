@@ -1,0 +1,27 @@
+.avatar {
+	border-radius: 50%;
+	height: 120px;
+	margin-right: 10px;
+}
+
+.section {
+	display: flex;
+	align-items: center;
+	padding: 10px;
+	width: 80vw;
+	margin: 0 auto;
+	margin-bottom: 25px;
+	flex-direction: column;
+
+	&:first-of-type {
+		margin-top: 25px;
+	}
+
+	p, h3, h4 {
+		width: 100%;
+	}
+
+	&.row {
+		flex-direction: row;
+	}
+}

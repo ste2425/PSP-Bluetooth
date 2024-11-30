@@ -1,12 +1,8 @@
 <h2>Firmware Installer</h2>
 
-<p>From here you can choose the latest development firmware to flash to your ESP32. This allows you to test the latest
-  features.</p>
-<p>However beware, these features will be unstable and you may experience bugs during use. If you do please log an
-  issue on my Github. <small>Link in the header</small></p>
+<p>From here you can choose the firmware to install. OTA and Serial options are available. All without the need for external tools.</p>
 
 <hr />
-
 
 @if($releases | async; as releases) {
   @for (release of releases; track release.id) {

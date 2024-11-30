@@ -35,7 +35,7 @@ export class GithubService {
 
   getReleases() {
     return this.httpClient.get<IRelease[]>('https://api.github.com/repos/ste2425/PSP-Bluetooth/releases')
-      .pipe(map(releases => releases.filter(x => x.tag_name.startsWith('internal-'))))
+      .pipe(map(releases => releases.filter(x => x.tag_name.startsWith('release-'))))
       .pipe(delay(1500));
   }
 
