@@ -1,8 +1,12 @@
 name: Build-PSP-Bluetooth
 on:
   push:
+    branches:
+      - main
     paths:
       - software/**
+    tags:
+      - release*
 
 permissions:
   contents: write
@@ -23,7 +27,7 @@ jobs:
         env:
           GITHUB_ACTION: true
       - name: Inject Version
-        run: sed -i -e 's/<DEVELOPMENT>/internal-${{github.run_number}}/g' constants.h
+        run: sed -i -e 's/<DEVELOPMENT>/${{  github.ref_name }}/g' constants.h
         working-directory: develop/software/src
       - name: Build
         run: ./compile.sh
@@ -52,20 +56,11 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
+          body_path: develop/software/releasenotes.md
           files: |
             develop/software/bin/pspBluetooth.bin
             develop/software/bin/pspBluetooth-ota.bin
-          prerelease: true
-          name: PSP Bluetooth Internal (Develop ${{github.run_number}})
-          body: |
-            *This is pre-release build on the PSP-Bluetooth project.*
-            
-            This release has been based of the `develop` branch and a new release created for every commit to the develop branch.
-
-            If you want to test the latest and greatest this is what you want.
-
-            Changes:
-
-            ${{ github.event.head_commit.message }}
-          tag_name: internal-${{github.run_number}}
+          prerelease: false
+          name: PSP Bluetooth ${{ github.ref_name }}
+          tag_name: ${{ github.ref_name }}-ci
           target_commitish: develop
