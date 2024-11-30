@@ -45,6 +45,7 @@ jobs:
         run: cp develop/software/bin/pspBluetooth-ota.bin develop/releaseBinaries/pspBluetooth-ota.bin
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
+          branch: main
           repository: develop
           file_pattern: :(exclude)**/constants.h
       - uses: actions/upload-artifact@v4
