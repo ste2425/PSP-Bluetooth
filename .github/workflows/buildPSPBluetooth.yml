@@ -1,12 +1,10 @@
 name: Build-PSP-Bluetooth
 on:
   push:
-    branches:
-      - main
     paths:
       - software/**
     tags:
-      - release*
+      - 'release*'
 
 permissions:
   contents: write
