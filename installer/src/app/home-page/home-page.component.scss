@@ -4,6 +4,45 @@
 	margin-right: 30px;
 }
 
+.banner-container {
+	min-height: 40rem;        
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	margin-bottom: 30px;
+}
+
+.banner-media {	    
+	height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+	overflow: hidden;
+
+	img {
+		position: absolute;
+		z-index: -1;
+	}
+}
+
+.banner {
+	border-radius: 6px;
+	width: 50rem;
+	padding: 2rem 1.5rem;
+
+	h1 {
+		margin: 0px;
+		text-align: center;
+	}
+
+	.banner-text {
+		display: flex;
+		align-items: center;
+	}
+}
+
 .section {
 	border-radius: 6px;
 	display: flex;

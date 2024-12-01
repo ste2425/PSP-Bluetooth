@@ -18,9 +18,9 @@
     a {
       color: $anchorColour !important;
     }
-
-    .section {
-      background-color: mat.get-color-from-palette($accent-palette, 300, $exportBackgroundOpacity );
+    
+    .section, .banner {
+      background-color: if($is-dark-theme, #494033, #f9f1f4);
       border: 1px solid mat.get-theme-color($theme, accent, A100);
     }
   }
