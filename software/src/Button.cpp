@@ -3,11 +3,7 @@
 OneButton button;
 
 void doubleClick()
-{
-  Serial.println("Delete mappings");
-
-  FileUtility::deleteFile(LittleFS, "/mapping.json");
-}
+{}
 
 void click() {
   CTRMANAGER_toggleConnections();

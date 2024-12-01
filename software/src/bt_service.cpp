@@ -98,6 +98,12 @@ static int att_write_callback(hci_con_handle_t con_handle,
                         return ATT_ERROR_UNLIKELY_ERROR;
                     }
                 break;
+                case 3: //reset mappings to default                    
+                    FileUtility::deleteFile(LittleFS, "/mapping.json");
+
+                    reloadControllerMappings();
+                    return ATT_ERROR_SUCCESS;
+                break;
                 default: 
                     Serial.println("Unknown OTA Command");
 
