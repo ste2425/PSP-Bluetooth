@@ -51,3 +51,18 @@ jobs:
           branch: main
           repository: develop
           file_pattern: :(exclude)**/constants.h
+      - uses: actions/upload-artifact@v4
+        with:
+          name: binFolder
+          path: develop/software/bin/
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          body_path: develop/software/releasenotes.md
+          files: |
+            develop/software/bin/pspBluetooth.bin
+            develop/software/bin/pspBluetooth-ota.bin
+          prerelease: false
+          name: PSP Bluetooth ${{ github.ref_name }}
+          tag_name: ${{ github.ref_name }}-ci
+          target_commitish: develop
