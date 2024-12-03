@@ -64,5 +64,4 @@ jobs:
             develop/software/bin/pspBluetooth-ota.bin
           prerelease: false
           name: PSP Bluetooth ${{ github.ref_name }}
-          tag_name: ${{ github.ref_name }}-ci
           target_commitish: develop
