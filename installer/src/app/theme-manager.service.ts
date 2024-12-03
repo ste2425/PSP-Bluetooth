@@ -69,7 +69,7 @@ export class ThemeManager {
   setMaterialTheme() {
     this.isDark$.pipe(take(1)).subscribe((isDark) => {
       if (isDark) {
-        const href = 'dark-theme.css';
+        const href = `dark-theme.css?v=${window.crypto.randomUUID()}`;
         getLinkElementForKey('dark-theme').setAttribute('href', href);
         this.document.documentElement.classList.add('dark-theme');
       } else {
