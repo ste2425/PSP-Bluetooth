@@ -12,21 +12,17 @@
   $accent-palette: map.get($color-config, "accent");
   $is-dark-theme: map.get($theme, is-dark);
   $exportBackgroundOpacity: if($is-dark-theme, 0.12, 0.06);
+  $anchorColour: if($is-dark-theme, white, black);
 
-  app-configuration-page {
-    .page-container {
-      border-left: 1px solid mat.get-theme-color($theme, primary, A100);
-      border-right: 1px solid mat.get-theme-color($theme, primary, A100);
-    }
-    .buttons-container {
-      background-color: mat.get-color-from-palette($primary-palette, 300, $exportBackgroundOpacity );
-      border: 1px solid mat.get-theme-color($theme, primary, A100);
-      border-top: 0px !important;
+  app-controller-button-mapping {
+    border-bottom: 1px solid mat.get-theme-color($theme, primary, A100);
+
+    &.active {
+      background-color: if($is-dark-theme, #494033, #f9f1f4);
     }
 
-    .terminal pre {
-      background-color: mat.get-color-from-palette($accent-palette, 300, $exportBackgroundOpacity );
-      border: 1px solid mat.get-theme-color($theme, accent, A100);
+    &:hover {      
+      background-color: if($is-dark-theme, #494033, #f9f1f4);
     }
   }
 }

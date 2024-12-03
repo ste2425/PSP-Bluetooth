@@ -14,3 +14,20 @@
         padding: 10px;
     }
 }
+
+.page-container {
+    width: 80%;
+    margin: 0 auto;
+    flex-grow: 1;
+}
+
+:host {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+}
+
+h2 {
+    margin-top: 0px;
+    padding-top: 10px;
+}

@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { BTConnectionAbortedError, BTConnectionFactoryService, BTConnectionGATTConnectionError, BTConnectionPrimaryServiceError, BTConnectionVersionMissmatchError, IControllerMapping, OTACommand, PSPBluetooth } from '../services/btconnection-factory.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -8,15 +8,23 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ControllerMapingComponent } from "../controller-maping/controller-maping.component";
 import { MatProgressSpinner, MatSpinner } from '@angular/material/progress-spinner';
+import {MatIconModule} from '@angular/material/icon';
+import { Title } from '@angular/platform-browser';
 
+interface IViewControllerMapping extends IControllerMapping {
+  visible?: boolean
+}
 @Component({
   selector: 'app-configuration-page',
   standalone: true,
-  imports: [MatProgressSpinner, MatButtonModule, TextFieldModule, FormsModule, CommonModule, ControllerMapingComponent],
+  imports: [MatIconModule, MatProgressSpinner, MatButtonModule, TextFieldModule, FormsModule, CommonModule, ControllerMapingComponent],
   templateUrl: './configuration-page.component.html',
   styleUrl: './configuration-page.component.scss'
 })
-export class ConfigurationPageComponent implements OnDestroy {
+export class ConfigurationPageComponent implements OnDestroy, OnInit {
+  ngOnInit(): void {
+    this.titleService.setTitle('Button Config');
+  }
   loadMappingsDisabled = false;
 
   btDevice?: PSPBluetooth;
@@ -36,9 +44,10 @@ export class ConfigurationPageComponent implements OnDestroy {
 
   btConnectionFactory = inject(BTConnectionFactoryService);
   dialogService = inject(MatDialog);
+  titleService = inject(Title);
   terminalOutput = '';
 
-  configurations: IControllerMapping[] = []
+  configurations: IViewControllerMapping[] = []
 
   addMapping() {
     const dialogRef = this.dialogService.open(AddMappingModalComponent);
@@ -46,6 +55,34 @@ export class ConfigurationPageComponent implements OnDestroy {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
     });
+  }
+
+  next() {
+    for (const configuration of this.configurations) {
+      const index = this.configurations.indexOf(configuration),
+        isLast = this.configurations.length - 1 === index;
+
+      if (configuration.visible) {
+        configuration.visible = false;
+
+        this.configurations[isLast ? 0 : index + 1 ].visible = true;
+        break;
+      }
+    }
+  }
+
+  back() {
+    for (const configuration of this.configurations) {
+      const index = this.configurations.indexOf(configuration),
+        isFirst = index === 0;
+
+      if (configuration.visible) {
+        configuration.visible = false;
+
+        this.configurations[isFirst ? this.configurations.length - 1 : index - 1 ].visible = true;
+        break;
+      }
+    }
   }
 
   async loadMappings() {
@@ -56,7 +93,9 @@ export class ConfigurationPageComponent implements OnDestroy {
       this.connectionError = false;
       this.generalError = '';
       this.loadMappingsDisabled = true;
-      await this.connect();
+
+      if (!this.btDevice)
+        await this.connect();
   
       if (!this.btDevice)
         throw new Error('Uh oh');
@@ -66,6 +105,9 @@ export class ConfigurationPageComponent implements OnDestroy {
   
       if (mappings) {
         this.configurations = mappings;
+
+        this.configurations[0].visible = true;
+
         //this.$configurations.next(mappings);
         console.log('Mappings read');
       } else {

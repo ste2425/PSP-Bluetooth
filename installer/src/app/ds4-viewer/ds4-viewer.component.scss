@@ -1,0 +1,104 @@
+:host {
+    display: block;
+    position: relative;
+}
+
+.l2, .r2, .l1, .r1 {
+    height: 25px;
+    background: #cccccc;
+    width: 100px;
+    position: absolute;
+    border-radius: 10px;
+    border: 1px solid black;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:not(.disabled):hover {
+        border-color: yellow !important;
+        border-width: 2px;
+    }
+
+    &.active {
+        border-color: #15ca15 !important;
+        border-width: 2px;
+    }
+}
+
+.r1, .l1 {
+    top: 30px;
+}
+
+.r2, .r1 {
+    right: 80px;
+}
+
+.l2, .l1 {
+    left: 80px;
+}
+
+svg {
+    margin-top: 30px;
+}
+
+#dpad-up, #dpad-left, #dpad-right, #dpad-down, #analog-left, #analog-right {
+    &:not(.active):not(.disabled):hover {
+        cursor: pointer;
+
+        stroke: yellow !important;
+        stroke-width: 6px !important;
+    }
+
+    &.active {
+        stroke: #15ca15 !important;
+        stroke-width: 6px !important;
+    }
+}
+
+#share-btn, #options-btn {
+    &:not(.active):not(.disabled):hover {
+        cursor: pointer;
+
+        stroke: yellow !important;
+        stroke-width: 3px !important;
+    }
+
+    &.active {
+        stroke: #15ca15 !important;
+        stroke-width: 3px !important;
+    }
+}
+
+#ps-btn, #triangle-btn, #square-btn, #circle-btn, #cross-btn {
+    &:not(.active):not(.disabled):hover {
+        cursor: pointer;
+
+        .circle {
+            stroke: yellow !important;
+            stroke-width: 3px !important;
+        }
+    }
+
+    &.active .circle {
+        stroke: #15ca15 !important;
+        stroke-width: 3px !important;
+    }
+}
+
+#psp-analog-up, #psp-analog-down, #psp-analog-left, #psp-analog-right, #psp-power {
+    stroke: grey;
+}
+
+#psp-l1, #psp-r1, #psp-power, #psp-home, #psp-vol-down, #psp-vol-up, #psp-vol-down, #psp-screen, #psp-music, #psp-select, #psp-start, #psp-analog, #psp-analog-up, #psp-analog-down, #psp-analog-left, #psp-analog-right {
+    &:not(.active):not(.disabled):hover {
+        cursor: pointer;
+        stroke: yellow;
+        stroke-width: 2px;
+    }
+
+    &.active {
+        stroke: green;
+        stroke-width: 2px;
+    }
+}

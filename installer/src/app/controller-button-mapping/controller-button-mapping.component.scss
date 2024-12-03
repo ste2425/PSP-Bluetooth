@@ -2,9 +2,9 @@
     display: block;
     padding: 10px;
 
-    border: 1px solid grey;
+    cursor: pointer;
 
     &.active {
-        border: 1px solid red;
+        border-bottom: 1px solid red;
     }
 }

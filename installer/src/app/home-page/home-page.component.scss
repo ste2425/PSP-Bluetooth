@@ -4,13 +4,21 @@
 	margin-right: 30px;
 }
 
-.banner-container {
+.banner-container, .disclaimer-container {
 	min-height: 40rem;        
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	position: relative;
 	margin-bottom: 30px;
+
+	&.disclaimer-container {
+		min-height: 20rem;
+	}
+}
+
+.disclaimer {
+	width: 50rem;
 }
 
 .banner-media {	    
@@ -52,7 +60,7 @@
 	display: flex;
 	align-items: center;
 	padding: 10px;
-	width: 80vw;
+	width: 50rem;
 	margin: 0 auto;
 	margin-bottom: 25px;
 	flex-direction: column;

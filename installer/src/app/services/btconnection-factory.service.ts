@@ -24,7 +24,6 @@ export interface IControllerMapping {
     cHex: string
 }
   
-
 export class PSPBluetooth {
     constructor(private device: BluetoothDevice, private primaryService: BluetoothRemoteGATTService) { }
 
@@ -54,7 +53,7 @@ export class PSPBluetooth {
         const strValue = await this.#readValue(MAPPINGS_UUID);
         
         if (!strValue)
-            return [];
+            return JSON.parse("[{\"n\":1,\"c\":[255,0,0,0.1],\"m\":[[8,0,0],[10,1,0],[9,3,0],[0,2,0],[15,0,1],[17,1,1],[16,2,1],[2,0,2],[1,1,2],[4,3,2],[6,2,2],[5,5,2],[7,6,2],[0,1,3]]},{\"n\":2,\"c\":[255,0,0,1],\"m\":[[8,0,0],[10,1,0],[9,3,0],[0,2,0],[15,0,1],[17,1,1],[16,2,1],[2,0,2],[1,1,2],[4,3,2],[6,2,2],[5,5,2],[7,6,2],[102,6,2],[101,7,2]]}]");
 
         const data = JSON.parse(strValue) as IControllerMapping[];
 

@@ -7,6 +7,8 @@
 @use "../../app/serial-page/serial-page-theme" as serialPage;
 @use "../../app/configuration-page/configuration-page-theme" as configurationPage;
 @use "../../app/home-page/home-page-theme" as homePage;
+@use "../../app/controller-maping/controller-mapping-theme" as controllerMapping;
+@use "../../app/controller-button-mapping/controller-button-mapping-theme" as controllerButtonMapping;
 
 
 @mixin theme($theme) {
@@ -17,4 +19,6 @@
     @include configurationPage.theme($theme);
     @include homePage.theme($theme);
     @include otaProgrammer.theme($theme);
+    @include controllerMapping.theme($theme);
+    @include controllerButtonMapping.theme($theme);
 }

@@ -18,10 +18,24 @@
     a {
       color: $anchorColour !important;
     }
+
+    .disclaimer-container {
+      background-color: if($is-dark-theme, #334345, #f9f1f4)
+    }
     
-    .section, .banner {
+    .banner, .row {
       background-color: if($is-dark-theme, #494033, #f9f1f4);
       border: 1px solid mat.get-theme-color($theme, accent, A100);
+
+      &.row {
+        border-left: unset;
+        border-right: unset;
+      }
+    }
+
+    .disclaimer-container {
+      border-bottom: 1px solid mat.get-theme-color($theme, primary, A100);
+      border-top: 1px solid mat.get-theme-color($theme, primary, A100);
     }
   }
 }
