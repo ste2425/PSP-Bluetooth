@@ -46,3 +46,8 @@ jobs:
       - name: status
         run: git status
         working-directory: develop
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          branch: main
+          repository: develop
+          file_pattern: :(exclude)**/constants.h
