@@ -14,13 +14,9 @@
   $exportBackgroundOpacity: if($is-dark-theme, 0.12, 0.06);
   $anchorColour: if($is-dark-theme, white, black);
 
-  app-controller-button-mapping {
-    &.active {
-      background-color: if($is-dark-theme, #494033, #f9f1f4);
-    }
-
-    &:hover {      
-      background-color: if($is-dark-theme, #494033, #f9f1f4);
+  app-ds4-viewer { 
+    svg, .l1, .l2, .r1, .r2 {
+      filter: drop-shadow(0 0 0.75rem mat.get-theme-color($theme, accent, A100))
     }
   }
 }

@@ -14,15 +14,21 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 10;
 
     &:not(.disabled):hover {
         border-color: yellow !important;
-        border-width: 2px;
+        border-width: 4px;
+        height: 17px;
+        width: 92px;
+        cursor: pointer;
     }
 
-    &.active {
+    &.active {    
         border-color: #15ca15 !important;
-        border-width: 2px;
+        border-width: 4px;
+        height: 17px;
+        width: 92px;
     }
 }
 

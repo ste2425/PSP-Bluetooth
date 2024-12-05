@@ -47,3 +47,13 @@
         stroke-width: 2px;
     }
 }
+
+#psp-l1, #psp-r1 {
+    &:not(.active):not(.disabled):hover {
+        fill: yellow;
+    }
+
+    &.active {
+        fill: green;
+    }
+}

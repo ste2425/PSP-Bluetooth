@@ -20,8 +20,7 @@ export type ButtonMapping = [number, number, number];
 export interface IControllerMapping {
     m: ButtonMapping[],
     n: number,
-    c: [number, number, number, number],
-    cHex: string
+    c: [number, number, number, number]
 }
   
 export class PSPBluetooth {
@@ -64,24 +63,7 @@ export class PSPBluetooth {
             return {
                 m: this.#validateControllerMappings(dataRaw.m),
                 n: this.#validateMappingControllerBumber(dataRaw.n),
-                c: this.#validateMappingColour(dataRaw.c),
-                get cHex() {
-                    const toHex = (c: number) => {
-                        var hex = c.toString(16);
-                        return hex.length == 1 ? "0" + hex : hex;
-                    };
-                    
-                    return `#${toHex(this.c[0])}${toHex(this.c[1])}${toHex(this.c[2])}`;
-                },
-                set cHex(value: string) {                    
-                    const r = parseInt(value.substring(1,2), 16)
-                    const g = parseInt(value.substring(3,2), 16)
-                    const b = parseInt(value.substring(5,2), 16)
-
-                    this.c[0] = r;
-                    this.c[1] = g;
-                    this.c[2] = b;
-                } 
+                c: this.#validateMappingColour(dataRaw.c)
             }
         })
     }

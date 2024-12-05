@@ -9,7 +9,9 @@
 @use "../../app/home-page/home-page-theme" as homePage;
 @use "../../app/controller-maping/controller-mapping-theme" as controllerMapping;
 @use "../../app/controller-button-mapping/controller-button-mapping-theme" as controllerButtonMapping;
-
+@use "../../app/psp-viewer/psp-viewer-mapping-theme" as pspViewer;
+@use "../../app/ds4-viewer/ds4-viewer-mapping-theme" as ds4Viewer;
+@use "../../app/colour-picker/colour-picker-page-theme" as colourPicker;
 
 @mixin theme($theme) {
     @include release.theme($theme);
@@ -21,4 +23,7 @@
     @include otaProgrammer.theme($theme);
     @include controllerMapping.theme($theme);
     @include controllerButtonMapping.theme($theme);
+    @include ds4Viewer.theme($theme);
+    @include pspViewer.theme($theme);
+    @include colourPicker.theme($theme);
 }

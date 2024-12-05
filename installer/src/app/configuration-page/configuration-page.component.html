@@ -1,9 +1,8 @@
 
 <div class="buttons-container">
     <button color="accent" mat-button (click)="loadMappings()" [disabled]="loadMappingsDisabled">Load Mappings</button>
-    <button color="accent" mat-button (click)="loadMappings()" [disabled]="!btDevice">Reset Mappings</button>
+    <button color="accent" mat-button (click)="saveMappings()" [disabled]="!btDevice">Save Mappings</button>
 </div>
-
 <div class="page-container">
     @if(wrongBoardError) {
         <p>
@@ -52,21 +51,29 @@
 
     @for (item of configurations; track item) {
         @if (item.visible) {
-            <div style="display: flex;">            
+            <div class="controll-bar">            
                 <button (click)="back()" [disabled]="!this.configurations.length" color="accent" mat-icon-button>
                     <mat-icon>arrow_back</mat-icon>
                 </button>
 
-                <div [ngStyle]="{
-                    backgroundColor: item?.cHex,
-                    height: '50px',
-                    flexGrow: 1,
-                    flexBasis: 0
-                }"></div>
+                <h3 style="margin: 0px; flex-grow: 1;">Mapping Group: {{$index + 1}} / 10</h3>
+
+                <app-colour-picker 
+                    style="margin-right: 20px;"
+                    [R]="item?.c?.[0]" 
+                    [G]="item?.c?.[1]"
+                    [B]="item?.c?.[2]"
+                    [A]="item?.c?.[3]"
+                    (onChange)="onColourChange(item, $event)"
+                ></app-colour-picker>
                 
-                <p style="flex-grow: 1; flex-basis: 0">
-                    Controller Number: {{item?.n}}
-                </p>
+                <button [disabled]="configurations.length < 2" (click)="deleteMapping(item)" color="accent" mat-icon-button >
+                    <mat-icon>delete_forever</mat-icon>
+                </button>
+
+                <button [disabled]="configurations.length == 10" (click)="addNewControllerMapping()" color="accent" mat-icon-button >
+                    <mat-icon>add_circle</mat-icon>
+                </button>
     
                 <button (click)="next()" [disabled]="!this.configurations.length" color="accent" mat-icon-button>
                     <mat-icon>arrow_forward</mat-icon>

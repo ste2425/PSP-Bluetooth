@@ -8,3 +8,20 @@
 	margin-right: 15px;
 	width: 600px;
 }
+
+.mapping-item {
+	display: flex;
+	justify-content: space-between;
+	min-height: 55px;
+	align-items: center;
+}
+
+.mapping-header {
+	display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+	h4 {
+		padding-left: 15px;
+	}
+}

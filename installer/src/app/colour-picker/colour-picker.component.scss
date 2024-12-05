@@ -1,0 +1,42 @@
+:host {
+	display: flex;
+	align-items: center;
+}
+
+.picker-container, .slider {
+	display: flex;
+	align-items: center;
+}
+
+mat-icon {
+	width: 30px;
+}
+
+mat-slider {
+	width: 150px;
+}
+
+.picker {
+	margin-left: 10px;
+	margin-right: 10px;
+	height: 30px;
+	width: 150px;
+	border-radius: 10px;
+	&:hover {
+		cursor: pointer;
+	}
+}
+
+.picker-container {
+	position: relative;
+
+	input {
+		position: absolute;
+		left: 90%;
+		height: 0px;
+		width: 0px;
+		padding: 0px;
+		border: 0px;
+		margin: 0px;
+	}
+}

@@ -14,5 +14,6 @@
     @include mat.progress-spinner-color(themes.$installer-dark-theme);
     @include mat.progress-bar-color(themes.$installer-dark-theme);
     @include mat.select-theme(themes.$installer-dark-theme);
+    @include mat.slider-theme(themes.$installer-dark-theme);
     @include components.theme(themes.$installer-dark-theme);
 }

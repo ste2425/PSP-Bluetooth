@@ -1,0 +1,21 @@
+<div class="picker-container">
+	<mat-icon>
+		palette
+	</mat-icon>
+
+	<input #input type="color" [ngModel]="cHex" (ngModelChange)="cHex = $event" />
+	
+	<div class="picker" [style]="{ backgroundColor: cHex }" (click)="show()"></div>
+</div>
+
+<div class="slider">
+	<mat-icon>brightness_4</mat-icon>
+
+	<mat-slider
+			[max]="1"
+			[min]="0"
+			[step]="0.001"
+			[discrete]="true">
+		  <input matSliderThumb [(ngModel)]="A" #slider (ngModelChange)="emitOnChange()">
+	</mat-slider>
+</div>

@@ -17,16 +17,6 @@
   themes.$installer-light-theme
 );
 
-@media (prefers-color-scheme: dark) {
-  @include mat.core-color(themes.$installer-dark-theme);
-  @include mat.button-color(themes.$installer-dark-theme);
-  @include mat.icon-color(themes.$installer-dark-theme);
-  @include mat.menu-color(themes.$installer-dark-theme);
-  @include mat.dialog-color(themes.$installer-dark-theme);
-  @include mat.progress-bar-color(themes.$installer-dark-theme);
-  @include components.theme(themes.$installer-dark-theme);
-}
-
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 

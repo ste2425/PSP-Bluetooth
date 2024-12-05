@@ -1,8 +1,23 @@
 <div class="d-flex">
-    <div style="overflow: auto; max-height: 550px; overscroll-behavior: contain;">
-        @for (item of controllerMapping?.m; track item) {
-            <app-controller-button-mapping [mapping]="item" (click)="activeMapping = item" [ngClass]="{ active: activeMapping === item }"></app-controller-button-mapping>
-        }
+    <div style="max-height: 550px; width: 40%;">
+        <div class="mapping-header">
+            <h4>Button Mappings: {{controllerMapping?.m?.length || 0}} / 30</h4>
+            <button (click)="addNewMapping()" color="accent" mat-icon-button >
+                <mat-icon>add_circle</mat-icon>
+            </button>
+        </div>
+
+        <div style="overflow: auto; height: 100%;">       
+             @for (item of controllerMapping?.m; track item) {
+                <div class="mapping-item">
+                    <app-controller-button-mapping style="flex-grow: 1;" [mapping]="item" (click)="activeMapping = item" [ngClass]="{ active: activeMapping === item }"></app-controller-button-mapping>
+                    
+                    <button (click)="removeMapping(item)" color="accent" mat-icon-button>
+                        <mat-icon>delete_forever</mat-icon>
+                    </button>
+                </div>       
+            }
+        </div>
     </div>
 
     <div class="d-flex" style="flex-grow: 1; align-items: center; flex-direction: column;">
@@ -13,7 +28,7 @@
             </div>
         }
 
-        <div style="width: 500px">
+        <div style="width: 500px; margin-top: 10px;">
             <app-psp-viewer [disableAll]="!activeMapping" [currentlyActivePin]="activeMapping?.[0]" (onChange)="onChange($event)"></app-psp-viewer>
         </div>
     

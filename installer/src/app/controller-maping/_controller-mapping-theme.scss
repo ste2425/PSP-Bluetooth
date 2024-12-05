@@ -15,6 +15,14 @@
   $anchorColour: if($is-dark-theme, white, black);
 
   app-controller-maping {
+    .mapping-item {      
+      border-bottom: 1px solid mat.get-theme-color($theme, primary, A100);
+    }
+
+    .mapping-header {
+      border-bottom: 1px solid mat.get-theme-color($theme, accent, A100);
+    }
+
     .disclaimer-container {
       background-color: if($is-dark-theme, #334345, #f9f1f4)
     }

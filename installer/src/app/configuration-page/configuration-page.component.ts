@@ -10,6 +10,7 @@ import { ControllerMapingComponent } from "../controller-maping/controller-mapin
 import { MatProgressSpinner, MatSpinner } from '@angular/material/progress-spinner';
 import {MatIconModule} from '@angular/material/icon';
 import { Title } from '@angular/platform-browser';
+import { ColourPickerComponent } from "../colour-picker/colour-picker.component";
 
 interface IViewControllerMapping extends IControllerMapping {
   visible?: boolean
@@ -17,7 +18,7 @@ interface IViewControllerMapping extends IControllerMapping {
 @Component({
   selector: 'app-configuration-page',
   standalone: true,
-  imports: [MatIconModule, MatProgressSpinner, MatButtonModule, TextFieldModule, FormsModule, CommonModule, ControllerMapingComponent],
+  imports: [MatIconModule, MatProgressSpinner, MatButtonModule, TextFieldModule, FormsModule, CommonModule, ControllerMapingComponent, ColourPickerComponent],
   templateUrl: './configuration-page.component.html',
   styleUrl: './configuration-page.component.scss'
 })
@@ -38,6 +39,47 @@ export class ConfigurationPageComponent implements OnDestroy, OnInit {
     return this.btDevice?.connected;
   }
 
+  deleteMapping(mapping: IViewControllerMapping) {
+    const index = this.configurations.indexOf(mapping);
+
+    if (index !== undefined && index !== null && index > -1) {
+      this.configurations.splice(index, 1);
+    }
+
+    this.configurations.forEach(c => c.visible = false);
+
+    if (this.configurations.length === 0)
+      return;
+
+    if (index < this.configurations.length)
+      this.configurations[index].visible = true;
+    else 
+      this.configurations[this.configurations.length - 1].visible = true;
+  }
+
+  addNewControllerMapping() {
+    if (this.configurations.length >= 10)
+      return;
+    
+    const newConfig: IViewControllerMapping = {
+      visible: true,
+      n: 1,
+      c: [255, 200, 10, 1],
+      m: []
+    };
+
+    this.configurations.forEach(c => c.visible = false);
+
+    this.configurations.push(newConfig);
+  }
+
+  onColourChange(mapping: IControllerMapping, event: { r: number, g: number, b: number, a: number }) {
+    mapping.c[0] = event.r;
+    mapping.c[1] = event.g;
+    mapping.c[2] = event.b;
+    mapping.c[3] = event.a;
+  }
+
   ngOnDestroy(): void {
     this.btDevice?.disconnect();
   }
@@ -47,7 +89,7 @@ export class ConfigurationPageComponent implements OnDestroy, OnInit {
   titleService = inject(Title);
   terminalOutput = '';
 
-  configurations: IViewControllerMapping[] = []
+  configurations: IViewControllerMapping[] = []; //JSON.parse("[{\"visible\": true,\"n\":1,\"c\":[255,0,0,0.1],\"m\":[[8,0,0],[10,1,0],[9,3,0],[0,2,0],[15,0,1],[17,1,1],[16,2,1],[2,0,2],[1,1,2],[4,3,2],[6,2,2],[5,5,2],[7,6,2],[0,1,3]]},{\"n\":2,\"c\":[255,0,0,1],\"m\":[[8,0,0],[10,1,0],[9,3,0],[0,2,0],[15,0,1],[17,1,1],[16,2,1],[2,0,2],[1,1,2],[4,3,2],[6,2,2],[5,5,2],[7,6,2],[102,6,2],[101,7,2]]}]");
 
   addMapping() {
     const dialogRef = this.dialogService.open(AddMappingModalComponent);
@@ -83,6 +125,24 @@ export class ConfigurationPageComponent implements OnDestroy, OnInit {
         break;
       }
     }
+  }
+
+  async saveMappings() {
+    if (!this.btDevice)
+      return;
+
+    const toSave = this.configurations.map(x => {
+      const y = {
+        c: x.c,
+        n: x.n,
+        m: x.m
+      };
+
+      return y.m.length ? y : undefined;
+    }).filter((x: IControllerMapping | undefined): x is IControllerMapping => !!x);
+    
+    await this.btDevice?.saveButtonMappings(toSave);
+
   }
 
   async loadMappings() {
