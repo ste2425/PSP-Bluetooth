@@ -56,6 +56,7 @@ static int att_write_callback(hci_con_handle_t con_handle,
             FileUtility::writeFile(LittleFS, "/mapping.json", (const char*)buffer);
 
             reloadControllerMappings();
+            
             return ATT_ERROR_SUCCESS;
         }
         // handle OTA command

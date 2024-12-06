@@ -9,10 +9,13 @@ const EXPECTED_VERSION_PREFIX = 'PSP Bluetooth Version';
 const OTA_COMMANDS_UUID = '4627c4a4-ac04-46b9-b688-afc5c1bf7f63';
 const OTA_DATA_UUID = '4627c4a4-ac05-46b9-b688-afc5c1bf7f63';
 
+const DEFAULT_MAPPINGS = "[{\"n\":1,\"c\":[255,0,0,1],\"m\":[[8,0,0],[10,1,0],[9,3,0],[0,2,0],[15,0,1],[17,1,1],[16,2,1],[2,0,2],[1,1,2],[4,3,2],[6,2,2],[5,5,2],[7,6,2],[0,1,3]]},{\"n\":2,\"c\":[255,0,0,1],\"m\":[[8,0,0],[10,1,0],[9,3,0],[0,2,0],[15,0,1],[17,1,1],[16,2,1],[2,0,2],[1,1,2],[4,3,2],[6,2,2],[5,5,2],[7,6,2],[102,6,2],[101,7,2]]}]";
+
 export enum OTACommand {
     startUpload = 0,
     uploadFinished = 1,
-    applyUpdate = 2
+    applyUpdate = 2,
+    resetMappings = 3
 }
 
 export type ButtonMapping = [number, number, number];
@@ -52,9 +55,16 @@ export class PSPBluetooth {
         const strValue = await this.#readValue(MAPPINGS_UUID);
         
         if (!strValue)
-            return JSON.parse("[{\"n\":1,\"c\":[255,0,0,0.1],\"m\":[[8,0,0],[10,1,0],[9,3,0],[0,2,0],[15,0,1],[17,1,1],[16,2,1],[2,0,2],[1,1,2],[4,3,2],[6,2,2],[5,5,2],[7,6,2],[0,1,3]]},{\"n\":2,\"c\":[255,0,0,1],\"m\":[[8,0,0],[10,1,0],[9,3,0],[0,2,0],[15,0,1],[17,1,1],[16,2,1],[2,0,2],[1,1,2],[4,3,2],[6,2,2],[5,5,2],[7,6,2],[102,6,2],[101,7,2]]}]");
+            return JSON.parse(DEFAULT_MAPPINGS);
 
-        const data = JSON.parse(strValue) as IControllerMapping[];
+        let data: IControllerMapping[] = [];
+
+        try {
+            data = JSON.parse(strValue);
+        } catch(e) {
+            console.log('Error parsing JSON', e, strValue);
+            data = JSON.parse(DEFAULT_MAPPINGS);
+        }
 
         if (!Array.isArray(data))
             return [];

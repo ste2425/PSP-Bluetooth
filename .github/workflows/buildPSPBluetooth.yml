@@ -51,6 +51,7 @@ jobs:
           branch: main
           repository: develop
           file_pattern: :(exclude)**/constants.h
+          tagging_message: ${{ github.ref_name }}-ci
       - uses: actions/upload-artifact@v4
         with:
           name: binFolder
@@ -65,3 +66,4 @@ jobs:
           prerelease: false
           name: PSP Bluetooth ${{ github.ref_name }}
           target_commitish: develop
+          tag_name: ${{ github.ref_name }}-ci

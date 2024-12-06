@@ -1,6 +1,6 @@
-# Release 1.0.0
+# Release 1.1.0
 
-First prime time ready release of the PSP Bluetooth project.
+Added Web Configuration support
 
 ---
 
@@ -10,15 +10,10 @@ This only support Consolizers. Future hardware revisions will suport portable bu
 
 ---
 
-This firmware has the following features:
+It is possible to connect via the web app: [https://ste2425.github.io/](https://ste2425.github.io/) and configure button mappings.
 
-* Controlls over all PSP buttons and analog stick
-* Ability to work with many controllers, including DS4/5, Nintendo Switch Pro, Xbox One S and more.
-* Ability to toggle between PSP and PS1 button mappings (R2/L2 in PS1 mode)
-* OTA update functionality
-* User defined buttons mappings (ready for when the Web App half is done)
-* Auto power on/off of PSP
+Button mappings are applied instantly.
 
-Limitations:
+You have have upto 3 button groupings each with upto 16 button mappings.
 
-* Controllers are not turned of by firmware. Users have to manually turn of controllers. This means each controlles will have its own may of doing this. It will be standardised in future firmware.
+The controller's LED (if it has one) can also be set per button grouping.

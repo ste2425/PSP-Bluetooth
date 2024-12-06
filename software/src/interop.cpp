@@ -50,18 +50,12 @@ enum {
 };
 
 static void arduinocmd_callback(void* arg) {
-	unsigned long ctx = (unsigned long)arg;
-	uint16_t cmd = ctx & 0xffff;
-	switch (cmd) {
-		case ARDUINOCMD_RELOAD_MAPPINGS:
-			MAPPINGS_setup();
-            CTRMANAGER_applyColours();
-		break;
-	}
+    MAPPINGS_setup();
+    CTRMANAGER_applyColours();
 
   vTaskDelete(reloadMappingsTaskHandle);
 }
 
 void reloadControllerMappings() {
-    xTaskCreatePinnedToCore(arduinocmd_callback, "arduinocmd_callback", 8192, (void*)ARDUINOCMD_RELOAD_MAPPINGS, 1, &reloadMappingsTaskHandle, 1);
+    xTaskCreatePinnedToCore(arduinocmd_callback, "arduinocmd_callback", 4096, NULL, 5, &reloadMappingsTaskHandle, 1);
 }

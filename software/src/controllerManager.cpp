@@ -3,7 +3,11 @@
 Timeout pspBootTimeout;
 Timeout pspScreenTimeout;
 
-ControllerPtr myControllers[BP32_MAX_GAMEPADS];
+volatile bool resetColours = false;
+
+#define maxGamepads 4
+
+ControllerPtr myControllers[maxGamepads];
 
 void onPspBootTimeout() {
   PSPState_pressScreen();
@@ -19,8 +23,8 @@ void onConnectedController(ControllerPtr ctl) {
     
     bool foundEmptySlot = false;
     
-    for (int i = 0; i < BP32_MAX_GAMEPADS; i++) {
-        if (myControllers[i] == nullptr) {            
+    for (int i = 0; i < maxGamepads; i++) {
+        if (myControllers[i] == nullptr) {       
             myControllers[i] = ctl;
             foundEmptySlot = true;
 
@@ -49,6 +53,7 @@ void onConnectedController(ControllerPtr ctl) {
     
     if (!foundEmptySlot) {
         Serial.println("CALLBACK: Controller connected, but could not found empty slot");
+        ctl->disconnect();
     }
 }
 
@@ -56,7 +61,7 @@ void onDisconnectedController(ControllerPtr ctl) {
   
     bool foundController = false;
 
-    for (int i = 0; i < BP32_MAX_GAMEPADS; i++) {
+    for (int i = 0; i < maxGamepads; i++) {
         if (myControllers[i] == ctl) {
             Serial.printf("CALLBACK: Controller disconnected from index=%d\n", i);
             myControllers[i] = nullptr;
@@ -67,7 +72,7 @@ void onDisconnectedController(ControllerPtr ctl) {
 
     bool allDisconnected = true;
 
-    for (int i = 0; i < BP32_MAX_GAMEPADS; i++) {
+    for (int i = 0; i < maxGamepads; i++) {
         if (myControllers[i] != nullptr) {
             allDisconnected = false;
             break;
@@ -110,15 +115,18 @@ void handleButtonMapping(ControllerMapping *mapping) {
   }
 }
 
-bool CTRMANAGER_applyColours() {
-    MappingMeta *meta = MAPPINGS_current;
+void CTRMANAGER_applyColours() { 
+    MappingMeta *hi = MAPPINGS_current;
+        for (uint8_t i = 0; i < 4; i++) {
 
-    for (auto ctl : myControllers) {
-      if (ctl && ctl->isConnected() && ctl->isGamepad()) {
-        ctl->setColorLED(meta->colour[0], meta->colour[1], meta->colour[2]);
-        ctl->setPlayerLEDs(meta->mappingNumer & 0x0f);
-      }
-    }
+          if (myControllers[i] && myControllers[i]->isConnected() && myControllers[i]->hasData()) {
+              if (myControllers[i]->isGamepad()) {
+                myControllers[i]->setColorLED(hi->colour[0], hi->colour[1], hi->colour[2]);
+              } else {
+                  Serial.println("Unsupported controller");
+              }
+          }
+        }
 }
 
 void processGamepad(ControllerPtr ctl) {

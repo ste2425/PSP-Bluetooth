@@ -13,4 +13,4 @@ void CTRMANAGER_setup();
 void CTRMANAGER_enableConnections(bool enabled);
 void CTRMANAGER_toggleConnections();
 bool CTRMANAGER_newConnectionEnabled();
-bool CTRMANAGER_applyColours();
+void CTRMANAGER_applyColours();
