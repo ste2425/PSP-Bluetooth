@@ -53,6 +53,7 @@ static int att_write_callback(hci_con_handle_t con_handle,
     switch (att_handle) {
         // save controller mappings
         case ATT_CHARACTERISTIC_4627C4A4_AC03_46B9_B688_AFC5C1BF7F63_01_VALUE_HANDLE: {
+            FileUtility::deleteFile(LittleFS, "/mapping.json");
             FileUtility::writeFile(LittleFS, "/mapping.json", (const char*)buffer);
 
             reloadControllerMappings();
