@@ -47,7 +47,7 @@ export class HeaderComponent {
     {
       path: '/configuration',
       label: 'Configuration',
-      experimental: true
+      experimental: false
     },
     {
       path: '/program',

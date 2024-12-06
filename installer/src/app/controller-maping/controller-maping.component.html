@@ -1,8 +1,8 @@
 <div class="d-flex">
     <div style="max-height: 550px; width: 40%;">
         <div class="mapping-header">
-            <h4>Button Mappings: {{controllerMapping?.m?.length || 0}} / 30</h4>
-            <button (click)="addNewMapping()" color="accent" mat-icon-button >
+            <h4>Button Mappings: {{controllerMapping?.m?.length || 0}} / 16</h4>
+            <button [disabled]="(controllerMapping?.m?.length || 0) >= 16" (click)="addNewMapping()" color="accent" mat-icon-button >
                 <mat-icon>add_circle</mat-icon>
             </button>
         </div>

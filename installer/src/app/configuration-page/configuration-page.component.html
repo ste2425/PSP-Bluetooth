@@ -1,7 +1,7 @@
 
 <div class="buttons-container">
     <button color="accent" mat-button (click)="loadMappings()" [disabled]="loadMappingsDisabled">Load Mappings</button>
-    <button color="accent" mat-button (click)="saveMappings()" [disabled]="!btDevice">Save Mappings</button>
+    <button color="accent" mat-button (click)="saveMappings()" [disabled]="!btDevice || mappingsSaving">Save Mappings</button>
 </div>
 <div class="page-container">
     @if(wrongBoardError) {
@@ -56,7 +56,7 @@
                     <mat-icon>arrow_back</mat-icon>
                 </button>
 
-                <h3 style="margin: 0px; flex-grow: 1;">Mapping Group: {{$index + 1}} / 10</h3>
+                <h3 style="margin: 0px; flex-grow: 1;">Mapping Group: {{$index + 1}} / 3</h3>
 
                 <app-colour-picker 
                     style="margin-right: 20px;"
@@ -71,7 +71,7 @@
                     <mat-icon>delete_forever</mat-icon>
                 </button>
 
-                <button [disabled]="configurations.length == 10" (click)="addNewControllerMapping()" color="accent" mat-icon-button >
+                <button [disabled]="configurations.length >= 3" (click)="addNewControllerMapping()" color="accent" mat-icon-button >
                     <mat-icon>add_circle</mat-icon>
                 </button>
     

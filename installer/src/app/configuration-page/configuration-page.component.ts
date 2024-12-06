@@ -58,7 +58,7 @@ export class ConfigurationPageComponent implements OnDestroy, OnInit {
   }
 
   addNewControllerMapping() {
-    if (this.configurations.length >= 10)
+    if (this.configurations.length >= 3)
       return;
     
     const newConfig: IViewControllerMapping = {
@@ -89,7 +89,7 @@ export class ConfigurationPageComponent implements OnDestroy, OnInit {
   titleService = inject(Title);
   terminalOutput = '';
 
-  configurations: IViewControllerMapping[] = []; //JSON.parse("[{\"visible\": true,\"n\":1,\"c\":[255,0,0,0.1],\"m\":[[8,0,0],[10,1,0],[9,3,0],[0,2,0],[15,0,1],[17,1,1],[16,2,1],[2,0,2],[1,1,2],[4,3,2],[6,2,2],[5,5,2],[7,6,2],[0,1,3]]},{\"n\":2,\"c\":[255,0,0,1],\"m\":[[8,0,0],[10,1,0],[9,3,0],[0,2,0],[15,0,1],[17,1,1],[16,2,1],[2,0,2],[1,1,2],[4,3,2],[6,2,2],[5,5,2],[7,6,2],[102,6,2],[101,7,2]]}]");
+  configurations: IViewControllerMapping[] = [];// JSON.parse("[{\"visible\": true,\"n\":1,\"c\":[255,0,0,0.1],\"m\":[[8,0,0],[10,1,0],[9,3,0],[0,2,0],[15,0,1],[17,1,1],[16,2,1],[2,0,2],[1,1,2],[4,3,2],[6,2,2],[5,5,2],[7,6,2],[0,1,3]]},{\"n\":2,\"c\":[255,0,0,1],\"m\":[[8,0,0],[10,1,0],[9,3,0],[0,2,0],[15,0,1],[17,1,1],[16,2,1],[2,0,2],[1,1,2],[4,3,2],[6,2,2],[5,5,2],[7,6,2],[102,6,2],[101,7,2]]}]");
 
   addMapping() {
     const dialogRef = this.dialogService.open(AddMappingModalComponent);
@@ -127,22 +127,31 @@ export class ConfigurationPageComponent implements OnDestroy, OnInit {
     }
   }
 
+  mappingsSaving = false;
+
   async saveMappings() {
     if (!this.btDevice)
-      return;
+     return;
 
-    const toSave = this.configurations.map(x => {
-      const y = {
-        c: x.c,
-        n: x.n,
-        m: x.m
-      };
+    this.mappingsSaving = true;
 
-      return y.m.length ? y : undefined;
-    }).filter((x: IControllerMapping | undefined): x is IControllerMapping => !!x);
-    
-    await this.btDevice?.saveButtonMappings(toSave);
-
+    try {
+      const toSave = this.configurations.map(x => {
+        const y = {
+          c: x.c,
+          n: x.n,
+          m: x.m
+        };
+  
+        return y.m.length ? y : undefined;
+      }).filter((x: IControllerMapping | undefined): x is IControllerMapping => !!x);
+      
+      await this.btDevice?.saveButtonMappings(toSave);
+    } catch(e) {
+      console.log(e);
+    } finally {      
+      this.mappingsSaving = false;
+    }
   }
 
   async loadMappings() {

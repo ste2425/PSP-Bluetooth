@@ -34,7 +34,7 @@ export class ControllerMapingComponent {
   }
 
   addNewMapping() {
-    if (!this.controllerMapping?.m || this.controllerMapping.m.length >= 30)
+    if (!this.controllerMapping?.m || this.controllerMapping.m.length >= 16)
       return;
 
     const newMapping: ButtonMapping = [0, 0, 0];
@@ -56,14 +56,30 @@ export class ControllerMapingComponent {
 
   onChange(value: number) {
     if (this.activeMapping) {
-      this.activeMapping[0] = value;
+      if (value === 105 || this.activeMapping[2] === 3) { // psp analogstick
+        //hard code toleft analog stick on psp.
+        this.activeMapping[0] = 105;
+        this.activeMapping[1] = 1;
+        this.activeMapping[2] = 3;
+      } else {
+        this.activeMapping[0] = value;
+      }
     }
   }
 
   onControllerChange(value: IDS4ViewerChange) {
     if (this.activeMapping) {
-      this.activeMapping[1] = value.controllerBit;
-      this.activeMapping[2] = value.type;
+      if (this.activeMapping[0] === 105) {
+        this.activeMapping[1] = value.type === 3 && (value.controllerBit === 1 || value.controllerBit === 2) ? value.controllerBit : 1;
+        this.activeMapping[2] = 3;
+      } else {
+        this.activeMapping[1] = value.controllerBit;
+        this.activeMapping[2] = value.type;
+  
+        if (value.pspAnalog) {
+          this.activeMapping[0] = 105;
+        }
+      }
     }
   }
 }

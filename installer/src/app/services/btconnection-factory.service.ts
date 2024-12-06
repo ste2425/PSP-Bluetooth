@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ILogger } from '../ILogger';
-import { availableControllerBitsMappedToType, availablecontrollerTypes, availablePspButtons } from './ESPValueDefinitions';
+import { analogControllerBits, availableControllerBitsMappedToType, availablecontrollerTypes, availablePspButtons, controllerTypes, pspButtons } from './ESPValueDefinitions';
 
 const PRIMARY_SERVICE_UUID = '4627c4a4-ac00-46b9-b688-afc5c1bf7f63';
 const VERSION_UUID = '4627c4a4-ac01-46b9-b688-afc5c1bf7f63';
@@ -101,6 +101,10 @@ export class PSPBluetooth {
                 console.error('Mapping controller bits for type invalid: ', controllerType, controllerBit);
                 return false;
             }
+
+            // Dirty. Default data set analog to 0. Detect analog and set to correct value.
+            if (controllerType === controllerTypes.analog && (controllerBit === analogControllerBits.leftAnalog || analogControllerBits.rightAnalog))
+                m[0] = pspButtons.analog;
 
             return true;
         });

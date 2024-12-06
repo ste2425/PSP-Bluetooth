@@ -25,7 +25,8 @@ enum ControllerButton {
 
 export interface IDS4ViewerChange {
   type: number,
-  controllerBit: number
+  controllerBit: number,
+  pspAnalog?: boolean
 }
 
 @Component({
@@ -99,10 +100,12 @@ export class DS4ViewerComponent {
       case ControllerButton.leftAnalog:
         event.type = controllerTypes.analog;
         event.controllerBit = analogControllerBits.leftAnalog;
+        event.pspAnalog = true;
         break;
       case ControllerButton.rightAnalog:
         event.type = controllerTypes.analog;
         event.controllerBit = analogControllerBits.rightAnalog;
+        event.pspAnalog = true;
         break;
       case ControllerButton.l1:
         event.type = controllerTypes.button;

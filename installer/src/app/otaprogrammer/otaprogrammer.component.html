@@ -53,9 +53,20 @@
   }
   }
 
+  @if (displayConnect) {
+    <div class="description-message">
+      <p>
+        Your ESP32 should now have reset. Please re-enable BLE mode then re-connect to continue.
+      </p>
+      <div>
+        <button color="accent" mat-button (click)="reConnect()">Re-connect</button>
+      </div>
+    </div>
+  }
+
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
   <button color="secondary" mat-button (click)="close()" [disabled]="closeDisabled">Close</button>
-  <button color="accent" mat-button cdkFocusInitial (click)="next()" [disabled]="disableNext">{{nextText}}</button>
+  <button color="accent" mat-button cdkFocusInitial (click)="next()" [disabled]="disableNext || displayConnect">{{nextText}}</button>
 </mat-dialog-actions>

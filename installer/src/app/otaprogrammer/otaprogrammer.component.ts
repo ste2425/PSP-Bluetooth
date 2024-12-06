@@ -110,6 +110,68 @@ export class OTAProgrammerComponent implements OnDestroy {
     }
   }
 
+  displayConnect = false;
+
+  async reConnect() {
+    if (!this.connection)
+      return;
+    
+    this.displayConnect = false;
+
+    try {
+      await this.connection.reconnect();
+
+      this.newVersion = await this.connection?.version() || '';
+      
+      this.state = OTAProgrammerState.ProgrammingSuccess;
+  
+      this.dialogRef.disableClose = false;
+    } catch(e) {
+      this.state = OTAProgrammerState.ProgrammingError;
+      if (e instanceof BTConnectionVersionMissmatchError) {
+        this.logger.clean();
+        this.logger.writeLine(
+          `The device you conencted to does not appear to be the PSP Bluetooth Mod.
+When requesting version number it did not match the value expected.
+
+Recieved: ${e.recieved}
+Expected: ${e.expected}
+
+Click \'Next\' to try again`
+        );
+
+      } else if (e instanceof BTConnectionPrimaryServiceError) {
+        this.logger.clean();
+        this.logger.writeLine(
+          `The device you conencted to does not appear to be the PSP Bluetooth Mod.
+It does not have the expected Primary Service.
+
+Click \'Next\' to try again`
+        );
+      } else if (e instanceof BTConnectionAbortedError) {
+        this.logger.clean();
+        this.logger.writeLine('Bluetooth device was not selected. Click \'Next\' to try again');
+      } else if (e instanceof BTConnectionGATTConnectionError) {
+        this.logger.clean();
+        this.logger.writeLine(
+          `We couldnt connect to your device, tried three times.
+Remember Web Bluetooth is an experimental technology and can be unreliable.
+It may be best to reload your browser and try again`
+        );
+      } else {
+        this.logger.writeLine('Error during OTA update:');
+  
+        if (e instanceof Error) {          
+          this.logger.writeLine(e?.message);
+          this.logger.writeLine(e?.stack || '' );
+        }
+      }
+
+      this.dialogRef.disableClose = false;
+      this.disableNext = false;
+    }
+  }
+
   async #program() {
     try {
       this.programProgress = 0;
@@ -166,13 +228,7 @@ export class OTAProgrammerComponent implements OnDestroy {
 
     await new Promise(res => setTimeout(res, 5000));
 
-    await this.connection.reconnect();
-
-    this.newVersion = await this.connection?.version() || '';
-    
-    this.state = OTAProgrammerState.ProgrammingSuccess;
-
-    this.dialogRef.disableClose = false;
+    this.displayConnect = true;
 
     } catch(e) {
       this.state = OTAProgrammerState.ProgrammingError;
