@@ -33,6 +33,23 @@ export class ControllerMapingComponent {
     return pspButton === pspButtons.analog || (type === controllerTypes.analog && (controllerPin === analogControllerBits.leftAnalog || controllerPin === analogControllerBits.rightAnalog));
   }
 
+  disableAllButAnalog() {
+    if (!this.activeMapping)
+      return false;
+
+    const controllerBit = this.activeMapping[1],
+      type = this.activeMapping[2];
+
+    return type === controllerTypes.analog && (controllerBit === analogControllerBits.leftAnalog || controllerBit === analogControllerBits.rightAnalog);
+  }
+
+  disableAllControllerButAnalog() {
+    if (!this.activeMapping)
+      return false;
+
+    return this.activeMapping[0] === pspButtons.analog;
+  }
+
   addNewMapping() {
     if (!this.controllerMapping?.m || this.controllerMapping.m.length >= 16)
       return;

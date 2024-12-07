@@ -41,10 +41,11 @@ export class DS4ViewerComponent {
 
   @Input({ required: true }) currentlyActive?: ButtonMapping = undefined;
   @Input() disableAll = false;
+  @Input() disableAllButAnalog = false;
   @Output() onChange = new EventEmitter<IDS4ViewerChange>();
   
   toggle(pin: ControllerButton) {
-    if(this.disableAll)
+    if(this.disableAll || this.disableAllButAnalog)
       return;
     
     const event: IDS4ViewerChange = {

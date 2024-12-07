@@ -82,6 +82,15 @@
 
             <app-controller-maping [controllerMapping]="item"></app-controller-maping>
         }
+    } @empty {
+        
+        <p style="text-align: center;">
+            Please enable the <em>BLE service</em> by press and holing the mode button. This will trigger the LED to flashe three times in a row with a pause.
+        </p>
+
+        <p style="text-align: center;">
+            Then click the <em>Load Mappings button</em>. In the popup select the device labelled either <em>BP32</em> or <em>Bluepad32</em>.
+        </p>
     }
     
     @if (loading) {    

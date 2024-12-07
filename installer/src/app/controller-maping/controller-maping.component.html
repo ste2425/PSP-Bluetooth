@@ -25,15 +25,16 @@
             <div class="analog-warning">
                 Controller analog sticks can only be mapped directly to the PSP's analog stick.
                 If you wish to map a controller analog stick to a PSP button, select the direction of the analog stick.
+                <strong>Once a mapping between the analog stick is made it can't be edited, it will need to be deleted instead.</strong>
             </div>
         }
 
         <div style="width: 500px; margin-top: 10px;">
-            <app-psp-viewer [disableAll]="!activeMapping" [currentlyActivePin]="activeMapping?.[0]" (onChange)="onChange($event)"></app-psp-viewer>
+            <app-psp-viewer [disableAllButAnalog]="disableAllButAnalog()" [disableAll]="!activeMapping" [currentlyActivePin]="activeMapping?.[0]" (onChange)="onChange($event)"></app-psp-viewer>
         </div>
     
         <div style="width: 500px; padding-top: 30px;">
-            <app-ds4-viewer [disableAll]="!activeMapping" [currentlyActive]="activeMapping" (onChange)="onControllerChange($event)"></app-ds4-viewer>
+            <app-ds4-viewer [disableAllButAnalog]="disableAllControllerButAnalog()" [disableAll]="!activeMapping" [currentlyActive]="activeMapping" (onChange)="onControllerChange($event)"></app-ds4-viewer>
         </div>
     </div>
 </div>

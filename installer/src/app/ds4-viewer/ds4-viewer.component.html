@@ -1,23 +1,23 @@
 <div class="r2"          
-   [ngClass]="{ active: isActive(ControllerButton.r2), disabled: disableAll }"
+   [ngClass]="{ active: isActive(ControllerButton.r2), disabled: disableAll || disableAllButAnalog }"
    (click)="toggle(ControllerButton.r2)">
    <span>R2</span>
 </div>
 
 <div class="l2"          
-   [ngClass]="{ active: isActive(ControllerButton.l2), disabled: disableAll }"
+   [ngClass]="{ active: isActive(ControllerButton.l2), disabled: disableAll || disableAllButAnalog }"
    (click)="toggle(ControllerButton.l2)">
  <span>L2</span>
 </div>
 
 <div class="r1"          
-   [ngClass]="{ active: isActive(ControllerButton.r1), disabled: disableAll }"
+   [ngClass]="{ active: isActive(ControllerButton.r1), disabled: disableAll || disableAllButAnalog }"
    (click)="toggle(ControllerButton.r1)">
    <span>R1</span>
 </div>
 
 <div class="l1"          
-   [ngClass]="{ active: isActive(ControllerButton.l1), disabled: disableAll }"
+   [ngClass]="{ active: isActive(ControllerButton.l1), disabled: disableAll || disableAllButAnalog }"
    (click)="toggle(ControllerButton.l1)">
  <span>L1</span>
 </div>
@@ -113,28 +113,28 @@
        id="g6246"
        style="stroke-width:3.13958668999999980;stroke-miterlimit:4;stroke-dasharray:none;fill:#cccccc">
       <path
-         [ngClass]="{ active: isActive(ControllerButton.dpadDown), disabled: disableAll }"
+         [ngClass]="{ active: isActive(ControllerButton.dpadDown), disabled: disableAll || disableAllButAnalog }"
          (click)="toggle(ControllerButton.dpadDown)"
          d="m -81.525686,336.98213 c -2.002782,0 -4.185529,0.4097 -6.90625,2.21875 l -24.562504,23.6875 c -1.96171,1.86627 -3.32182,3.89834 -4.25,6.59375 l -3.65625,44.5 c 2.43421,9.11961 8.19304,15.22766 17.59375,16.9375 16.373746,1.29369 28.950191,1.09016 43.562504,0 9.400711,-1.70984 15.19079,-7.81789 17.625,-16.9375 l -3.65625,-44.5 c -0.92818,-2.69541 -2.28829,-4.72748 -4.25,-6.59375 l -24.5625,-23.6875 c -2.72072,-1.80905 -4.934717,-2.21875 -6.9375,-2.21875 z"
          id="dpad-down"
          style="color:#000000;fill:#cccccc;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:3.13958668999999980;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
          inkscape:connector-curvature="0" />
       <path
-         [ngClass]="{ active: isActive(ControllerButton.dpadUp), disabled: disableAll }"
+         [ngClass]="{ active: isActive(ControllerButton.dpadUp), disabled: disableAll || disableAllButAnalog }"
          (click)="toggle(ControllerButton.dpadUp)"
          d="m -81.525685,294.18205 c -2.002782,0 -4.185529,-0.4097 -6.90625,-2.21875 l -24.562505,-23.6875 c -1.96171,-1.86627 -3.32182,-3.89834 -4.25,-6.59375 l -3.65625,-44.5 c 2.43421,-9.11961 8.19304,-15.22766 17.59375,-16.9375 16.373747,-1.29369 28.950192,-1.09016 43.562505,0 9.400711,1.70984 15.19079,7.81789 17.625,16.9375 l -3.65625,44.5 c -0.92818,2.69541 -2.28829,4.72748 -4.25,6.59375 l -24.5625,23.6875 c -2.72072,1.80905 -4.934717,2.21875 -6.9375,2.21875 z"
          id="dpad-up"
          style="color:#000000;fill:#cccccc;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:3.13958668999999980;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
          inkscape:connector-curvature="0" />
       <path
-         [ngClass]="{ active: isActive(ControllerButton.dpadRight), disabled: disableAll }"
+         [ngClass]="{ active: isActive(ControllerButton.dpadRight), disabled: disableAll || disableAllButAnalog }"
          (click)="toggle(ControllerButton.dpadRight)"
          d="m -60.043435,315.47152 c 0,2.00278 0.4097,4.18553 2.21875,6.90625 l 23.6875,24.5625 c 1.86627,1.96171 3.89834,3.32182 6.59375,4.25 l 44.499999,3.65625 c 9.119611,-2.43421 15.227661,-8.19304 16.937501,-17.59375 1.29369,-16.37374 1.09016,-28.95019 0,-43.5625 -1.70984,-9.40071 -7.81789,-15.19079 -16.937501,-17.625 l -44.499999,3.65625 c -2.69541,0.92818 -4.72748,2.28829 -6.59375,4.25 l -23.6875,24.5625 c -1.80905,2.72072 -2.21875,4.93472 -2.21875,6.9375 z"
          id="dpad-right"
          style="color:#000000;fill:#cccccc;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:3.13958668999999980;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
          inkscape:connector-curvature="0" />
       <path
-         [ngClass]="{ active: isActive(ControllerButton.dpadLeft), disabled: disableAll }"
+         [ngClass]="{ active: isActive(ControllerButton.dpadLeft), disabled: disableAll || disableAllButAnalog }"
          (click)="toggle(ControllerButton.dpadLeft)"
          d="m -103.60127,315.44027 c 0,-2.00278 -0.4097,-4.18553 -2.21875,-6.90625 l -23.6875,-24.5625 c -1.86627,-1.96171 -3.89834,-3.32182 -6.59375,-4.25 l -44.5,-3.65625 c -9.11961,2.43421 -15.22766,8.19304 -16.9375,17.59375 -1.29369,16.37374 -1.09016,28.95019 0,43.5625 1.70984,9.40071 7.81789,15.19079 16.9375,17.625 l 44.5,-3.65625 c 2.69541,-0.92818 4.72748,-2.28829 6.59375,-4.25 l 23.6875,-24.5625 c 1.80905,-2.72072 2.21875,-4.93472 2.21875,-6.9375 z"
          id="dpad-left"
@@ -151,7 +151,7 @@
        style="color:#000000;fill:#cccccc;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1.20000005000000010;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
        inkscape:connector-curvature="0" />
     <g id="triangle-btn" 
-      [ngClass]="{ active: isActive(ControllerButton.triangle), disabled: disableAll }"
+      [ngClass]="{ active: isActive(ControllerButton.triangle), disabled: disableAll || disableAllButAnalog }"
       (click)="toggle(ControllerButton.triangle)"
       >
       <path
@@ -167,7 +167,7 @@
          style="color:#000000;fill:#cccccc;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
          inkscape:connector-curvature="0" />
     </g>
-    <g id="cross-btn" [ngClass]="{ active: isActive(ControllerButton.cross), disabled: disableAll }" (click)="toggle(ControllerButton.cross)">
+    <g id="cross-btn" [ngClass]="{ active: isActive(ControllerButton.cross), disabled: disableAll || disableAllButAnalog }" (click)="toggle(ControllerButton.cross)">
       <path
           class="circle"
          d="m 489.21234,164.89189 a 17.080017,17.080017 0 0 1 -34.16003,0 17.080017,17.080017 0 1 1 34.16003,0 z"
@@ -187,7 +187,7 @@
     inkscape:connector-curvature="0" />
 
     </g>
-    <g id="square-btn" [ngClass]="{ active: isActive(ControllerButton.square), disabled: disableAll }" (click)="toggle(ControllerButton.square)">
+    <g id="square-btn" [ngClass]="{ active: isActive(ControllerButton.square), disabled: disableAll || disableAllButAnalog }" (click)="toggle(ControllerButton.square)">
       <path
         class="circle"
          d="m 449.0631,124.75922 a 17.08002,17.08002 0 0 1 -34.16004,0 17.08002,17.08002 0 1 1 34.16004,0 z"
@@ -202,7 +202,7 @@
          id="rect4554"
          style="color:#000000;fill:#cccccc;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
     </g>
-    <g id="circle-btn" [ngClass]="{ active: isActive(ControllerButton.circle), disabled: disableAll }" (click)="toggle(ControllerButton.circle)">
+    <g id="circle-btn" [ngClass]="{ active: isActive(ControllerButton.circle), disabled: disableAll || disableAllButAnalog }" (click)="toggle(ControllerButton.circle)">
       <path
         class="circle"
          d="m 530.14747,124.75922 a 17.080017,17.080017 0 0 1 -34.16003,0 17.080017,17.080017 0 1 1 34.16003,0 z"
@@ -306,21 +306,21 @@
      style="fill:#cccccc">
     <path
     
-      [ngClass]="{ active: isActive(ControllerButton.share), disabled: disableAll }"
+      [ngClass]="{ active: isActive(ControllerButton.share), disabled: disableAll || disableAllButAnalog }"
       (click)="toggle(ControllerButton.share)"
        d="m 188.8255,56.58123 c -4.8239,0 -8.73124,3.90733 -8.73124,8.73125 l 0,13.30588 c 0,4.82391 3.90734,8.73125 8.73124,8.73125 4.82391,0 8.73125,-3.90734 8.73125,-8.73125 l 0,-13.30588 c 0,-4.82392 -3.90734,-8.73125 -8.73125,-8.73125 z"
        id="share-btn"
        style="color:#000000;fill:#cccccc;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1.20000005000000010;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
        inkscape:connector-curvature="0" />
     <path      
-      [ngClass]="{ active: isActive(ControllerButton.options), disabled: disableAll }"
+      [ngClass]="{ active: isActive(ControllerButton.options), disabled: disableAll || disableAllButAnalog }"
       (click)="toggle(ControllerButton.options)"
        d="m 412.79696,56.58123 c -4.8239,0 -8.73124,3.90733 -8.73124,8.73125 l 0,13.30588 c 0,4.82391 3.90734,8.73125 8.73124,8.73125 4.82391,0 8.73125,-3.90734 8.73125,-8.73125 l 0,-13.30588 c 0,-4.82392 -3.90734,-8.73125 -8.73125,-8.73125 z"
        id="options-btn"
        style="color:#000000;fill:#cccccc;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1.20000005000000010;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
        inkscape:connector-curvature="0" />
     <g id="ps-btn" 
-    [ngClass]="{ active: isActive(ControllerButton.ps), disabled: disableAll }"
+    [ngClass]="{ active: isActive(ControllerButton.ps), disabled: disableAll || disableAllButAnalog }"
     (click)="toggle(ControllerButton.ps)"
     >
       

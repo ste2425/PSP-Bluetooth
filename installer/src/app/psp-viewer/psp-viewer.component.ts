@@ -14,6 +14,7 @@ export class PspViewerComponent {
 
   @Input({ required: true }) currentlyActivePin?: number = undefined;
   @Input() disableAll = false;
+  @Input() disableAllButAnalog = false;
   @Output() onChange = new EventEmitter<number>();
 
   isActive(pin: number) {
@@ -21,7 +22,7 @@ export class PspViewerComponent {
   }
 
   toggleActive(pin: number) {
-    if (this.disableAll)
+    if (this.disableAll || (this.disableAllButAnalog && pin === this.PSPButtons.analog))
       return;
     
     if (availablePspButtons.includes(pin)) {
