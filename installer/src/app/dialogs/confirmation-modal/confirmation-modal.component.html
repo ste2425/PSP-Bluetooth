@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>{{data.title}}</h2>
+<mat-dialog-content style="padding: 20px;">
+  <p>{{data.message}}</p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="nope()">{{data.noText || 'No Thanks'}}</button>
+  <button color="accent" mat-button (click)="ok()" cdkFocusInitial>{{data.yesText || 'Ok'}}</button>
+</mat-dialog-actions>

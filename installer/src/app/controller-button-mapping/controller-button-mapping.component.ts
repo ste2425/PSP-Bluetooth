@@ -1,9 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, HostBinding, HostListener, Input, Output, output } from '@angular/core';
+import { Attribute, Component, EventEmitter, HostBinding, HostListener, inject, Input, Output, output } from '@angular/core';
 import { analogControllerBits, buttonControllerBits, controllerTypes, dpadControllerBits, miscControllerBits, pspButtons } from '../services/ESPValueDefinitions';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { TourMatMenuModule, TourService } from 'ngx-ui-tour-md-menu';
+import { TimmyDirective } from '../timmy.directive';
 
 const dpadDisplayValues = {
   [dpadControllerBits.dpadUp]: 'DPAD up',
@@ -79,11 +81,20 @@ interface IControllerOption {
 @Component({
   selector: 'app-controller-button-mapping',
   standalone: true,
-  imports: [CommonModule, MatFormFieldModule, MatSelectModule, FormsModule, ReactiveFormsModule],
+  imports: [TourMatMenuModule, CommonModule, MatFormFieldModule, MatSelectModule, FormsModule, ReactiveFormsModule],
   templateUrl: './controller-button-mapping.component.html',
   styleUrl: './controller-button-mapping.component.scss'
 })
 export class ControllerButtonMappingComponent {
+  tourService = inject(TourService);
+  
+  ngOnDestroy() {
+    //this.tourService.unregister(this.tour);
+    console.log('DESTROY');
+  }
+
+  @Input() tour: string = '';
+
   @Input({ required: true }) mapping?: [number, number, number]; //psp, controller bit, controller type
 
   controllerOptions: IControllerOption[] = [

@@ -1,0 +1,15 @@
+:host {
+	display: flex;
+	align-items: center;
+	padding: 10px;
+	flex-direction: column;
+	justify-content: center;
+
+	&.row {
+		flex-direction: row;
+	}
+
+	&.rounded {
+		border-radius: 6px;
+	}
+}

@@ -1,16 +1,17 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { BTConnectionAbortedError, BTConnectionFactoryService, BTConnectionGATTConnectionError, BTConnectionPrimaryServiceError, BTConnectionVersionMissmatchError, IControllerMapping, OTACommand, PSPBluetooth } from '../services/btconnection-factory.service';
-import { MatDialog } from '@angular/material/dialog';
-import { AddMappingModalComponent } from '../add-mapping-modal/add-mapping-modal.component';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ControllerMapingComponent } from "../controller-maping/controller-maping.component";
-import { MatProgressSpinner, MatSpinner } from '@angular/material/progress-spinner';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import {MatIconModule} from '@angular/material/icon';
-import { Title } from '@angular/platform-browser';
 import { ColourPickerComponent } from "../colour-picker/colour-picker.component";
+import { TourMatMenuModule, TourService } from 'ngx-ui-tour-md-menu';
+import { DialogService } from '../dialogs/dialog.service';
+import { PanelComponent } from '../panel/panel.component';
+import { controllerTypes, dpadControllerBits, pspButtons } from '../services/ESPValueDefinitions';
 
 interface IViewControllerMapping extends IControllerMapping {
   visible?: boolean
@@ -18,14 +19,15 @@ interface IViewControllerMapping extends IControllerMapping {
 @Component({
   selector: 'app-configuration-page',
   standalone: true,
-  imports: [MatIconModule, MatProgressSpinner, MatButtonModule, TextFieldModule, FormsModule, CommonModule, ControllerMapingComponent, ColourPickerComponent],
+  imports: [PanelComponent, TourMatMenuModule, MatIconModule, MatProgressSpinner, MatButtonModule, TextFieldModule, FormsModule, CommonModule, ControllerMapingComponent, ColourPickerComponent],
   templateUrl: './configuration-page.component.html',
   styleUrl: './configuration-page.component.scss'
 })
-export class ConfigurationPageComponent implements OnDestroy, OnInit {
-  ngOnInit(): void {
-    this.titleService.setTitle('Button Config');
-  }
+export class ConfigurationPageComponent implements OnDestroy {
+  dialogService = inject(DialogService);
+  btConnectionFactory = inject(BTConnectionFactoryService);
+  readonly tourService = inject(TourService);
+
   loadMappingsDisabled = false;
 
   btDevice?: PSPBluetooth;
@@ -39,6 +41,7 @@ export class ConfigurationPageComponent implements OnDestroy, OnInit {
     return this.btDevice?.connected;
   }
 
+
   deleteMapping(mapping: IViewControllerMapping) {
     const index = this.configurations.indexOf(mapping);
 
@@ -48,13 +51,19 @@ export class ConfigurationPageComponent implements OnDestroy, OnInit {
 
     this.configurations.forEach(c => c.visible = false);
 
-    if (this.configurations.length === 0)
-      return;
+    if (this.configurations.length === 0) {
+      this.visibleItem = undefined;
 
-    if (index < this.configurations.length)
-      this.configurations[index].visible = true;
-    else 
-      this.configurations[this.configurations.length - 1].visible = true;
+      return;
+    }
+
+    const visibleitem = index < this.configurations.length ?
+      this.configurations[index] :
+      this.configurations[this.configurations.length - 1];
+
+    visibleitem.visible = true;
+
+    this.visibleItem = visibleitem;
   }
 
   addNewControllerMapping() {
@@ -65,12 +74,16 @@ export class ConfigurationPageComponent implements OnDestroy, OnInit {
       visible: true,
       n: 1,
       c: [255, 200, 10, 1],
-      m: []
+      m: [
+        [pspButtons.left, dpadControllerBits.dpadLeft, controllerTypes.dpad]
+      ]
     };
 
     this.configurations.forEach(c => c.visible = false);
 
     this.configurations.push(newConfig);
+
+    this.visibleItem = newConfig;
   }
 
   onColourChange(mapping: IControllerMapping, event: { r: number, g: number, b: number, a: number }) {
@@ -84,21 +97,11 @@ export class ConfigurationPageComponent implements OnDestroy, OnInit {
     this.btDevice?.disconnect();
   }
 
-  btConnectionFactory = inject(BTConnectionFactoryService);
-  dialogService = inject(MatDialog);
-  titleService = inject(Title);
   terminalOutput = '';
 
   configurations: IViewControllerMapping[] = [];// JSON.parse("[{\"visible\": true,\"n\":1,\"c\":[255,0,0,0.1],\"m\":[[8,0,0],[10,1,0],[9,3,0],[0,2,0],[15,0,1],[17,1,1],[16,2,1],[2,0,2],[1,1,2],[4,3,2],[6,2,2],[5,5,2],[7,6,2],[0,1,3]]},{\"n\":2,\"c\":[255,0,0,1],\"m\":[[8,0,0],[10,1,0],[9,3,0],[0,2,0],[15,0,1],[17,1,1],[16,2,1],[2,0,2],[1,1,2],[4,3,2],[6,2,2],[5,5,2],[7,6,2],[102,6,2],[101,7,2]]}]");
 
-  addMapping() {
-    const dialogRef = this.dialogService.open(AddMappingModalComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed', result);
-    });
-  }
-
+  visibleItem?: IViewControllerMapping = this.configurations[0];
   next() {
     for (const configuration of this.configurations) {
       const index = this.configurations.indexOf(configuration),
@@ -107,7 +110,11 @@ export class ConfigurationPageComponent implements OnDestroy, OnInit {
       if (configuration.visible) {
         configuration.visible = false;
 
-        this.configurations[isLast ? 0 : index + 1 ].visible = true;
+        const next = this.configurations[isLast ? 0 : index + 1 ];
+        
+        next.visible = true;
+
+        this.visibleItem = next;
         break;
       }
     }
@@ -121,7 +128,12 @@ export class ConfigurationPageComponent implements OnDestroy, OnInit {
       if (configuration.visible) {
         configuration.visible = false;
 
-        this.configurations[isFirst ? this.configurations.length - 1 : index - 1 ].visible = true;
+        const next = this.configurations[isFirst ? this.configurations.length - 1 : index - 1 ];
+
+        next.visible = true;
+
+        this.visibleItem = next;
+
         break;
       }
     }
@@ -147,11 +159,23 @@ export class ConfigurationPageComponent implements OnDestroy, OnInit {
       }).filter((x: IControllerMapping | undefined): x is IControllerMapping => !!x);
       
       await this.btDevice?.saveButtonMappings(toSave);
+
+      this.dialogService.configSaved();
     } catch(e) {
       console.log(e);
     } finally {      
       this.mappingsSaving = false;
     }
+  }
+
+  startTour() {
+    if (!this.configurations.length)
+      this.addNewControllerMapping();
+    
+    if (this.visibleItem && !this.visibleItem.m.length)
+      this.visibleItem.m.push([pspButtons.left, dpadControllerBits.dpadLeft, controllerTypes.dpad])
+
+    this.tourService.start();
   }
 
   async loadMappings() {
@@ -177,30 +201,28 @@ export class ConfigurationPageComponent implements OnDestroy, OnInit {
 
         this.configurations[0].visible = true;
 
-        //this.$configurations.next(mappings);
+        this.visibleItem = this.configurations[0];
+
         console.log('Mappings read');
       } else {
         console.log('no mappings');
       }
   
       this.loadMappingsDisabled = false;
+
+      if (!localStorage.getItem('config.tourPrompted')) {        
+        localStorage.setItem('config.tourPrompted', 'true');
+        const doTour = await this.dialogService.confirmConfigTour();
+
+        if (doTour)
+          this.startTour();
+      }
     } catch(e) {
       console.log(e);
       this.loadMappingsDisabled = false;
     } finally {
       this.loading = false;
     }
-  }
-
-  async saveValue() {
-    if (!this.connected || !this.btDevice)
-      return;
-
-    console.log('Saving mappings...');
-
-    //await this.btDevice.saveButtonMappings(JSON.parse(this.configuration));
-    
-    console.log("Mappings written");
   }
 
   async connect() {  

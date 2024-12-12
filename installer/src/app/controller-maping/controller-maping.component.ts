@@ -9,11 +9,12 @@ import { DS4ViewerComponent, IDS4ViewerChange } from '../ds4-viewer/ds4-viewer.c
 import { analogControllerBits, controllerTypes, pspButtons } from '../services/ESPValueDefinitions';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { TourMatMenuModule } from 'ngx-ui-tour-md-menu';
 
 @Component({
   selector: 'app-controller-maping',
   standalone: true,
-  imports: [MatIconModule, MatButtonModule, CommonModule, MatDividerModule, MatGridListModule, ControllerButtonMappingComponent, PspViewerComponent, DS4ViewerComponent],
+  imports: [TourMatMenuModule, MatIconModule, MatButtonModule, CommonModule, MatDividerModule, MatGridListModule, ControllerButtonMappingComponent, PspViewerComponent, DS4ViewerComponent],
   templateUrl: './controller-maping.component.html',
   styleUrl: './controller-maping.component.scss'
 })

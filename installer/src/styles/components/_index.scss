@@ -12,6 +12,7 @@
 @use "../../app/psp-viewer/psp-viewer-mapping-theme" as pspViewer;
 @use "../../app/ds4-viewer/ds4-viewer-mapping-theme" as ds4Viewer;
 @use "../../app/colour-picker/colour-picker-page-theme" as colourPicker;
+@use "../../app/panel/panel-theme" as panel;
 
 @mixin theme($theme) {
     @include release.theme($theme);
@@ -26,4 +27,5 @@
     @include ds4Viewer.theme($theme);
     @include pspViewer.theme($theme);
     @include colourPicker.theme($theme);
+    @include panel.theme($theme);
 }

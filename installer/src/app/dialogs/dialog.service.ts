@@ -1,0 +1,40 @@
+import { inject, Injectable } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationModalComponent, IConfirmationData } from './confirmation-modal/confirmation-modal.component';
+import { firstValueFrom } from 'rxjs';
+import { IOKModalData, OKModalComponent } from './ok-modal/ok-modal.component';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DialogService {
+  dialogService = inject(MatDialog);
+
+  async confirmConfigTour(): Promise<boolean> {
+    const data: IConfirmationData = {
+      title: 'Take a short tour?',
+      message: 'Lools like your new here. Fancy a quick tour?'
+    };
+
+    const result = await firstValueFrom(
+      this.dialogService.open(ConfirmationModalComponent, {
+        data
+      }).afterClosed()
+    )
+
+    return !!result;
+  }
+
+  async configSaved() {
+    const data: IOKModalData = {
+      title: 'Data Saved',
+      message: 'Configuration data has been saved'
+    };
+
+    await firstValueFrom(
+      this.dialogService.open(OKModalComponent, {
+        data
+      }).afterClosed()
+    )
+  }
+}

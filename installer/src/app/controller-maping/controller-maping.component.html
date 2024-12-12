@@ -2,17 +2,17 @@
     <div style="max-height: 550px; width: 40%;">
         <div class="mapping-header">
             <h4>Button Mappings: {{controllerMapping?.m?.length || 0}} / 16</h4>
-            <button [disabled]="(controllerMapping?.m?.length || 0) >= 16" (click)="addNewMapping()" color="accent" mat-icon-button >
+            <button tourAnchor="config.buttoncreate" [disabled]="(controllerMapping?.m?.length || 0) >= 16" (click)="addNewMapping()" color="accent" mat-icon-button >
                 <mat-icon>add_circle</mat-icon>
             </button>
         </div>
 
-        <div style="overflow: auto; height: 100%;">       
+        <div style="overflow: auto; height: 100%;">        
              @for (item of controllerMapping?.m; track item) {
                 <div class="mapping-item">
-                    <app-controller-button-mapping style="flex-grow: 1;" [mapping]="item" (click)="activeMapping = item" [ngClass]="{ active: activeMapping === item }"></app-controller-button-mapping>
+                    <app-controller-button-mapping [tourAnchor]="'config.buttonmapping-' + $index" style="flex-grow: 1;" [mapping]="item" (click)="activeMapping = item" [ngClass]="{ active: activeMapping === item }"></app-controller-button-mapping>
                     
-                    <button (click)="removeMapping(item)" color="accent" mat-icon-button>
+                    <button [tourAnchor]="'config.buttondelete-' + $index" (click)="removeMapping(item)" color="accent" mat-icon-button>
                         <mat-icon>delete_forever</mat-icon>
                     </button>
                 </div>       
@@ -20,7 +20,7 @@
         </div>
     </div>
 
-    <div class="d-flex" style="flex-grow: 1; align-items: center; flex-direction: column;">
+    <div tourAnchor="config.mappingselector" class="d-flex" style="flex-grow: 1; align-items: center; flex-direction: column;">
         @if (isAnalogStickMapping) {
             <div class="analog-warning">
                 Controller analog sticks can only be mapped directly to the PSP's analog stick.
@@ -30,11 +30,11 @@
         }
 
         <div style="width: 500px; margin-top: 10px;">
-            <app-psp-viewer [disableAllButAnalog]="disableAllButAnalog()" [disableAll]="!activeMapping" [currentlyActivePin]="activeMapping?.[0]" (onChange)="onChange($event)"></app-psp-viewer>
+            <app-psp-viewer tourAnchor="config.mappingselectorpsp" [disableAllButAnalog]="disableAllButAnalog()" [disableAll]="!activeMapping" [currentlyActivePin]="activeMapping?.[0]" (onChange)="onChange($event)"></app-psp-viewer>
         </div>
     
         <div style="width: 500px; padding-top: 30px;">
-            <app-ds4-viewer [disableAllButAnalog]="disableAllControllerButAnalog()" [disableAll]="!activeMapping" [currentlyActive]="activeMapping" (onChange)="onControllerChange($event)"></app-ds4-viewer>
+            <app-ds4-viewer tourAnchor="config.mappingselectords4" [disableAllButAnalog]="disableAllControllerButAnalog()" [disableAll]="!activeMapping" [currentlyActive]="activeMapping" (onChange)="onControllerChange($event)"></app-ds4-viewer>
         </div>
     </div>
 </div>
