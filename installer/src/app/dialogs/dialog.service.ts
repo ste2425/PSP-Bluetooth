@@ -13,7 +13,7 @@ export class DialogService {
   async confirmConfigTour(): Promise<boolean> {
     const data: IConfirmationData = {
       title: 'Take a short tour?',
-      message: 'Lools like your new here. Fancy a quick tour?'
+      message: 'Looks like you\'re new here. Fancy a quick tour?'
     };
 
     const result = await firstValueFrom(
