@@ -1,8 +1,5 @@
 import { Routes } from '@angular/router';
-import { SerialPageComponent } from './serial-page/serial-page.component';
-import { ProgrammerPageComponent } from './programmer-page/programmer-page.component';
 import { HomePageComponent } from './home-page/home-page.component';
-import { ConfigurationPageComponent } from './configuration-page/configuration-page.component';
 
 export const routes: Routes = [
 {
@@ -12,14 +9,15 @@ export const routes: Routes = [
 },
 {
     path: 'configuration',
-    component: ConfigurationPageComponent,
+    loadComponent: () => import('./configuration-page/configuration-page.component').then(m => m.ConfigurationPageComponent),
     pathMatch: 'full'
 },
 {
     path: 'serial',
-    component: SerialPageComponent
+    loadComponent: () => import('./serial-page/serial-page.component').then(m => m.SerialPageComponent),
+    pathMatch: 'full'
 }, {
     path: 'program',
-    component: ProgrammerPageComponent,
+    loadComponent: () => import('./programmer-page/programmer-page.component').then(m => m.ProgrammerPageComponent),
     pathMatch: 'full'
 }];

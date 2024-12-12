@@ -63,7 +63,7 @@ export class AppComponent {
       },
       {
         anchorId: 'config.deletegroup',
-        content: 'New Button Groups can also be deleted.',
+        content: 'Button Groups can also be deleted.',
         enableBackdrop: true,
         placement: {
           horizontal: true
@@ -71,7 +71,7 @@ export class AppComponent {
       },
       {
         anchorId: 'config.colourpicker',
-        content: 'Each Button Group has a colour assigned. If your controller has a LED the colour will be used to indicate active Button Grouping.',
+        content: 'Each Button Group has a colour assigned. If your controller has an LED the colour will be used to indicate the active Button Grouping.',
         enableBackdrop: true
       },
       {
@@ -92,7 +92,7 @@ export class AppComponent {
       },
       {        
         anchorId: 'config.buttonmapping-0',
-        content: 'Clicking on a mapping make it active.',
+        content: 'Clicking on a mapping makes it active.',
         enableBackdrop: true
       },
       {        
