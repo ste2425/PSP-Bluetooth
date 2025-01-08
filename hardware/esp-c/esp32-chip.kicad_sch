@@ -2213,6 +2213,213 @@
 				)
 			)
 		)
+		(symbol "JLCPCB_schematic:TC1109DE26048"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "U"
+				(at 0 1.27 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "TC1109DE26048"
+				(at 0 -2.54 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "JLCPCB_footprint:SW-TH_3P-L4.5-W4.5-P1.8-LS3.0"
+				(at 0 -10.16 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+						(italic yes)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "https://atta.szlcsc.com/upload/public/pdf/source/20240320/DE47A893E236FDE638ED44011AF8E572.pdf"
+				(at -2.286 0.127 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+					(hide yes)
+				)
+			)
+			(property "Description" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "LCSC" "C22459542"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "C22459542"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "TC1109DE26048_0_1"
+				(polyline
+					(pts
+						(xy -1.27 -2.54) (xy 1.27 -2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 2.54) (xy 5.08 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -6.35 2.54) (xy -2.54 2.54) (xy 0 5.08)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -0.8407 -3.1394) (xy 0.7188 -3.1394) (xy 0.7188 -3.1572)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -0.4978 -3.6474) (xy 0.4089 -3.6474) (xy 0.3912 -3.6474)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 5.08 0) (xy 0 0) (xy 0 -2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 0.9589 2.4892)
+					(radius 0.2108)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(pin unspecified line
+					(at -7.62 2.54 0)
+					(length 5.08)
+					(name "1"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+				)
+				(pin unspecified line
+					(at 7.62 2.54 180)
+					(length 5.08)
+					(name "2"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+				)
+				(pin unspecified line
+					(at 7.62 0 180)
+					(length 5.08)
+					(name "3"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1 1)
+							)
+						)
+					)
+				)
+			)
+		)
 		(symbol "JLCPCB_schematic:TS-1187A-B-A-B"
 			(exclude_from_sim no)
 			(in_bom yes)
@@ -2431,6 +2638,198 @@
 						(effects
 							(font
 								(size 1 1)
+							)
+						)
+					)
+				)
+			)
+		)
+		(symbol "Jumper:SolderJumper_2_Bridged"
+			(pin_numbers hide)
+			(pin_names
+				(offset 0) hide)
+			(exclude_from_sim yes)
+			(in_bom no)
+			(on_board yes)
+			(property "Reference" "JP"
+				(at 0 2.032 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "SolderJumper_2_Bridged"
+				(at 0 -2.54 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Solder Jumper, 2-pole, closed/bridged"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "solder jumper SPST"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "SolderJumper*Bridged*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "SolderJumper_2_Bridged_0_1"
+				(rectangle
+					(start -0.508 0.508)
+					(end 0.508 -0.508)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(arc
+					(start -0.254 1.016)
+					(mid -1.2656 0)
+					(end -0.254 -1.016)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start -0.254 1.016)
+					(mid -1.2656 0)
+					(end -0.254 -1.016)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(polyline
+					(pts
+						(xy -0.254 1.016) (xy -0.254 -1.016)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.254 1.016) (xy 0.254 -1.016)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start 0.254 -1.016)
+					(mid 1.2656 0)
+					(end 0.254 1.016)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start 0.254 -1.016)
+					(mid 1.2656 0)
+					(end 0.254 1.016)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+			)
+			(symbol "SolderJumper_2_Bridged_1_1"
+				(pin passive line
+					(at -3.81 0 0)
+					(length 2.54)
+					(name "A"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 3.81 0 180)
+					(length 2.54)
+					(name "B"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
 							)
 						)
 					)
@@ -2661,12 +3060,6 @@
 		(uuid "0694cf33-5c89-4f49-ac87-b0be7a2701a3")
 	)
 	(junction
-		(at 54.61 151.13)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "22c11a65-3874-43bb-9c84-aeff2dd80703")
-	)
-	(junction
 		(at 48.26 62.23)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -2677,6 +3070,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "599da097-0148-4d1b-b58d-7fcf9ae3b8d0")
+	)
+	(junction
+		(at 33.02 158.75)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "5e513979-1083-4a4c-b518-00e78d4dbc18")
 	)
 	(junction
 		(at 48.26 69.85)
@@ -2697,46 +3096,22 @@
 		(uuid "87750e56-5d8b-4f6c-b5e8-68e6bb593e65")
 	)
 	(junction
-		(at 46.99 157.48)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "8bd99079-20a9-4a8a-9c11-20a235b22e38")
-	)
-	(junction
 		(at 93.98 153.67)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "a36eb9e0-dd64-40ad-8214-b072885cad38")
 	)
 	(junction
-		(at 78.74 181.61)
+		(at 208.28 115.57)
 		(diameter 0)
 		(color 0 0 0 0)
-		(uuid "a4c51c44-1403-476a-9c03-17479c650bba")
+		(uuid "ab3d0c85-58b7-437e-a260-60527519d42e")
 	)
 	(junction
 		(at 71.12 185.42)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "ac913470-732f-47d4-87a4-bb089599e1cf")
-	)
-	(junction
-		(at 46.99 151.13)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "ade0a7ae-01f8-4db9-90e2-7924285f54ab")
-	)
-	(junction
-		(at 71.12 181.61)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "d10ba2e7-14fd-4f55-b8a0-3152ef388a60")
-	)
-	(junction
-		(at 54.61 157.48)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "e1a7a67e-7d1a-4889-9099-f5b2ddf8873d")
 	)
 	(junction
 		(at 93.98 157.48)
@@ -2767,6 +3142,10 @@
 		(uuid "1b99b937-02e7-4047-a609-0237dc1f532c")
 	)
 	(no_connect
+		(at 83.82 173.99)
+		(uuid "1c626633-d2a4-49fa-bdb4-155ad966e7cb")
+	)
+	(no_connect
 		(at 106.68 113.03)
 		(uuid "20f3bc3b-0997-42a3-b057-86c2cf589c30")
 	)
@@ -2793,6 +3172,10 @@
 	(no_connect
 		(at 76.2 113.03)
 		(uuid "8c1188e1-3df7-4eec-8dfd-28257f55e483")
+	)
+	(no_connect
+		(at 48.26 144.78)
+		(uuid "ac79cae2-c4b7-44fb-ab09-bb8e056828ee")
 	)
 	(no_connect
 		(at 106.68 82.55)
@@ -2822,7 +3205,7 @@
 	)
 	(wire
 		(pts
-			(xy 80.01 181.61) (xy 78.74 181.61)
+			(xy 78.74 181.61) (xy 86.36 181.61)
 		)
 		(stroke
 			(width 0)
@@ -2832,33 +3215,23 @@
 	)
 	(wire
 		(pts
-			(xy 54.61 151.13) (xy 54.61 157.48)
+			(xy 208.28 115.57) (xy 209.55 115.57)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "0bccf3b6-3e21-4e9c-ae0b-0f21764e4bab")
+		(uuid "089ea704-9c63-4100-964e-4fc0da594b68")
 	)
 	(wire
 		(pts
-			(xy 196.85 115.57) (xy 185.42 115.57)
+			(xy 184.15 115.57) (xy 185.42 115.57)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "0dc41541-7bfe-4468-a2ef-6d2fd91df44c")
-	)
-	(wire
-		(pts
-			(xy 46.99 140.97) (xy 43.18 140.97)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "0e4262e7-12d1-4589-9b04-d8970de49c58")
 	)
 	(wire
 		(pts
@@ -2869,6 +3242,16 @@
 			(type default)
 		)
 		(uuid "0f2695f4-8a4b-4d93-a2b8-1c097447807c")
+	)
+	(wire
+		(pts
+			(xy 50.8 158.75) (xy 44.45 158.75)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "118c128a-4481-46e8-8143-8373d42cd82a")
 	)
 	(wire
 		(pts
@@ -2889,16 +3272,6 @@
 			(type default)
 		)
 		(uuid "122a2f83-a0b0-4159-ad28-fe958e43ba02")
-	)
-	(wire
-		(pts
-			(xy 43.18 140.97) (xy 43.18 151.13)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "145f823e-d8f3-4a71-9df5-2b8a30c1cf64")
 	)
 	(wire
 		(pts
@@ -2952,13 +3325,13 @@
 	)
 	(wire
 		(pts
-			(xy 80.01 171.45) (xy 80.01 181.61)
+			(xy 68.58 171.45) (xy 68.58 181.61)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "27f751dc-1820-4a82-93cb-20acd311c7bd")
+		(uuid "282be935-8786-4e6b-81fc-c2172e0e27fe")
 	)
 	(wire
 		(pts
@@ -2989,6 +3362,26 @@
 			(type default)
 		)
 		(uuid "2d0672dc-d8ad-49c3-b481-0bf3e5b6570a")
+	)
+	(wire
+		(pts
+			(xy 194.31 115.57) (xy 200.66 115.57)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "37ac0360-53ad-4ff6-8f2d-33632b541509")
+	)
+	(wire
+		(pts
+			(xy 83.82 171.45) (xy 86.36 171.45)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "39aaa47a-9af9-4652-944e-e51db62f0c6a")
 	)
 	(wire
 		(pts
@@ -3112,16 +3505,6 @@
 	)
 	(wire
 		(pts
-			(xy 69.85 181.61) (xy 71.12 181.61)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "51e370d3-4b55-4627-b046-9c7531f4ff74")
-	)
-	(wire
-		(pts
 			(xy 102.87 153.67) (xy 101.6 153.67)
 		)
 		(stroke
@@ -3139,16 +3522,6 @@
 			(type default)
 		)
 		(uuid "54b02e29-6418-49a1-883c-3bc80f48147d")
-	)
-	(wire
-		(pts
-			(xy 46.99 151.13) (xy 46.99 157.48)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "5887a47a-9ca0-4925-8ad9-79f18a51542d")
 	)
 	(wire
 		(pts
@@ -3179,16 +3552,6 @@
 			(type default)
 		)
 		(uuid "6482e23d-7d3f-4c43-b398-e740c6c2d383")
-	)
-	(wire
-		(pts
-			(xy 44.45 157.48) (xy 46.99 157.48)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "67f70e21-892e-468d-bcea-fd5845d8bf0d")
 	)
 	(polyline
 		(pts
@@ -3302,26 +3665,6 @@
 	)
 	(wire
 		(pts
-			(xy 69.85 171.45) (xy 69.85 181.61)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "839febd9-8d51-418b-a693-9e66443cb88c")
-	)
-	(wire
-		(pts
-			(xy 43.18 151.13) (xy 46.99 151.13)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "84bdc913-c5d7-4966-be1c-59593ee26177")
-	)
-	(wire
-		(pts
 			(xy 184.15 139.7) (xy 219.71 139.7)
 		)
 		(stroke
@@ -3329,26 +3672,6 @@
 			(type default)
 		)
 		(uuid "86d213d2-0f5e-4c98-96e7-b2071fd9c6a0")
-	)
-	(wire
-		(pts
-			(xy 57.15 140.97) (xy 57.15 151.13)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "86efd1fa-f7d3-4dcb-b5e3-261bceefda15")
-	)
-	(wire
-		(pts
-			(xy 59.69 157.48) (xy 54.61 157.48)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "8b6a0071-1bf6-4b7e-a8c2-f395fab2c6d3")
 	)
 	(wire
 		(pts
@@ -3419,16 +3742,6 @@
 			(type default)
 		)
 		(uuid "9d06e7d2-389d-4836-bb9a-8e97114b6aa7")
-	)
-	(wire
-		(pts
-			(xy 54.61 140.97) (xy 57.15 140.97)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "9f98c95c-f7e6-4d79-a862-ae3d4bfad66a")
 	)
 	(wire
 		(pts
@@ -3512,6 +3825,16 @@
 	)
 	(wire
 		(pts
+			(xy 48.26 142.24) (xy 50.8 142.24)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b92ac953-5cab-4ace-b9d2-62f4fedc3b18")
+	)
+	(wire
+		(pts
 			(xy 200.66 58.42) (xy 220.98 58.42)
 		)
 		(stroke
@@ -3522,6 +3845,16 @@
 	)
 	(wire
 		(pts
+			(xy 33.02 158.75) (xy 36.83 158.75)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "beff90ef-8090-4201-ab3d-9c884ddafcaf")
+	)
+	(wire
+		(pts
 			(xy 220.98 60.96) (xy 220.98 63.5)
 		)
 		(stroke
@@ -3529,16 +3862,6 @@
 			(type default)
 		)
 		(uuid "c1717f6a-654b-4483-81cc-0e04e8c55c9e")
-	)
-	(wire
-		(pts
-			(xy 71.12 171.45) (xy 69.85 171.45)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "c313e653-8da9-45b0-8111-a38626f24f7c")
 	)
 	(wire
 		(pts
@@ -3559,6 +3882,16 @@
 			(type default)
 		)
 		(uuid "c9a291b4-6748-42bf-81ab-7618d01bdcb7")
+	)
+	(wire
+		(pts
+			(xy 68.58 181.61) (xy 71.12 181.61)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ccf6a390-e25e-4fa3-a071-04fe6170eb7f")
 	)
 	(wire
 		(pts
@@ -3599,16 +3932,6 @@
 			(type default)
 		)
 		(uuid "d92ca785-0ffb-4973-b8c1-ee3aa1869144")
-	)
-	(wire
-		(pts
-			(xy 78.74 171.45) (xy 80.01 171.45)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "d9e25acb-9a0a-4971-9529-efe9aaf28f39")
 	)
 	(wire
 		(pts
@@ -3662,16 +3985,6 @@
 	)
 	(wire
 		(pts
-			(xy 207.01 115.57) (xy 209.55 115.57)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "e7d3fd40-e4a3-452b-88f9-1453d3b68f56")
-	)
-	(wire
-		(pts
 			(xy 69.85 92.71) (xy 76.2 92.71)
 		)
 		(stroke
@@ -3722,13 +4035,13 @@
 	)
 	(wire
 		(pts
-			(xy 57.15 151.13) (xy 54.61 151.13)
+			(xy 33.02 142.24) (xy 33.02 158.75)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "f3b908c0-8175-493a-9163-3c5b8a6591ba")
+		(uuid "f2103017-4a15-4451-b0bb-4b4d61904575")
 	)
 	(wire
 		(pts
@@ -3749,6 +4062,26 @@
 			(type default)
 		)
 		(uuid "f97394dc-aa0d-4d92-ab30-315b95d7a0d1")
+	)
+	(wire
+		(pts
+			(xy 86.36 171.45) (xy 86.36 181.61)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f9b79fc9-b458-48e1-99fd-99b98a771308")
+	)
+	(wire
+		(pts
+			(xy 50.8 142.24) (xy 50.8 158.75)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fdc69d62-687a-4b78-ab0c-5f93bfa5cb1d")
 	)
 	(wire
 		(pts
@@ -3872,7 +4205,7 @@
 		(uuid "2acf4217-201a-4a6f-b7d9-a190a0c83871")
 	)
 	(label "ESP_EN"
-		(at 59.69 157.48 0)
+		(at 50.8 158.75 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -3880,7 +4213,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "5d5f931f-bc43-4087-84f5-dc030c315842")
+		(uuid "494e41be-008d-45d5-89f9-27a66278c829")
 	)
 	(label "ESP_EN"
 		(at 19.05 72.39 0)
@@ -4649,6 +4982,88 @@
 		)
 	)
 	(symbol
+		(lib_id "JLCPCB_schematic:TC1109DE26048")
+		(at 40.64 144.78 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "0be5cb75-cc5a-46db-a45c-c53ea2aca7c0")
+		(property "Reference" "U15"
+			(at 40.005 134.62 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "TC1109DE26048"
+			(at 40.005 137.16 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "JLCPCB_footprint:SW-TH_3P-L4.5-W4.5-P1.8-LS3.0"
+			(at 40.64 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+					(italic yes)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://atta.szlcsc.com/upload/public/pdf/source/20240320/DE47A893E236FDE638ED44011AF8E572.pdf"
+			(at 38.354 144.653 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 40.64 144.78 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C22459542"
+			(at 40.64 144.78 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "e527a00a-3862-472e-9bdd-ccea2c01f9cc")
+		)
+		(pin "2"
+			(uuid "ba44c7ed-b699-497e-921d-ebe48be53925")
+		)
+		(pin "3"
+			(uuid "5ea0a9f6-d7fa-4280-b2fa-22ff788f0b4d")
+		)
+		(instances
+			(project "esp32-c"
+				(path "/3a9f3299-35f4-4d62-9438-2986d1fa401f/4d61521e-d26b-4a87-9dc4-97977e5f7fed"
+					(reference "U15")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Connector:TestPoint")
 		(at 69.85 85.09 90)
 		(unit 1)
@@ -5141,93 +5556,6 @@
 		)
 	)
 	(symbol
-		(lib_id "JLCPCB_schematic:TS-1187A-B-A-B")
-		(at 49.53 146.05 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "4ab6c2fd-ee5a-4d75-b030-21baebfc7d3a")
-		(property "Reference" "RESET1"
-			(at 55.88 144.7799 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" "TS-1187A-B-A-B"
-			(at 55.88 147.3199 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" "JLCPCB_footprint:SW-SMD_4P-L5.1-W5.1-P3.70-LS6.5-TL-2"
-			(at 59.69 146.05 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-					(italic yes)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://item.szlcsc.com/300285.html"
-			(at 49.403 148.336 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 49.53 146.05 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C318884"
-			(at 49.53 146.05 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "3"
-			(uuid "9ed8302f-cb5d-48e0-8272-5abd6caf3526")
-		)
-		(pin "1"
-			(uuid "103bedba-07a7-45df-a7d4-13382b8d2408")
-		)
-		(pin "2"
-			(uuid "df2f065f-a1e1-4928-a4a4-60681f12f5ab")
-		)
-		(pin "4"
-			(uuid "0c78f4dc-42e6-484b-93a4-86f9705f4469")
-		)
-		(instances
-			(project ""
-				(path "/3a9f3299-35f4-4d62-9438-2986d1fa401f/4d61521e-d26b-4a87-9dc4-97977e5f7fed"
-					(reference "RESET1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Connector:TestPoint")
 		(at 238.76 139.7 0)
 		(unit 1)
@@ -5461,17 +5789,33 @@
 		)
 	)
 	(symbol
-		(lib_id "power:GND")
-		(at 44.45 157.48 270)
+		(lib_id "Jumper:SolderJumper_2_Bridged")
+		(at 204.47 115.57 0)
 		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
+		(exclude_from_sim yes)
+		(in_bom no)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "817f2766-c6e7-4057-86f3-7ba635345141")
-		(property "Reference" "#PWR04"
-			(at 38.1 157.48 0)
+		(uuid "6d268a5a-f2e0-4ab1-9fcd-5d35d821a838")
+		(property "Reference" "JP1"
+			(at 204.47 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "SolderJumper_2_Bridged"
+			(at 204.47 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Jumper:SolderJumper-2_P1.3mm_Bridged_Pad1.0x1.5mm"
+			(at 204.47 115.57 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5479,16 +5823,8 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "GND"
-			(at 43.18 153.67 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 44.45 157.48 0)
+		(property "Datasheet" "~"
+			(at 204.47 115.57 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5496,17 +5832,8 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
-			(at 44.45 157.48 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 44.45 157.48 0)
+		(property "Description" "Solder Jumper, 2-pole, closed/bridged"
+			(at 204.47 115.57 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5515,12 +5842,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "148d07c8-f104-4030-850f-a6a70d6cc1ce")
+			(uuid "85035464-b249-4b9f-ac42-cbc5899af516")
+		)
+		(pin "2"
+			(uuid "3592d70a-f131-482d-b19d-2485d546ec66")
 		)
 		(instances
-			(project "esp32"
+			(project ""
 				(path "/3a9f3299-35f4-4d62-9438-2986d1fa401f/4d61521e-d26b-4a87-9dc4-97977e5f7fed"
-					(reference "#PWR04")
+					(reference "JP1")
 					(unit 1)
 				)
 			)
@@ -5654,93 +5984,6 @@
 			(project "esp32"
 				(path "/3a9f3299-35f4-4d62-9438-2986d1fa401f/4d61521e-d26b-4a87-9dc4-97977e5f7fed"
 					(reference "#PWR059")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "JLCPCB_schematic:TS-1187A-B-A-B")
-		(at 73.66 176.53 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "8f00b8ee-e08a-41a9-9e1e-0f6aaeb84d29")
-		(property "Reference" "MODE1"
-			(at 80.01 175.2599 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" "TS-1187A-B-A-B"
-			(at 80.01 177.7999 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" "JLCPCB_footprint:SW-SMD_4P-L5.1-W5.1-P3.70-LS6.5-TL-2"
-			(at 83.82 176.53 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-					(italic yes)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://item.szlcsc.com/300285.html"
-			(at 73.533 178.816 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 73.66 176.53 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C318884"
-			(at 73.66 176.53 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "3"
-			(uuid "ae57b2b0-30a9-4969-b27a-00e610ca12d0")
-		)
-		(pin "1"
-			(uuid "6a9790c1-9ad9-4596-976c-28e0df8365f7")
-		)
-		(pin "2"
-			(uuid "77c4e367-7e05-4062-81f2-7801e74d5f38")
-		)
-		(pin "4"
-			(uuid "60915e09-d57b-4ca2-b561-15841092ad5f")
-		)
-		(instances
-			(project "esp32"
-				(path "/3a9f3299-35f4-4d62-9438-2986d1fa401f/4d61521e-d26b-4a87-9dc4-97977e5f7fed"
-					(reference "MODE1")
 					(unit 1)
 				)
 			)
@@ -6323,7 +6566,7 @@
 	)
 	(symbol
 		(lib_id "JLCPCB_schematic:FC-2012HRK-620D")
-		(at 201.93 115.57 0)
+		(at 189.23 115.57 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -6332,7 +6575,7 @@
 		(fields_autoplaced yes)
 		(uuid "c62d28a6-7bd1-47d9-b49a-773b4ef23945")
 		(property "Reference" "LED1"
-			(at 200.66 106.68 0)
+			(at 187.96 106.68 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6340,7 +6583,7 @@
 			)
 		)
 		(property "Value" "FC-2012HRK-620D"
-			(at 200.66 109.22 0)
+			(at 187.96 109.22 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6348,7 +6591,7 @@
 			)
 		)
 		(property "Footprint" "JLCPCB_footprint:LED0805-R-RD"
-			(at 201.93 125.73 0)
+			(at 189.23 125.73 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6358,7 +6601,7 @@
 			)
 		)
 		(property "Datasheet" "https://item.szlcsc.com/88042.html"
-			(at 199.644 115.443 0)
+			(at 186.944 115.443 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6368,7 +6611,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 201.93 115.57 0)
+			(at 189.23 115.57 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6377,7 +6620,7 @@
 			)
 		)
 		(property "LCSC" "C84256"
-			(at 201.93 115.57 0)
+			(at 189.23 115.57 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6640,6 +6883,155 @@
 		)
 	)
 	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 208.28 115.57 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "dda5f102-5766-4bf3-9d02-ad34239e709f")
+		(property "Reference" "TP9"
+			(at 210.82 117.6019 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "TestPoint"
+			(at 210.82 120.1419 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Pad_1.0x1.0mm"
+			(at 203.2 115.57 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 203.2 115.57 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point"
+			(at 208.28 115.57 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "eaffc62c-10ac-4f90-80aa-0b184c533e40")
+		)
+		(instances
+			(project ""
+				(path "/3a9f3299-35f4-4d62-9438-2986d1fa401f/4d61521e-d26b-4a87-9dc4-97977e5f7fed"
+					(reference "TP9")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "JLCPCB_schematic:TC1109DE26048")
+		(at 76.2 173.99 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "ec45c5dc-2f5d-4a20-a731-b769181e3e15")
+		(property "Reference" "U14"
+			(at 75.565 163.83 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "TC1109DE26048"
+			(at 75.565 166.37 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "JLCPCB_footprint:SW-TH_3P-L4.5-W4.5-P1.8-LS3.0"
+			(at 76.2 184.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+					(italic yes)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://atta.szlcsc.com/upload/public/pdf/source/20240320/DE47A893E236FDE638ED44011AF8E572.pdf"
+			(at 73.914 173.863 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 76.2 173.99 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C22459542"
+			(at 76.2 173.99 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "f1ede6a4-3c60-4224-94dd-71afd0618eed")
+		)
+		(pin "2"
+			(uuid "208d15d8-c7a4-4be3-9c92-a76e28a5abab")
+		)
+		(pin "3"
+			(uuid "4980db44-0d5a-480d-8562-0a82f07c9a23")
+		)
+		(instances
+			(project ""
+				(path "/3a9f3299-35f4-4d62-9438-2986d1fa401f/4d61521e-d26b-4a87-9dc4-97977e5f7fed"
+					(reference "U14")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "JLCPCB_schematic:CC0805KRX7R9BB104")
 		(at 74.93 185.42 0)
 		(unit 1)
@@ -6719,7 +7111,7 @@
 	)
 	(symbol
 		(lib_id "JLCPCB_schematic:CC0805KRX7R9BB104")
-		(at 50.8 157.48 0)
+		(at 40.64 158.75 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -6727,7 +7119,7 @@
 		(dnp no)
 		(uuid "f5a30af9-9db3-48fa-87fe-f6c8046210bd")
 		(property "Reference" "C4"
-			(at 50.8 162.306 0)
+			(at 40.64 163.576 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6735,7 +7127,7 @@
 			)
 		)
 		(property "Value" "CC0805KRX7R9BB104"
-			(at 50.8 164.592 0)
+			(at 40.64 165.862 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6743,7 +7135,7 @@
 			)
 		)
 		(property "Footprint" "JLCPCB_footprint:C0805"
-			(at 50.8 167.64 0)
+			(at 40.64 168.91 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6753,7 +7145,7 @@
 			)
 		)
 		(property "Datasheet" "https://item.szlcsc.com/373011.html"
-			(at 48.514 157.353 0)
+			(at 38.354 158.623 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6763,7 +7155,7 @@
 			)
 		)
 		(property "Description" ".1uF"
-			(at 50.8 157.48 0)
+			(at 40.64 158.75 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6772,7 +7164,7 @@
 			)
 		)
 		(property "LCSC" "C49678"
-			(at 50.8 157.48 0)
+			(at 40.64 158.75 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6790,6 +7182,72 @@
 			(project "esp32"
 				(path "/3a9f3299-35f4-4d62-9438-2986d1fa401f/4d61521e-d26b-4a87-9dc4-97977e5f7fed"
 					(reference "C4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 33.02 158.75 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "f8dbe1f3-223a-4d48-933e-c1224e006f29")
+		(property "Reference" "#PWR04"
+			(at 26.67 158.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 31.75 154.94 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 33.02 158.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 33.02 158.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 33.02 158.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "4370315d-7434-4233-a8a7-82a9a5d633ee")
+		)
+		(instances
+			(project "esp32-c"
+				(path "/3a9f3299-35f4-4d62-9438-2986d1fa401f/4d61521e-d26b-4a87-9dc4-97977e5f7fed"
+					(reference "#PWR04")
 					(unit 1)
 				)
 			)

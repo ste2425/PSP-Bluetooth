@@ -2668,28 +2668,6 @@
 		(uuid "581306e8-f476-4e9f-adae-7ea0b0ea15c8")
 	)
 	(label "+V"
-		(at 255.27 57.15 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "5c787d1d-01a1-4abd-addb-9acd36de685a")
-	)
-	(label "PSP_y"
-		(at 255.27 59.69 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "6821e7b5-908a-45a2-9106-63a60702e336")
-	)
-	(label "+V"
 		(at 218.44 50.8 0)
 		(fields_autoplaced yes)
 		(effects
@@ -2701,6 +2679,17 @@
 		(uuid "79f1ded9-e547-464e-8214-4fd51369e59d")
 	)
 	(label "PSP_x"
+		(at 255.27 57.15 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "835cd9e9-0e95-4d7b-ad18-08e512bcd95f")
+	)
+	(label "+V"
 		(at 255.27 54.61 180)
 		(fields_autoplaced yes)
 		(effects
@@ -2709,7 +2698,18 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "9eb4ed8e-cb85-4590-8a8f-2d122c6e50cf")
+		(uuid "a710c681-effd-46b1-887f-83f88b722b75")
+	)
+	(label "PSP_y"
+		(at 257.81 52.07 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "ba91d00d-be5e-4ae2-9bfd-c9a2d7806085")
 	)
 	(label "Annalog_y"
 		(at 204.47 106.68 0)
@@ -5485,73 +5485,6 @@
 		)
 	)
 	(symbol
-		(lib_id "power:GND")
-		(at 257.81 52.07 270)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "c1e06beb-0c7a-492c-92ec-f199f8473984")
-		(property "Reference" "#PWR037"
-			(at 251.46 52.07 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 254 52.0699 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" ""
-			(at 257.81 52.07 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 257.81 52.07 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 257.81 52.07 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "7a468ed3-ce56-4698-b981-9398ad477430")
-		)
-		(instances
-			(project "esp32"
-				(path "/3a9f3299-35f4-4d62-9438-2986d1fa401f/e4f76cb1-7d48-40aa-a3b2-74b8410dfe76"
-					(reference "#PWR037")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "JLCPCB_schematic:1N5819WS")
 		(at 115.57 95.25 0)
 		(mirror x)
@@ -6337,6 +6270,73 @@
 			(project "esp32"
 				(path "/3a9f3299-35f4-4d62-9438-2986d1fa401f/e4f76cb1-7d48-40aa-a3b2-74b8410dfe76"
 					(reference "D12")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 255.27 59.69 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "f68c5843-ff07-46a2-85ba-9b766bdb8fea")
+		(property "Reference" "#PWR037"
+			(at 248.92 59.69 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 251.46 59.6899 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" ""
+			(at 255.27 59.69 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 255.27 59.69 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 255.27 59.69 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "37f184a7-7ca5-4235-8d02-dfe2a60e5b78")
+		)
+		(instances
+			(project "esp32-c"
+				(path "/3a9f3299-35f4-4d62-9438-2986d1fa401f/e4f76cb1-7d48-40aa-a3b2-74b8410dfe76"
+					(reference "#PWR037")
 					(unit 1)
 				)
 			)
