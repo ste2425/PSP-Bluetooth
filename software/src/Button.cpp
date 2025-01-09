@@ -6,31 +6,17 @@ void doubleClick()
 {}
 
 void click() {
-  CTRMANAGER_toggleConnections();
+  INTEROP_enableBLEService(false);
+  CTRMANAGER_toggleConnections();  
 
-  if (CTRMANAGER_newConnectionEnabled()) {
-    LED_syncPattern();
-  } else if (INTEROP_bleServiceEnabled()) {
-    LED_blePattern();
-  } else if (PSPstate_poweredOn()) {
-    LED_on();
-  } else {
-    LED_off();
-  }
+  LED_autoSet();
 }
 
 void longClick() {
+  CTRMANAGER_enableConnections(false);
   INTEROP_toggleBLEService();
 
-  if (INTEROP_bleServiceEnabled()) {
-    LED_blePattern();
-  } else if (CTRMANAGER_newConnectionEnabled()) {
-    LED_syncPattern();
-  } else if (PSPstate_poweredOn()) {
-    LED_on();
-  } else {
-    LED_off();
-  }
+  LED_autoSet();
 }
 
 void BUTTON_loop() {

@@ -1,33 +1,33 @@
 #include "Mappings.h"
 #include <ArduinoJson.h>
 
-const char defaultJSON[] = "[{\"n\":1,\"c\":[255,0,0,0.1],\"m\":[[8,0,0],[10,1,0],[9,3,0],[0,2,0],[15,0,1],[17,1,1],[16,2,1],[2,0,2],[1,1,2],[4,3,2],[6,2,2],[5,5,2],[7,6,2],[0,1,3]]},{\"n\":2,\"c\":[255,0,0,1],\"m\":[[8,0,0],[10,1,0],[9,3,0],[0,2,0],[15,0,1],[17,1,1],[16,2,1],[2,0,2],[1,1,2],[4,3,2],[6,2,2],[5,5,2],[7,6,2],[102,6,2],[101,7,2]]}]";
-
 MappingMeta test[10];
 MappingMeta *MAPPINGS_current;
 uint8_t maxMappings = 1; // zero indexed
 uint8_t currentMapping = 0;
 
 void MAPPINGS_setup() {
-  
   JsonDocument doc;
 
+  Serial.println("Loading Saved");
   String savedMappings = FileUtility::readFile(LittleFS, "/mapping.json");
-  bool isEmpty = savedMappings == "";
+  auto len = savedMappings.length() + 1;
+  char dataArr[len];
+  savedMappings.toCharArray(dataArr, len);
 
-  if (isEmpty) {
-    Serial.println("Loading default");
-    deserializeJson(doc, defaultJSON, strlen(defaultJSON));
-  } else {
-    Serial.println("Loading Saved");
-    auto len = savedMappings.length() + 1;
-    char dataArr[len];
-    savedMappings.toCharArray(dataArr, len);
-    deserializeJson(doc, dataArr, len);
-  }
-  
+  deserializeJson(doc, dataArr, len);
+
   JsonArray mappingsArray = doc.as<JsonArray>();
   uint8_t mappingsLength = mappingsArray.size();
+
+  if (mappingsLength == 0) {  
+    Serial.println("Saved empty: Loading default");  
+    doc = NULL;
+    deserializeJson(doc, MAPPINGS_DEFAULT, strlen(MAPPINGS_DEFAULT));
+
+    mappingsArray = doc.as<JsonArray>();
+    mappingsLength = mappingsArray.size();
+  }
 
   maxMappings = mappingsLength;
 

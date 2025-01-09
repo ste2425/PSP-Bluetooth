@@ -25,7 +25,7 @@ void Timeout::loop() {
 	}
 }
 
-void Timeout::setTimeout(int timeout) {
+void Timeout::setTimeout(unsigned long timeout) {
 	_interval = timeout;
 }
 

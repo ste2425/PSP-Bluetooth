@@ -9,9 +9,23 @@
 // General Discoverable = 0x02
 // BR/EDR Not supported = 0x04
 #define APP_AD_FLAGS 0x06
+// Max number of clients that can connect to the service at the same time.
+#define MAX_NR_CLIENT_CONNECTIONS 1
+
+// client connection
+typedef struct {
+    bool notification_enabled;
+    uint16_t value_handle;
+    hci_con_handle_t connection_handle;
+    bool is_webapp;
+} client_connection_t;
+static client_connection_t client_connections[MAX_NR_CLIENT_CONNECTIONS];
 
 static bool service_enabled;
 esp_ota_handle_t otaHandler = 0;
+
+bool uploadingConfig = false;
+uint16_t configReadOfset = 0; 
 
 // clang-format off
 static const uint8_t adv_data[] = {
@@ -39,6 +53,16 @@ static uint16_t att_read_callback(hci_con_handle_t conn_handle,
                                   uint16_t offset,
                                   uint8_t* buffer,
                                   uint16_t buffer_size);
+static client_connection_t* connection_for_conn_handle(hci_con_handle_t conn_handle);
+
+static client_connection_t* connection_for_conn_handle(hci_con_handle_t conn_handle) {
+    int i;
+    for (i = 0; i < MAX_NR_CLIENT_CONNECTIONS; i++) {
+        if (client_connections[i].connection_handle == conn_handle)
+            return &client_connections[i];
+    }
+    return NULL;
+}
 
 static int att_write_callback(hci_con_handle_t con_handle,
                               uint16_t att_handle,
@@ -51,12 +75,9 @@ static int att_write_callback(hci_con_handle_t con_handle,
     Serial.println("att_write_callback");
 
     switch (att_handle) {
-        // save controller mappings
+        // save controller mappings chunk
         case ATT_CHARACTERISTIC_4627C4A4_AC03_46B9_B688_AFC5C1BF7F63_01_VALUE_HANDLE: {
-            FileUtility::deleteFile(LittleFS, "/mapping.json");
-            FileUtility::writeFile(LittleFS, "/mapping.json", (const char*)buffer);
-
-            reloadControllerMappings();
+            FileUtility::appendFile(LittleFS, "/mappingHolding.json", (const char*)buffer);
             
             return ATT_ERROR_SUCCESS;
         }
@@ -100,12 +121,33 @@ static int att_write_callback(hci_con_handle_t con_handle,
                         return ATT_ERROR_UNLIKELY_ERROR;
                     }
                 break;
-                case 3: //reset mappings to default                    
+                case 3: //reset mappings to default            
+                    FileUtility::deleteFile(LittleFS, "/mappingHolding.json");        
                     FileUtility::deleteFile(LittleFS, "/mapping.json");
 
-                    reloadControllerMappings();
+                    INTEROP_reloadControllerMappings();
                     return ATT_ERROR_SUCCESS;
                 break;
+                case 4: //config upload start
+                    FileUtility::deleteFile(LittleFS, "/mappingHolding.json");
+                    uploadingConfig = true;
+
+                    return ATT_ERROR_SUCCESS;
+                case 5: //config upload complete
+                    uploadingConfig = false;
+                    return ATT_ERROR_SUCCESS;
+                case 6: //config upload apply
+                    uploadingConfig = false;
+                    FileUtility::renameFile(LittleFS, "/mappingHolding.json", "/mapping.json");
+                    FileUtility::deleteFile(LittleFS, "/mappingHolding.json");
+
+                    INTEROP_reloadControllerMappings();
+
+                    return ATT_ERROR_SUCCESS;
+                case 7: //begin config read
+                    configReadOfset = 0;
+
+                    return ATT_ERROR_SUCCESS;
                 default: 
                     Serial.println("Unknown OTA Command");
 
@@ -136,28 +178,61 @@ static int att_write_callback(hci_con_handle_t con_handle,
     return ATT_ERROR_SUCCESS;
 }
 
-static uint16_t att_read_callback(hci_con_handle_t conn_handle,
+static uint16_t att_read_callback(hci_con_handle_t con_handle,
                                   uint16_t att_handle,
                                   uint16_t offset,
                                   uint8_t* buffer,
                                   uint16_t buffer_size) {
-    UNUSED(conn_handle);
+
+    client_connection_t* ctx;
 
     switch (att_handle) {
         // Read Controller Mappings
         case ATT_CHARACTERISTIC_4627C4A4_AC03_46B9_B688_AFC5C1BF7F63_01_VALUE_HANDLE: {
             // TODO change me so its not a String class
-            String mappingsAsString = FileUtility::readFile(LittleFS, "/mapping.json");
+            String mappingsAsString;
+
+            if (uploadingConfig) {
+                mappingsAsString = FileUtility::readFile(LittleFS, "/mappingHolding.json");
+            } else {
+                mappingsAsString = FileUtility::readFile(LittleFS, "/mapping.json");
+
+                Serial.print("Len ");
+                Serial.println(mappingsAsString.length());
+                Serial.println(mappingsAsString[0]);
+                Serial.println(mappingsAsString[1]);
+
+                if (mappingsAsString.length() > 2 && mappingsAsString[0] == '[' && mappingsAsString[1] == ']'){
+                    Serial.println("Loading default");
+                    mappingsAsString = MAPPINGS_DEFAULT;
+                }
+            }
 
             // convert to char array
             auto len = mappingsAsString.length() + 1;
             char dataArr[len];
             mappingsAsString.toCharArray(dataArr, len);
+        
+            if (!buffer) {
+                return len;
+            }
 
-            return att_read_callback_handle_blob((const uint8_t *)dataArr, len, offset, buffer, buffer_size);
+            uint8_t resp = att_read_callback_handle_blob((const uint8_t *)dataArr, len, configReadOfset, buffer, 100);
+
+            configReadOfset += resp;
+
+            return resp;
         }
         // Return Version
         case ATT_CHARACTERISTIC_4627C4A4_AC01_46B9_B688_AFC5C1BF7F63_01_VALUE_HANDLE: {
+            ctx = connection_for_conn_handle(con_handle);
+
+            if (!ctx)
+                return ATT_ERROR_REQUEST_NOT_SUPPORTED;
+
+            ctx->is_webapp = true;
+            INTEROP_disableBLEInactivityWatcher();
+
             return att_read_callback_handle_blob((const uint8_t *)PSP_BLUETOOTH_VERSION, strlen(PSP_BLUETOOTH_VERSION), offset, buffer, buffer_size);
         }
         default:
@@ -170,15 +245,36 @@ static void att_packet_handler(uint8_t packet_type, uint16_t channel, uint8_t* p
     UNUSED(channel);
     UNUSED(size);
 
+    client_connection_t* ctx;
+
     if (packet_type != HCI_EVENT_PACKET)
         return;
 
     switch (hci_event_packet_get_type(packet)) {
         case ATT_EVENT_CONNECTED:
-            Serial.println("BLE Service: New client connected handle");
+            ctx = connection_for_conn_handle(HCI_CON_HANDLE_INVALID);
+
+            if (!ctx)
+                break;
+
+            ctx->connection_handle = att_event_connected_get_handle(packet);
             break;
         case ATT_EVENT_DISCONNECTED:
-            Serial.println("BLE Service: client disconnected");
+            ctx = connection_for_conn_handle(att_event_disconnected_get_handle(packet));
+
+            if (!ctx)
+                break;
+
+            Serial.print("BLE Service: client disconnected, handle = ");
+            Serial.println(ctx->connection_handle);
+
+            if (ctx->is_webapp)
+                INTEROP_enableBLEInactivityWatcher();
+
+            memset(ctx, 0, sizeof(*ctx));
+            
+            ctx->connection_handle = HCI_CON_HANDLE_INVALID;
+            
             //this runs when controller disconnects too, maybe should remove it?
             esp_ota_abort(otaHandler);
             break;

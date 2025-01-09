@@ -9,7 +9,7 @@ class Timeout {
 			this->_callback = function;
 		}
 		void loop();
-		void setTimeout(int timeout);
+		void setTimeout(unsigned long timeout);
 		void start();
 		void stop();
 		bool running();
@@ -18,5 +18,5 @@ class Timeout {
 		unsigned long _previousMillis;
 		void (*_callback)(void);
 		bool _running;
-		int _interval;
+		unsigned long _interval;
 };

@@ -98,39 +98,39 @@ void FileUtility::writeFile(fs::FS &fs, const char *path, const char *message)
     file.close();
 }
 
-// void FileUtility::appendFile(fs::FS &fs, const char *path, const char *message)
-// {
-//     Serial.printf("Appending to file: %s\n", path);
+ void FileUtility::appendFile(fs::FS &fs, const char *path, const char *message)
+ {
+     Serial.printf("Appending to file: %s\n", path);
 
-//     File file = fs.open(path, FILE_APPEND);
-//     if (!file)
-//     {
-//         Serial.println("Failed to open file for appending");
-//         return;
-//     }
-//     if (file.print(message))
-//     {
-//         Serial.println("Message appended");
-//     }
-//     else
-//     {
-//         Serial.println("Append failed");
-//     }
-//     file.close();
-// }
+     File file = fs.open(path, FILE_APPEND);
+     if (!file)
+     {
+         Serial.println("Failed to open file for appending");
+         return;
+     }
+     if (file.print(message))
+     {
+         Serial.println("Message appended");
+     }
+     else
+     {
+         Serial.println("Append failed");
+     }
+     file.close();
+ }
 
-// void FileUtility::renameFile(fs::FS &fs, const char *path1, const char *path2)
-// {
-//     Serial.printf("Renaming file %s to %s\n", path1, path2);
-//     if (fs.rename(path1, path2))
-//     {
-//         Serial.println("File renamed");
-//     }
-//     else
-//     {
-//         Serial.println("Rename failed");
-//     }
-// }
+ void FileUtility::renameFile(fs::FS &fs, const char *from, const char *to)
+ {
+     Serial.printf("Renaming file %s to %s\n", from, to);
+     if (fs.rename(from, to))
+     {
+         Serial.println("File renamed");
+     }
+     else
+     {
+         Serial.println("Rename failed");
+     }
+ }
 
 void FileUtility::deleteFile(fs::FS &fs, const char *path)
 {

@@ -93,7 +93,22 @@ void LED_loop() {
   patternTimeout.loop();
 }
 
+void LED_autoSet() {  
+  if(CTRMANAGER_pspBooting()) {
+    LED_bootPattern();
+  } else if (CTRMANAGER_newConnectionEnabled()) {
+    LED_syncPattern();
+  } else if (INTEROP_bleServiceEnabled()) {
+    LED_blePattern();
+  } else if (PSPstate_poweredOn()) {
+    LED_on();
+  } else {
+    LED_off();
+  }
+}
+
 void LED_setup() {
     pinMode(LED, OUTPUT);
+    digitalWrite(LED, LOW);
     patternTimeout.setCallback(onPatternTick);
 }

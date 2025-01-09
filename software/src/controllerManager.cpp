@@ -2,8 +2,9 @@
 
 Timeout pspBootTimeout;
 Timeout pspScreenTimeout;
+Timeout controllerTurnOffTimeout;
 
-volatile bool resetColours = false;
+bool pspBooting = false;
 
 #define maxGamepads 4
 
@@ -12,11 +13,23 @@ ControllerPtr myControllers[maxGamepads];
 void onPspBootTimeout() {
   PSPState_pressScreen();
   pspScreenTimeout.start();
+  pspBootTimeout.setTimeout(1500); // After first boot PSP is 'warm' so dont need to wait as long
 }
 
 void onPSPScreenTimeout() {
   PSPState_releaseScreen();
-  LED_on();
+  pspBooting = false;
+  LED_autoSet();
+}
+
+void disconnectAll() {    
+      Serial.println("disconnect");
+    for (int i = 0; i < maxGamepads; i++) {
+        if (myControllers[i] != nullptr) {
+      Serial.println("cont");
+          myControllers[i]->disconnect();
+        }
+    }
 }
 
 void onConnectedController(ControllerPtr ctl) {
@@ -38,13 +51,9 @@ void onConnectedController(ControllerPtr ctl) {
               PSPState_togglePower();
               pspBootTimeout.start();
 
-              if (CTRMANAGER_newConnectionEnabled()) {
-                LED_syncPattern();
-              } else if (INTEROP_bleServiceEnabled()) {
-                LED_blePattern();
-              } else {
-                LED_bootPattern();
-              }
+              pspBooting = true;
+
+              LED_autoSet();
             }
             
             break;
@@ -80,17 +89,13 @@ void onDisconnectedController(ControllerPtr ctl) {
     }
     
     if (allDisconnected) {  
-      if (CTRMANAGER_newConnectionEnabled()) {
-        LED_syncPattern();
-      } else if (INTEROP_bleServiceEnabled()) {
-        LED_blePattern();
-      } else {
-        LED_off();
-      }
 
       pspBootTimeout.stop();
       pspScreenTimeout.stop();
       PSPState_togglePower();
+      INTEROP_enableBLEService(false);
+
+      LED_autoSet();
     }
 
     if (!foundController) {
@@ -115,13 +120,34 @@ void handleButtonMapping(ControllerMapping *mapping) {
   }
 }
 
+bool CTRMANAGER_pspBooting() {
+  return pspBooting;
+}
+
 void CTRMANAGER_applyColours() { 
+  Serial.println("Applying colours");
     MappingMeta *hi = MAPPINGS_current;
         for (uint8_t i = 0; i < 4; i++) {
+          Serial.print("Updating controller for index: ");
+          Serial.println(i);
 
-          if (myControllers[i] && myControllers[i]->isConnected() && myControllers[i]->hasData()) {
+          if (myControllers[i] && myControllers[i]->isConnected()) {
               if (myControllers[i]->isGamepad()) {
+                Serial.print("Applying color RGB (");
+                Serial.print(hi->colour[0]);
+                Serial.print(", ");
+                Serial.print(hi->colour[1]);
+                Serial.print(", ");
+                Serial.print(hi->colour[2]);
+                Serial.println(")");
+
                 myControllers[i]->setColorLED(hi->colour[0], hi->colour[1], hi->colour[2]);
+
+                auto indicatorNumber = hi->mappingNumer & 0x0f;
+                Serial.print("Setting player indicator: ");
+                Serial.println(indicatorNumber);
+                myControllers[i]->setPlayerLEDs(indicatorNumber);
+                
               } else {
                   Serial.println("Unsupported controller");
               }
@@ -129,91 +155,136 @@ void CTRMANAGER_applyColours() {
         }
 }
 
+bool changingMapping = false;
+
+void proccessControllerButton(ControllerPtr ctl, ControllerMapping *mapping) {
+  auto isL2 = mapping->ControllerBit == 6;
+  auto isR2 = mapping->ControllerBit == 7;
+  auto brakeVal = ctl->brake();
+  auto throttleVal = ctl->throttle();
+  auto pressed = false;
+
+  if (!isL2 && !isR2) {
+    if (bitRead(ctl->buttons(), mapping->ControllerBit))
+      handleButtonMapping(mapping);
+  } else {
+    if (brakeVal == 0 && throttleVal == 0)
+      pressed = bitRead(ctl->buttons(), mapping->ControllerBit);
+    else if ((isL2 && ctl->brake() > 800) || (isR2 && ctl->throttle() > 800))
+      pressed = true;
+
+    if (pressed)
+      handleButtonMapping(mapping);
+  }
+}
+
+bool pressingHome = false;
+
 void processGamepad(ControllerPtr ctl) {
     MappingMeta *meta = MAPPINGS_current;
-    if (bitRead(ctl->buttons(), 8)) {
-      MAPPINGS_next();
-      delay(200);
-      
-      ctl->setColorLED(meta->colour[0], meta->colour[1], meta->colour[2]);
-      ctl->setPlayerLEDs(meta->mappingNumer & 0x0f);
-    } else {
-      for (uint8_t i = 0; i < 30; i++) {
-        ControllerMapping *mapping = &meta->mappings[i];
-
-        if (mapping->PSPButton == 99)
-          continue;
+    // next mapping y pressing R1 L2 and Dpad right
+    if (bitRead(ctl->buttons(), 4) && bitRead(ctl->buttons(), 5) && bitRead(ctl->dpad(), 2)) {
+      if (!changingMapping) {
+        MAPPINGS_next();
+        delay(200);
         
-        switch (mapping->ControllerType) {
-          case ControllerTypes::DPad:
-            // > 100 means controlling analog stick
-            if (bitRead(ctl->dpad(), mapping->ControllerBit))
-              handleButtonMapping(mapping);
-          break;
-          case ControllerTypes::Misc:
-            if (bitRead(ctl->miscButtons(), mapping->ControllerBit))
-              handleButtonMapping(mapping);
-          break;
-          case ControllerTypes::Button:
-            if (bitRead(ctl->buttons(), mapping->ControllerBit))
-              handleButtonMapping(mapping);
-          break;
-          case ControllerTypes::Analog:       
-            int32_t  xAxis = ctl->axisX();
-            int32_t yAxis = ctl->axisY();       
-            int32_t  xRAxis = ctl->axisRX();
-            int32_t yRAxis = ctl->axisRY();
-          
-            switch(mapping->ControllerBit) {
-              case 1:
-                PSPState_analog(xAxis, yAxis);
-              break;
-              case 2:
-                PSPState_analog(xRAxis, yRAxis);
-              break;
-              case 3: //lu
-                if (yAxis < -400) {
-                  PSPState_markButtonAsPressed(mapping->PSPButton);
-                }
-              break;
-              case 4: //ld
-                if (yAxis > 400) {
-                  PSPState_markButtonAsPressed(mapping->PSPButton);
-                }
-              break;
-              case 5: //ll
-                if (xAxis < -400) {
-                  PSPState_markButtonAsPressed(mapping->PSPButton);
-                }
-              break;
-              case 6: //lr
-                if (xAxis > 400) {
-                  PSPState_markButtonAsPressed(mapping->PSPButton);
-                }
-              break;
-              case 7: //ru
-                if (yRAxis < -400) {
-                  PSPState_markButtonAsPressed(mapping->PSPButton);
-                }
-              break;
-              case 8: //rd
-                if (yRAxis > 400) {
-                  PSPState_markButtonAsPressed(mapping->PSPButton);
-                }
-              break;
-              case 9: //rd
-                if (xRAxis < -400) {
-                  PSPState_markButtonAsPressed(mapping->PSPButton);
-                }
-              break;
-              case 10: //rr
-                if (xRAxis > 400) {
-                  PSPState_markButtonAsPressed(mapping->PSPButton);
-                }
-              break;
-            }
-          break;
-        }
+        ctl->setColorLED(meta->colour[0], meta->colour[1], meta->colour[2]);
+        ctl->setPlayerLEDs(meta->mappingNumer & 0x0f);
+
+        changingMapping = true;
+      }
+
+      return;
+    }
+
+    // controller home button
+    bool homePressed = bitRead(ctl->miscButtons(), 0);
+    if (homePressed && !pressingHome) {
+      Serial.println("Press");
+      pressingHome = true;
+      controllerTurnOffTimeout.start();
+    } else if (!homePressed && pressingHome) {
+      Serial.println("Release");
+      pressingHome = false;
+      controllerTurnOffTimeout.stop();
+    }
+
+    changingMapping = false;
+
+    for (uint8_t i = 0; i < 30; i++) {
+      ControllerMapping *mapping = &meta->mappings[i];
+
+      if (mapping->PSPButton == 99)
+        continue;
+      
+      switch (mapping->ControllerType) {
+        case ControllerTypes::DPad:
+          // > 100 means controlling analog stick
+          if (bitRead(ctl->dpad(), mapping->ControllerBit))
+            handleButtonMapping(mapping);
+        break;
+        case ControllerTypes::Misc:
+          if (bitRead(ctl->miscButtons(), mapping->ControllerBit))
+            handleButtonMapping(mapping);
+        break;
+        case ControllerTypes::Button:
+          proccessControllerButton(ctl, mapping);
+        break;
+        case ControllerTypes::Analog:       
+          int32_t  xAxis = ctl->axisX();
+          int32_t yAxis = ctl->axisY();       
+          int32_t  xRAxis = ctl->axisRX();
+          int32_t yRAxis = ctl->axisRY();
+        
+          switch(mapping->ControllerBit) {
+            case 1:
+              PSPState_analog(xAxis, yAxis);
+            break;
+            case 2:
+              PSPState_analog(xRAxis, yRAxis);
+            break;
+            case 3: //lu
+              if (yAxis < -400) {
+                PSPState_markButtonAsPressed(mapping->PSPButton);
+              }
+            break;
+            case 4: //ld
+              if (yAxis > 400) {
+                PSPState_markButtonAsPressed(mapping->PSPButton);
+              }
+            break;
+            case 5: //ll
+              if (xAxis < -400) {
+                PSPState_markButtonAsPressed(mapping->PSPButton);
+              }
+            break;
+            case 6: //lr
+              if (xAxis > 400) {
+                PSPState_markButtonAsPressed(mapping->PSPButton);
+              }
+            break;
+            case 7: //ru
+              if (yRAxis < -400) {
+                PSPState_markButtonAsPressed(mapping->PSPButton);
+              }
+            break;
+            case 8: //rd
+              if (yRAxis > 400) {
+                PSPState_markButtonAsPressed(mapping->PSPButton);
+              }
+            break;
+            case 9: //rd
+              if (xRAxis < -400) {
+                PSPState_markButtonAsPressed(mapping->PSPButton);
+              }
+            break;
+            case 10: //rr
+              if (xRAxis > 400) {
+                PSPState_markButtonAsPressed(mapping->PSPButton);
+              }
+            break;
+          }
+        break;
       }
     }
 }
@@ -240,6 +311,7 @@ void CTRMANAGER_loop() {
     PSPState_loop();
     pspBootTimeout.loop();
     pspScreenTimeout.loop();
+    controllerTurnOffTimeout.loop();
 }
 
 void CTRMANAGER_setup() {
@@ -252,6 +324,9 @@ void CTRMANAGER_setup() {
     pspBootTimeout.setTimeout(12000);
     pspScreenTimeout.setCallback(onPSPScreenTimeout);
     pspScreenTimeout.setTimeout(6000);
+
+    controllerTurnOffTimeout.setTimeout(3000);
+    controllerTurnOffTimeout.setCallback(disconnectAll);
 }
 
 bool newConnectionsEnabled = false;

@@ -4,8 +4,14 @@
 #include "Mappings.h"
 #include <Bluepad32.h>
 #include "controllerManager.h"
+#include "timeout.h"
+#include "led.h"
 
 bool INTEROP_bleServiceEnabled();
 void INTEROP_enableBLEService(bool enabled);
 void INTEROP_toggleBLEService();
-void reloadControllerMappings();
+void INTEROP_reloadControllerMappings();
+void INTEROP_enableBLEInactivityWatcher();
+void INTEROP_disableBLEInactivityWatcher();
+void INTEROP_setup();
+void INTEROP_loop();

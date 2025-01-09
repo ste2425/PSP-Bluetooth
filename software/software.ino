@@ -30,6 +30,7 @@ void setup() {
     MAPPINGS_setup();
     CTRMANAGER_setup();
     LED_setup();
+    INTEROP_setup();
 
     INTEROP_enableBLEService(false);
 }
@@ -40,6 +41,7 @@ void loop() {
   
   BUTTON_loop();
   CTRMANAGER_loop();
+  INTEROP_loop();
 
   delay(1);
 }

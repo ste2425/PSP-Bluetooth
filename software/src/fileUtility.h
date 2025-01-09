@@ -12,7 +12,7 @@
         // static void removeDir(fs::FS &fs, const char *path);
         static String readFile(fs::FS &fs, const char *path);
         static void writeFile(fs::FS &fs, const char *path, const char *message);
-        // static void appendFile(fs::FS &fs, const char *path, const char *message);
-        // static void renameFile(fs::FS &fs, const char *path1, const char *path2);
+        static void appendFile(fs::FS &fs, const char *path, const char *message);
+        static void renameFile(fs::FS &fs, const char *from, const char *to);
         static void deleteFile(fs::FS &fs, const char *path);
     };
