@@ -22,7 +22,7 @@ export class PspViewerComponent {
   }
 
   toggleActive(pin: number) {
-    if (this.disableAll || (this.disableAllButAnalog && pin === this.PSPButtons.analog))
+    if (this.disableAll || (this.disableAllButAnalog && pin !== this.PSPButtons.analog))
       return;
     
     if (availablePspButtons.includes(pin)) {

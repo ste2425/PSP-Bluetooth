@@ -36,13 +36,13 @@ export class AppComponent {
         showArrow: false
       }, {
         anchorId: 'config.buttongroups',
-        content: 'Button Groups contain Button mappings. There can be upto 3 Button groups each with 16 Button Mappings.',
+        content: 'Button Groups contain Button mappings. There can be upto 5 Button Groups each with 30 Button Mappings.',
         enableBackdrop: true,
         title: 'Button Groups'
       },
       {
         anchorId: 'config.navigateforward',
-        content: 'You can cyle through your configured Button Groups, going forwards...',
+        content: 'You can cycle through your configured Button Groups, going forwards...',
         enableBackdrop: true,
         placement: {
           horizontal: true
@@ -64,6 +64,14 @@ export class AppComponent {
       {
         anchorId: 'config.deletegroup',
         content: 'Button Groups can also be deleted.',
+        enableBackdrop: true,
+        placement: {
+          horizontal: true
+        }
+      },
+      {
+        anchorId: 'config.playerpicker',
+        content: 'Each Button Group has a player number assigned. This uses the controllers player indiciator LED\'s to indicate the active Button Grouping.',
         enableBackdrop: true,
         placement: {
           horizontal: true

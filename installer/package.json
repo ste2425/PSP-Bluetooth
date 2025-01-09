@@ -21,6 +21,7 @@
     "@angular/platform-browser-dynamic": "^17.0.0",
     "@angular/router": "^17.0.0",
     "@octokit/core": "^6.1.2",
+    "@types/semver": "^7.5.8",
     "@types/w3c-web-serial": "^1.0.6",
     "@types/web-bluetooth": "^0.0.20",
     "esptool-js": "^0.4.3",
@@ -28,6 +29,7 @@
     "ngx-markdown": "^17.2.1",
     "ngx-ui-tour-md-menu": "^12.1.0",
     "rxjs": "~7.8.0",
+    "semver": "^7.6.3",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.2"
   },

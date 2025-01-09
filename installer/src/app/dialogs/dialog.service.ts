@@ -25,6 +25,21 @@ export class DialogService {
     return !!result;
   }
 
+  async confirmResetConfig(): Promise<boolean> {
+    const data: IConfirmationData = {
+      title: 'Reset Button Mappings?',
+      message: 'This will remove all custom buttons mappings and reset to defaults. Continue?'
+    };
+
+    const result = await firstValueFrom(
+      this.dialogService.open(ConfirmationModalComponent, {
+        data
+      }).afterClosed()
+    )
+
+    return !!result;
+  }
+
   async configSaved() {
     const data: IOKModalData = {
       title: 'Data Saved',

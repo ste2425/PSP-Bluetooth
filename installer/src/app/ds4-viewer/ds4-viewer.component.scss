@@ -48,7 +48,7 @@ svg {
     margin-top: 30px;
 }
 
-#dpad-up, #dpad-left, #dpad-right, #dpad-down, #analog-left, #analog-right {
+#dpad-up, #dpad-left, #dpad-right, #dpad-down, #analog-left, #analog-right, #analog-left-up, #analog-left-down, #analog-left-left, #analog-left-right, #analog-right-up, #analog-right-down, #analog-right-left, #analog-right-right {
     &:not(.active):not(.disabled):hover {
         cursor: pointer;
 
@@ -89,22 +89,5 @@ svg {
     &.active .circle {
         stroke: #15ca15 !important;
         stroke-width: 3px !important;
-    }
-}
-
-#psp-analog-up, #psp-analog-down, #psp-analog-left, #psp-analog-right, #psp-power {
-    stroke: grey;
-}
-
-#psp-l1, #psp-r1, #psp-power, #psp-home, #psp-vol-down, #psp-vol-up, #psp-vol-down, #psp-screen, #psp-music, #psp-select, #psp-start, #psp-analog, #psp-analog-up, #psp-analog-down, #psp-analog-left, #psp-analog-right {
-    &:not(.active):not(.disabled):hover {
-        cursor: pointer;
-        stroke: yellow;
-        stroke-width: 2px;
-    }
-
-    &.active {
-        stroke: green;
-        stroke-width: 2px;
     }
 }

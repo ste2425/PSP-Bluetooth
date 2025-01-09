@@ -6,11 +6,13 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { BTConnectionAbortedError, BTConnectionFactoryService, BTConnectionGATTConnectionError, BTConnectionPrimaryServiceError, BTConnectionVersionMissmatchError, OTACommand, PSPBluetooth } from '../services/btconnection-factory.service';
 import { ILogger } from '../ILogger';
 import { firstValueFrom } from 'rxjs';
 import { GithubService, ReleaseType } from '../github.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { OTAServiceFactory } from '../bt/ota.service';
+import { BTConnectionFactoryService } from '../bt/btconnection-factory.service';
+import { BTConnectionAbortedError, BTConnectionGATTConnectionError, BTConnectionPrimaryServiceError, BTConnectionVersionMissmatchError } from '../bt/errors';
 
 enum OTAProgrammerState {
   WarningPrompt,
@@ -37,7 +39,8 @@ export class OTAProgrammerComponent implements OnDestroy {
   constructor(
     public dialogRef: MatDialogRef<OTAProgrammerComponent>,
     @Inject(MAT_DIALOG_DATA) public data: IOTAProgrammerDialogData,
-    public btConnectionFactory: BTConnectionFactoryService,
+    public otaFactory: OTAServiceFactory,
+    public btConFactory: BTConnectionFactoryService,
     private gihubService: GithubService
   ) { }
 
@@ -48,7 +51,7 @@ export class OTAProgrammerComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.connection?.disconnect();
+    this.btConFactory.disconnect();
   }
 
   logger: ILogger = {
@@ -65,8 +68,6 @@ export class OTAProgrammerComponent implements OnDestroy {
       this.terminalOutput += JSON.stringify(value, null, 2);
     }
   }
-
-  connection?: PSPBluetooth;
 
   terminalOutput = '';
 
@@ -86,47 +87,44 @@ export class OTAProgrammerComponent implements OnDestroy {
       this.state === OTAProgrammerState.ProgrammingSuccess;
   }*/
 
-      disableNext = false;
+  disableNext = false;
 
   nextText = 'Next';
 
-  close () {
+  close() {
     if (!this.dialogRef.disableClose)
       this.dialogRef.close();
   }
 
   reconnectDisabled = true;
 
-  async next () {
-    switch(this.state) {
+  async next() {
+    switch (this.state) {
       case OTAProgrammerState.WarningPrompt:
         this.state = this.programmingStates.ProgramPrompt;
-      break;
+        break;
       case OTAProgrammerState.ProgramPrompt:
       case OTAProgrammerState.ProgrammingError:
         this.state = OTAProgrammerState.ProgrammingActive;
         this.#program();
-      break;
+        break;
     }
   }
 
   displayConnect = false;
 
   async reConnect() {
-    if (!this.connection)
-      return;
-    
     this.displayConnect = false;
 
-    try {
-      await this.connection.reconnect();
+    try {      
+      const connection = await this.btConFactory.connect(this.logger);
 
-      this.newVersion = await this.connection?.version() || '';
-      
+      this.newVersion = await connection.version();
+
       this.state = OTAProgrammerState.ProgrammingSuccess;
-  
+
       this.dialogRef.disableClose = false;
-    } catch(e) {
+    } catch (e) {
       this.state = OTAProgrammerState.ProgrammingError;
       if (e instanceof BTConnectionVersionMissmatchError) {
         this.logger.clean();
@@ -154,16 +152,16 @@ Click \'Next\' to try again`
       } else if (e instanceof BTConnectionGATTConnectionError) {
         this.logger.clean();
         this.logger.writeLine(
-          `We couldnt connect to your device, tried three times.
+          `We couldnt connect to your device, tried three times. Did you remember to enable the BLE service?
 Remember Web Bluetooth is an experimental technology and can be unreliable.
 It may be best to reload your browser and try again`
         );
       } else {
         this.logger.writeLine('Error during OTA update:');
-  
-        if (e instanceof Error) {          
+
+        if (e instanceof Error) {
           this.logger.writeLine(e?.message);
-          this.logger.writeLine(e?.stack || '' );
+          this.logger.writeLine(e?.stack || '');
         }
       }
 
@@ -180,57 +178,29 @@ It may be best to reload your browser and try again`
       this.dialogRef.disableClose = true;
       this.disableNext = true;
 
-      this.connection = await this.btConnectionFactory.connect(this.logger);
-      this.logger.writeLine('Connected to the BLE Server');
+      const connection = await this.btConFactory.connect(this.logger);
+      const otaService = this.otaFactory.create(connection);
 
-      this.oldVersion = await this.connection?.version();
-
+      this.oldVersion = await connection.version();
       this.logger.writeLine(`Current Version: ${this.oldVersion}`);
 
       this.logger.writeLine('Downloading binary...');
-      // throw some delays in to make it look busy
-      await new Promise(res => setTimeout(res, 2000));
 
       const binaryData = await firstValueFrom(this.gihubService.getReleaseBinary(this.data.tag, ReleaseType.OTA));
 
       this.logger.writeLine(`Downloaded, size: ${binaryData.size}`);
 
-      const otaSize = binaryData.size;
-      let sent = 0;
-
-      await this.connection?.sendOTACommand(OTACommand.startUpload);
-
-      this.logger.writeLine('Uploading the binary, this can take a while');
-
-      while (sent < otaSize) {
-        const remaining = otaSize - sent;
-        const toTake = remaining > 244 ? 244 : remaining; 
-        const dataToSend = new DataView(binaryData.buffer, sent, toTake);
-  
-        await this.connection?.sendOTAData(dataToSend);
-  
-        sent += toTake;
-
-        this.programProgress = Math.round((sent / otaSize) * 100);
+      for await (const progresss of otaService.performUpdate(binaryData, this.logger)) {
+        this.programProgress = progresss
       }
-      
+
       this.logger.writeLine('Update has been uploaded. Instructing the PSP Bluetooth Mod to reboot and apply the update. Please wait...');
 
-      
-    this.connection?.sendOTACommand(OTACommand.applyUpdate)
-      .catch((e) => {
-        console.log('Apply error (this is expected)', e);
-      });
+      await new Promise(res => setTimeout(res, 5000));
 
-    await new Promise(res => setTimeout(res, 1000));
+      this.displayConnect = true;
 
-    this.connection.disconnect();
-
-    await new Promise(res => setTimeout(res, 5000));
-
-    this.displayConnect = true;
-
-    } catch(e) {
+    } catch (e) {
       this.state = OTAProgrammerState.ProgrammingError;
       if (e instanceof BTConnectionVersionMissmatchError) {
         this.logger.clean();
@@ -264,10 +234,10 @@ It may be best to reload your browser and try again`
         );
       } else {
         this.logger.writeLine('Error during OTA update:');
-  
-        if (e instanceof Error) {          
+
+        if (e instanceof Error) {
           this.logger.writeLine(e?.message);
-          this.logger.writeLine(e?.stack || '' );
+          this.logger.writeLine(e?.stack || '');
         }
       }
 

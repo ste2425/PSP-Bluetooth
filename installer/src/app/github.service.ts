@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { delay, map } from 'rxjs';
+import { delay, map, Observable } from 'rxjs';
 
 export interface IArtifact {
   url: string,
@@ -26,6 +26,12 @@ export enum ReleaseType {
   OTA
 }
 
+export interface IReleaseBinary {
+  data: string,
+  size: number,
+  buffer: ArrayBuffer
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -39,7 +45,7 @@ export class GithubService {
       .pipe(delay(1500));
   }
 
-  getReleaseBinary(releaseTag: string, type: ReleaseType) {
+  getReleaseBinary(releaseTag: string, type: ReleaseType): Observable<IReleaseBinary> {
     const headers = {
       Accept: 'application/octet-stream'
     };

@@ -11,11 +11,17 @@ const OTA_DATA_UUID = '4627c4a4-ac05-46b9-b688-afc5c1bf7f63';
 
 const DEFAULT_MAPPINGS = "[{\"n\":1,\"c\":[255,0,0,1],\"m\":[[8,0,0],[10,1,0],[9,3,0],[0,2,0],[15,0,1],[17,1,1],[16,2,1],[2,0,2],[1,1,2],[4,3,2],[6,2,2],[5,5,2],[7,6,2],[0,1,3]]},{\"n\":2,\"c\":[255,0,0,1],\"m\":[[8,0,0],[10,1,0],[9,3,0],[0,2,0],[15,0,1],[17,1,1],[16,2,1],[2,0,2],[1,1,2],[4,3,2],[6,2,2],[5,5,2],[7,6,2],[102,6,2],[101,7,2]]}]";
 
+export const MAX_GROUPINGS = 5;
+export const MAX_MAPPINGS = 30;
+
 export enum OTACommand {
     startUpload = 0,
     uploadFinished = 1,
     applyUpdate = 2,
-    resetMappings = 3
+    resetMappings = 3,
+    configUploadStart = 4,
+    configUploadComplete = 5,
+    configUploadApply = 6
 }
 
 export type ButtonMapping = [number, number, number];
@@ -133,10 +139,54 @@ export class PSPBluetooth {
         ];
     }
 
+    #chunk(s: string, maxBytes: number): string[] {
+        const data = [];
+        const decoder = new TextDecoder("utf-8");
+        let buf = new TextEncoder().encode(s);
+        
+        while (buf.length) {
+            const chunk = buf.slice(0, maxBytes);
+            let chunkStr = decoder.decode(chunk);
+
+            console.log(chunk.byteLength);
+            
+            if (chunk.byteLength < maxBytes) {
+                console.log('Adding padding');
+                const spaces = maxBytes - chunk.byteLength,
+                    padding = ' '.repeat(spaces);
+
+                chunkStr += padding;
+
+                console.log(new Blob([chunkStr]).size);
+            }
+
+
+            data.push(chunkStr);
+            buf = buf.slice(maxBytes);
+        }
+        
+        return data;
+    }
+
     async saveButtonMappings(mappings: IControllerMapping[]) {
         const mappingsJson = JSON.stringify(mappings);
+
+        await this.sendOTACommand(OTACommand.configUploadStart);
+
+        const chunks = this.#chunk(mappingsJson, 100);
+
+        for (const chunk of chunks) {
+            await this.#writeValue(MAPPINGS_UUID, this.#encode(chunk));
+        }
+
+        const strValue = await this.#readValue(MAPPINGS_UUID);
+
+        await this.sendOTACommand(OTACommand.configUploadComplete);
+
+        if (strValue.trim() !== mappingsJson.trim())
+            throw new Error("Unable to apply mappings, saved configuration data does not match what was expected");
         
-        await this.#writeValue(MAPPINGS_UUID, this.#encode(mappingsJson));
+        await this.sendOTACommand(OTACommand.configUploadApply);
     }
 
     connectToCharacteristic(uuid: string) {

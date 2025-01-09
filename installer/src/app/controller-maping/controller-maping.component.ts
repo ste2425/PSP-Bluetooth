@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ButtonMapping, IControllerMapping } from '../services/btconnection-factory.service';
+import { ButtonMapping, IControllerMapping, MAX_MAPPINGS } from '../services/btconnection-factory.service';
 import { CommonModule } from '@angular/common';
 import { MatDividerModule } from '@angular/material/divider';
 import {MatGridListModule} from '@angular/material/grid-list';
@@ -22,6 +22,7 @@ export class ControllerMapingComponent {
   @Input({ required: true }) controllerMapping?: IControllerMapping;
 
   activeMapping?: ButtonMapping;
+  MAX_MAPPINGS = MAX_MAPPINGS;
 
   get isAnalogStickMapping() {
     if (!this.activeMapping)
@@ -31,7 +32,15 @@ export class ControllerMapingComponent {
       controllerPin = this.activeMapping[1],
       type = this.activeMapping[2];
 
-    return pspButton === pspButtons.analog || (type === controllerTypes.analog && (controllerPin === analogControllerBits.leftAnalog || controllerPin === analogControllerBits.rightAnalog));
+    return pspButton === pspButtons.analog || 
+      (type === controllerTypes.analog && 
+        (controllerPin === analogControllerBits.leftAnalog || controllerPin === analogControllerBits.rightAnalog)
+      );
+  }
+
+  
+  get addDisabled() {
+    return (this.controllerMapping?.m?.length || 0) >= MAX_MAPPINGS;
   }
 
   disableAllButAnalog() {
@@ -52,7 +61,7 @@ export class ControllerMapingComponent {
   }
 
   addNewMapping() {
-    if (!this.controllerMapping?.m || this.controllerMapping.m.length >= 16)
+    if (!this.controllerMapping?.m || this.controllerMapping.m.length >= MAX_MAPPINGS)
       return;
 
     const newMapping: ButtonMapping = [0, 0, 0];
@@ -73,12 +82,23 @@ export class ControllerMapingComponent {
   }
 
   onChange(value: number) {
-    if (this.activeMapping) {
-      if (value === 105 || this.activeMapping[2] === 3) { // psp analogstick
+    if (this.activeMapping) {    
+      const controllerBit = this.activeMapping[1],
+        controllerType = this.activeMapping[2];
+
+      const ispspAnalogStick = value === pspButtons.analog;
+      const isControllerAnalog = controllerType === controllerTypes.analog && 
+        (
+          controllerBit === analogControllerBits.leftAnalog ||
+          controllerBit === analogControllerBits.rightAnalog
+        );
+
+      // Analog sticks (full 360 not a specific direction) can only be mapped to the PSP's analog stick so hard code it
+      if (isControllerAnalog || ispspAnalogStick) {      
         //hard code toleft analog stick on psp.
-        this.activeMapping[0] = 105;
-        this.activeMapping[1] = 1;
-        this.activeMapping[2] = 3;
+        this.activeMapping[0] = pspButtons.analog;
+        this.activeMapping[1] = analogControllerBits.leftAnalog;
+        this.activeMapping[2] = controllerTypes.analog;
       } else {
         this.activeMapping[0] = value;
       }

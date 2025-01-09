@@ -20,7 +20,15 @@ enum ControllerButton {
   r1,
   r2,
   leftAnalog,
-  rightAnalog
+  leftAnalogUp,
+  leftAnalogDown,
+  leftAnalogLeft,
+  leftAnalogRight,
+  rightAnalog,
+  rightAnalogUp,
+  rightAnalogDown,
+  rightAnalogLeft,
+  rightAnalogRight
 }
 
 export interface IDS4ViewerChange {
@@ -45,7 +53,13 @@ export class DS4ViewerComponent {
   @Output() onChange = new EventEmitter<IDS4ViewerChange>();
   
   toggle(pin: ControllerButton) {
-    if(this.disableAll || this.disableAllButAnalog)
+    if(
+      this.disableAll || 
+      this.disableAllButAnalog && 
+      ( // also check if the button clicked is either analog, if its not disable
+        pin !== ControllerButton.leftAnalog && pin !== ControllerButton.rightAnalog
+      )
+    )
       return;
     
     const event: IDS4ViewerChange = {
@@ -103,10 +117,42 @@ export class DS4ViewerComponent {
         event.controllerBit = analogControllerBits.leftAnalog;
         event.pspAnalog = true;
         break;
+      case ControllerButton.leftAnalogUp:
+        event.type = controllerTypes.analog;
+        event.controllerBit = analogControllerBits.leftAnalogUp;
+        break;
+      case ControllerButton.leftAnalogDown:
+        event.type = controllerTypes.analog;
+        event.controllerBit = analogControllerBits.leftAnalogDown;
+        break;
+      case ControllerButton.leftAnalogLeft:
+        event.type = controllerTypes.analog;
+        event.controllerBit = analogControllerBits.leftAnalogLeft;
+        break;
+      case ControllerButton.leftAnalogRight:
+        event.type = controllerTypes.analog;
+        event.controllerBit = analogControllerBits.leftAnalogRight;
+        break;
       case ControllerButton.rightAnalog:
         event.type = controllerTypes.analog;
         event.controllerBit = analogControllerBits.rightAnalog;
         event.pspAnalog = true;
+        break;
+      case ControllerButton.rightAnalogUp:
+        event.type = controllerTypes.analog;
+        event.controllerBit = analogControllerBits.rightAnalogUp;
+        break;
+      case ControllerButton.rightAnalogDown:
+        event.type = controllerTypes.analog;
+        event.controllerBit = analogControllerBits.rightAnalogDown;
+        break;
+      case ControllerButton.rightAnalogLeft:
+        event.type = controllerTypes.analog;
+        event.controllerBit = analogControllerBits.rightAnalogLeft;
+        break;
+      case ControllerButton.rightAnalogRight:
+        event.type = controllerTypes.analog;
+        event.controllerBit = analogControllerBits.rightAnalogRight;
         break;
       case ControllerButton.l1:
         event.type = controllerTypes.button;
@@ -160,8 +206,24 @@ export class DS4ViewerComponent {
         return type === controllerTypes.button && controllerBit === buttonControllerBits.triangleButton;
       case ControllerButton.leftAnalog:
         return type === controllerTypes.analog && controllerBit === analogControllerBits.leftAnalog;
+      case ControllerButton.leftAnalogUp:
+        return type === controllerTypes.analog && controllerBit === analogControllerBits.leftAnalogUp;
+      case ControllerButton.leftAnalogDown:
+        return type === controllerTypes.analog && controllerBit === analogControllerBits.leftAnalogDown;
+      case ControllerButton.leftAnalogLeft:
+        return type === controllerTypes.analog && controllerBit === analogControllerBits.leftAnalogLeft;
+      case ControllerButton.leftAnalogRight:
+        return type === controllerTypes.analog && controllerBit === analogControllerBits.leftAnalogRight;
       case ControllerButton.rightAnalog:
         return type === controllerTypes.analog && controllerBit === analogControllerBits.rightAnalog;
+      case ControllerButton.rightAnalogUp:
+        return type === controllerTypes.analog && controllerBit === analogControllerBits.rightAnalogUp;
+      case ControllerButton.rightAnalogDown:
+        return type === controllerTypes.analog && controllerBit === analogControllerBits.rightAnalogDown;
+      case ControllerButton.rightAnalogLeft:
+        return type === controllerTypes.analog && controllerBit === analogControllerBits.rightAnalogLeft;
+      case ControllerButton.rightAnalogRight:
+      return type === controllerTypes.analog && controllerBit === analogControllerBits.rightAnalogRight;
       case ControllerButton.l1:
         return type === controllerTypes.button && controllerBit === buttonControllerBits.l1;
       case ControllerButton.l2:

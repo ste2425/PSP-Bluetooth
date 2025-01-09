@@ -1,111 +1,134 @@
 <div class="centered-tour-element" tourAnchor="config.page"></div>
 
 <div class="buttons-container">
-    <button color="accent" tourAnchor="config.loadbtn" mat-button (click)="loadMappings()" [disabled]="loadMappingsDisabled">Load Mappings</button>
-    <button color="accent" tourAnchor="config.savebtn" mat-button (click)="saveMappings()" [disabled]="!btDevice || mappingsSaving">Save Mappings</button>
+    <button color="accent" tourAnchor="config.loadbtn" mat-button (click)="loadMappings()" [disabled]="loadMappingsDisabled || loading">Load Mappings</button>
+    <button color="accent" tourAnchor="config.savebtn" mat-button (click)="saveMappings()" [disabled]="!connected || mappingsSaving || firmwareTooLow || loading">Save Mappings</button>
+
+    {{version}}
 </div>
 
 <div class="page-container" >
-    @if(wrongBoardError) {
-        <p style="text-align: center;">
-            The device you conencted to does not appear to be the PSP Bluetooth Mod.
-        </p>
+    @if (firmwareTooLow) {
+        <app-panel colour="accent" borderHorizontal style="margin-top: 20px;">
+            <p>Your firmware version is too low to use this feature.</p>
+            <p>Please upgrade to at least <strong>{{MIN_FIRMWARE_VERSION}}</strong></p>
+        </app-panel>
+    } @else if (!loading) {
+        @if(wrongBoardError) {
+            <p style="text-align: center;">
+                The device you conencted to does not appear to be the PSP Bluetooth Mod.
+            </p>
+        
+            <p style="text-align: center;">
+                Please try again and select a different device.
+            </p>
+        } @else if(deviceNotSelectedError) {
+            <p style="text-align: center;">
+                A device was not selected.
+            </p>
+        
+            <p style="text-align: center;">
+                Please try again and select a different device.
+            </p>
+        } @else if (generalError) {
+            <p style="text-align: center;">
+                There was an error
+            </p>
+        
+            <p style="text-align: center;">
+                {{generalError}}
+            </p>
+        
+            <p style="text-align: center;">
+                Please try again.
+            </p>
+        } @else if (connectionError) {
+            <p style="text-align: center;">
+                We couldnt connect to your device, tried three times.
+            Remember Web Bluetooth is an experimental technology and can be unreliable.
+            </p>
+        
+            <p style="text-align: center;">
+                It may be best to reload your browser and try again
+            </p>
+        } @else if (!configurations.length && !loading) {   
+            <app-panel minHeight="xs">
+                <div>
+                    Please enable the <em>BLE service</em> by press and holding the mode button. This will trigger the LED to flash three times in a row with a pause. 
+                </div>
+            </app-panel>
     
-        <p style="text-align: center;">
-            Please try again and select a different device.
-        </p>
-    } @else if(deviceNotSelectedError) {
-        <p style="text-align: center;">
-            A device was not selected.
-        </p>
+            <app-panel minHeight="md" borderHorizontal colour="accent">
+                <video autoplay muted style="max-width: 100%; max-height: 300px;" loop src="assets/enableBLE.mp4"></video>
+            </app-panel>  
     
-        <p style="text-align: center;">
-            Please try again and select a different device.
-        </p>
-    } @else if (generalError) {
-        <p style="text-align: center;">
-            There was an error
-        </p>
+            <app-panel minHeight="xs">
+                <div>
+                    Then click the <em>Load Mappings button</em>. In the popup select the device labelled either <em>BP32</em> or <em>Bluepad32</em>.
+                </div>
+            </app-panel>
     
-        <p style="text-align: center;">
-            {{generalError}}
-        </p>
+            <app-panel colour="primary"borderHorizontal>
+                <img style="max-width: 100%; max-height: 350px;" src="assets/pairDialog.png" />
+            </app-panel>
+        }
     
-        <p style="text-align: center;">
-            Please try again.
-        </p>
-    } @else if (connectionError) {
-        <p style="text-align: center;">
-            We couldnt connect to your device, tried three times.
-        Remember Web Bluetooth is an experimental technology and can be unreliable.
-        </p>
+        @if (visibleItem) {    
+            <div class="controll-bar" tourAnchor="config.buttongroups">            
+                <button tourAnchor="config.navigateback" (click)="back()" [disabled]="configurations.length <= 1" color="accent" mat-icon-button>
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
     
-        <p style="text-align: center;">
-            It may be best to reload your browser and try again
-        </p>
-    } @else if (!configurations.length && !loading) {   
-        <app-panel minHeight="xs">
-            <div>
-                Please enable the <em>BLE service</em> by press and holding the mode button. This will trigger the LED to flash three times in a row with a pause. 
+                <h3 style="margin: 0px; flex-grow: 1;">Mapping Group: {{configurations.indexOf(visibleItem) + 1}} / {{configurations.length}}</h3>
+    
+                <button (click)="startTour()" color="accent" mat-icon-button>
+                    <mat-icon>help_center</mat-icon>
+                </button>
+
+                <button tourAnchor="config.reset" (click)="resetSettings()" color="accent" mat-icon-button>
+                    <mat-icon>restart_alt</mat-icon>
+                </button>
+    
+                <app-colour-picker tourAnchor="config.colourpicker"
+                    style="margin-right: 20px;"
+                    [R]="visibleItem.c[0]" 
+                    [G]="visibleItem.c[1]"
+                    [B]="visibleItem.c[2]"
+                    [A]="visibleItem.c[3]"
+                    (onChange)="onColourChange(visibleItem, $event)"
+                ></app-colour-picker>
+                
+                <div class="player-select" tourAnchor="config.playerpicker">
+                    <mat-icon>tag</mat-icon>
+                    <mat-select [(ngModel)]="visibleItem.n" hideSingleSelectionIndicator>
+                        <mat-option [value]="1">Player 1</mat-option>
+                        <mat-option [value]="2">Player 2</mat-option>
+                        <mat-option [value]="3">Player 3</mat-option>
+                        <mat-option [value]="4">Player 4</mat-option>
+                    </mat-select>
+                </div>
+
+                <button tourAnchor="config.deletegroup" [disabled]="configurations.length < 2" (click)="deleteMapping(visibleItem)" color="accent" mat-icon-button >
+                    <mat-icon>delete_forever</mat-icon>
+                </button>
+    
+                <button tourAnchor="config.creategroup" [disabled]="addDisabled" (click)="addNewControllerMapping()" color="accent" mat-icon-button >
+                    <mat-icon>add_circle</mat-icon>
+                </button>
+    
+                <button tourAnchor="config.navigateforward" (click)="next()" [disabled]="configurations.length <= 1" color="accent" mat-icon-button>
+                    <mat-icon>arrow_forward</mat-icon>
+                </button>
             </div>
-        </app-panel>
-
-        <app-panel minHeight="md" borderHorizontal colour="accent">
-            <video autoplay muted style="max-width: 100%; max-height: 300px;" loop src="assets/enableBLE.mp4"></video>
-        </app-panel>  
-
-        <app-panel minHeight="xs">
-            <div>
-                Then click the <em>Load Mappings button</em>. In the popup select the device labelled either <em>BP32</em> or <em>Bluepad32</em>.
-            </div>
-        </app-panel>
-
-        <app-panel colour="primary"borderHorizontal>
-            <img style="max-width: 100%; max-height: 350px;" src="assets/pairDialog.png" />
-        </app-panel>
-    }
-
-    @if (visibleItem) {    
-        <div class="controll-bar" tourAnchor="config.buttongroups">            
-            <button tourAnchor="config.navigateback" (click)="back()" [disabled]="configurations.length <= 1" color="accent" mat-icon-button>
-                <mat-icon>arrow_back</mat-icon>
-            </button>
-
-            <h3 style="margin: 0px; flex-grow: 1;">Mapping Group: {{configurations.indexOf(visibleItem) + 1}} / {{configurations.length}}</h3>
-
-            <button (click)="startTour()" color="accent" mat-icon-button>
-                <mat-icon>help_center</mat-icon>
-            </button>
-
-            <app-colour-picker tourAnchor="config.colourpicker"
-                style="margin-right: 20px;"
-                [R]="visibleItem.c[0]" 
-                [G]="visibleItem.c[1]"
-                [B]="visibleItem.c[2]"
-                [A]="visibleItem.c[3]"
-                (onChange)="onColourChange(visibleItem, $event)"
-            ></app-colour-picker>
-            
-            <button tourAnchor="config.deletegroup" [disabled]="configurations.length < 2" (click)="deleteMapping(visibleItem)" color="accent" mat-icon-button >
-                <mat-icon>delete_forever</mat-icon>
-            </button>
-
-            <button tourAnchor="config.creategroup" [disabled]="configurations.length >= 3" (click)="addNewControllerMapping()" color="accent" mat-icon-button >
-                <mat-icon>add_circle</mat-icon>
-            </button>
-
-            <button tourAnchor="config.navigateforward" (click)="next()" [disabled]="configurations.length <= 1" color="accent" mat-icon-button>
-                <mat-icon>arrow_forward</mat-icon>
-            </button>
-        </div>
-    }
-
-    @for (item of configurations; track item) {
-        @if (item.visible) {
-            <app-controller-maping [controllerMapping]="item"></app-controller-maping>
+        }
+    
+        @for (item of configurations; track item) {
+            @if (item.visible) {
+                <app-controller-maping [controllerMapping]="item"></app-controller-maping>
+            }
         }
     }
-    
+
     @if (loading) {    
       <div class="center">
         <mat-spinner></mat-spinner>

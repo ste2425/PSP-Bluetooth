@@ -1,6 +1,5 @@
 import { Component, inject, OnDestroy } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { BTConnectionAbortedError, BTConnectionFactoryService, BTConnectionGATTConnectionError, BTConnectionPrimaryServiceError, BTConnectionVersionMissmatchError, IControllerMapping, OTACommand, PSPBluetooth } from '../services/btconnection-factory.service';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -12,6 +11,11 @@ import { TourMatMenuModule, TourService } from 'ngx-ui-tour-md-menu';
 import { DialogService } from '../dialogs/dialog.service';
 import { PanelComponent } from '../panel/panel.component';
 import { controllerTypes, dpadControllerBits, pspButtons } from '../services/ESPValueDefinitions';
+import { BTConnectionFactoryService } from '../bt/btconnection-factory.service';
+import { ConfigurationService, ConfigurationServiceFactory, IControllerMapping, MAX_GROUPINGS } from '../bt/configuration.service';
+import { BTConnectionAbortedError, BTConnectionGATTConnectionError, BTConnectionPrimaryServiceError, BTConnectionVersionMissmatchError } from '../bt/errors';
+import semver from 'semver';
+import { MatSelectModule } from '@angular/material/select';
 
 interface IViewControllerMapping extends IControllerMapping {
   visible?: boolean
@@ -19,28 +23,37 @@ interface IViewControllerMapping extends IControllerMapping {
 @Component({
   selector: 'app-configuration-page',
   standalone: true,
-  imports: [PanelComponent, TourMatMenuModule, MatIconModule, MatProgressSpinner, MatButtonModule, TextFieldModule, FormsModule, CommonModule, ControllerMapingComponent, ColourPickerComponent],
+  imports: [MatSelectModule, PanelComponent, TourMatMenuModule, MatIconModule, MatProgressSpinner, MatButtonModule, TextFieldModule, FormsModule, CommonModule, ControllerMapingComponent, ColourPickerComponent],
   templateUrl: './configuration-page.component.html',
   styleUrl: './configuration-page.component.scss'
 })
 export class ConfigurationPageComponent implements OnDestroy {
   dialogService = inject(DialogService);
   btConnectionFactory = inject(BTConnectionFactoryService);
+  configFactory = inject(ConfigurationServiceFactory);
   readonly tourService = inject(TourService);
 
   loadMappingsDisabled = false;
+  MIN_FIRMWARE_VERSION = '2.0.0';
 
-  btDevice?: PSPBluetooth;
+  version = '';
+
   wrongBoardError = false;
   deviceNotSelectedError = false;
   connectionError = false;
   generalError = '';
   loading = false;
+  firmwareTooLow = false;
+
+  configService?: ConfigurationService;
 
   get connected() {
-    return this.btDevice?.connected;
+    return !!this.configService?.connected();
   }
 
+  get addDisabled() {
+    return this.configurations.length >= MAX_GROUPINGS;
+  }
 
   deleteMapping(mapping: IViewControllerMapping) {
     const index = this.configurations.indexOf(mapping);
@@ -66,8 +79,17 @@ export class ConfigurationPageComponent implements OnDestroy {
     this.visibleItem = visibleitem;
   }
 
+  async resetSettings() {
+    if (this.configService) {
+      if (await this.dialogService.confirmResetConfig()) {
+        await this.configService.resetToDefaults();
+        await this.loadMappings();
+      }
+    }
+  }
+
   addNewControllerMapping() {
-    if (this.configurations.length >= 3)
+    if (this.configurations.length >= MAX_GROUPINGS)
       return;
     
     const newConfig: IViewControllerMapping = {
@@ -94,7 +116,7 @@ export class ConfigurationPageComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.btDevice?.disconnect();
+    this.configService?.disconnect();
   }
 
   terminalOutput = '';
@@ -142,29 +164,40 @@ export class ConfigurationPageComponent implements OnDestroy {
   mappingsSaving = false;
 
   async saveMappings() {
-    if (!this.btDevice)
-     return;
+    if (!this.configService)
+      return;
 
     this.mappingsSaving = true;
+    this.loading = true;
 
     try {
-      const toSave = this.configurations.map(x => {
+      this.configurations = this.configurations.filter(x => x.m.length);
+      
+      const toSave = this.configurations.map((x, i) => {
         const y = {
           c: x.c,
           n: x.n,
           m: x.m
         };
+
+        if (y.m.length)
+          return y;
   
-        return y.m.length ? y : undefined;
+        return undefined;
       }).filter((x: IControllerMapping | undefined): x is IControllerMapping => !!x);
-      
-      await this.btDevice?.saveButtonMappings(toSave);
+
+      console.log('toSave', toSave)
+
+      await this.configService.saveButtonMappings(toSave);
+
+      await this.loadMappings();
 
       this.dialogService.configSaved();
     } catch(e) {
       console.log(e);
     } finally {      
       this.mappingsSaving = false;
+      this.loading = false;
     }
   }
 
@@ -179,6 +212,7 @@ export class ConfigurationPageComponent implements OnDestroy {
   }
 
   async loadMappings() {
+
     try {
       this.loading = true;
       this.deviceNotSelectedError = false;
@@ -187,25 +221,27 @@ export class ConfigurationPageComponent implements OnDestroy {
       this.generalError = '';
       this.loadMappingsDisabled = true;
 
-      if (!this.btDevice)
+      if (!this.configService)
         await this.connect();
+
+      if (this.firmwareTooLow) {
+        this.loading = false;
+        this.loadMappingsDisabled = true;
+        return;
+      }
+
   
-      if (!this.btDevice)
-        throw new Error('Uh oh');
+      if (!this.configService)
+        throw new Error('No Config Service');
+
+      const mappings = await this.configService.loadButtonMappings();
   
-      console.log('Reading mappings');
-      const mappings = await this.btDevice.loadButtonMappings();
-  
-      if (mappings) {
+      if (mappings?.length) {
         this.configurations = mappings;
 
         this.configurations[0].visible = true;
 
         this.visibleItem = this.configurations[0];
-
-        console.log('Mappings read');
-      } else {
-        console.log('no mappings');
       }
   
       this.loadMappingsDisabled = false;
@@ -229,7 +265,7 @@ export class ConfigurationPageComponent implements OnDestroy {
       try {      
         console.log('Connecting...');
         
-        this.btDevice = await this.btConnectionFactory.connect({
+        const connection = await this.btConnectionFactory.connect({
           write(value) {
             this.writeLine(value);
           },
@@ -242,13 +278,11 @@ export class ConfigurationPageComponent implements OnDestroy {
           }
         });
 
-        console.log('Connected');
-        console.log(this.btDevice.deviceDetails());
-
-        console.log('Connected');
-
-        const version = await this.btDevice.version();
-        console.log(version);
+        this.version = await connection.version();
+        this.firmwareTooLow = this.version.endsWith('<DEVELOPMENT>') ? false : semver.gte(this.version.replace(/[^\d.]/g,''), this.MIN_FIRMWARE_VERSION);
+        
+        if (!this.firmwareTooLow)
+          this.configService = this.configFactory.create(connection);
       } catch(e) {if (e instanceof BTConnectionVersionMissmatchError) {
         this.wrongBoardError = true;
         

@@ -154,7 +154,7 @@ export class ControllerButtonMappingComponent {
       controllerBit = this.mapping[1],
       controllerType = this.mapping[2];
 
-    const isAnalog = controllerBit === analogControllerBits.leftAnalog || analogControllerBits.rightAnalog;
+    const isAnalog = controllerBit === analogControllerBits.leftAnalog || controllerBit === analogControllerBits.rightAnalog;
 
     // Analog sticks (full 360 not a specific direction) can only be mapped to the PSP's analog stick so hard code it
     if (controllerType === controllerTypes.analog && isAnalog)

@@ -493,4 +493,80 @@
     </g>
 
   </g>
+  
+  <g
+     inkscape:groupmode="layer"
+     id="layer1"
+     inkscape:label="left analog">
+    <path
+       id="analog-left-up"
+       [ngClass]="{ active: isActive(ControllerButton.leftAnalogUp), disabled: disableAll || disableAllButAnalog }"
+       (click)="toggle(ControllerButton.leftAnalogUp)"
+       d="m 178.08449,150.86867 a 68.131685,57.491295 0 0 1 68.13166,0 l -10.9014,15.93298 a 46.328825,39.093473 0 0 0 -46.32885,0 z"
+       bx:shape="pie 592 554.6 28.293 41.608 330 30 1@90c11f9b"
+       style="stroke: black; fill: #cccccc;stroke-width:1.50418"
+       inkscape:label="left-analog-up" />
+    <path
+       id="analog-left-left"
+       [ngClass]="{ active: isActive(ControllerButton.leftAnalogLeft), disabled: disableAll || disableAllButAnalog }"
+       (click)="toggle(ControllerButton.leftAnalogLeft)"
+       d="m 163.73256,235.73181 a 57.491295,68.131685 0 0 1 0,-68.13166 l 15.93298,10.9014 a 39.093473,46.328825 0 0 0 0,46.32885 z"
+       bx:shape="pie 592 554.6 28.293 41.608 330 30 1@90c11f9b"
+       style="stroke: black; fill: #cccccc;stroke-width:1.50418"
+       inkscape:label="left-analog-right" />
+    <path
+       id="analog-left-right"
+       [ngClass]="{ active: isActive(ControllerButton.leftAnalogRight), disabled: disableAll || disableAllButAnalog }"
+       (click)="toggle(ControllerButton.leftAnalogRight)"
+       d="m 264.11498,167.6 a 57.491295,68.131685 0 0 1 0,68.13166 L 248.182,224.83026 a 39.093473,46.328825 0 0 0 0,-46.32885 z"
+       bx:shape="pie 592 554.6 28.293 41.608 330 30 1@90c11f9b"
+       style="stroke: black; fill: #cccccc;stroke-width:1.50418"
+       inkscape:label="left-analog-left" />
+    <path
+       id="analog-left-down"
+       [ngClass]="{ active: isActive(ControllerButton.leftAnalogDown), disabled: disableAll || disableAllButAnalog }"
+       (click)="toggle(ControllerButton.leftAnalogDown)"
+       d="m 246.21566,249.7682 a 68.131685,57.491295 0 0 1 -68.13166,0 l 10.9014,-15.93298 a 46.328825,39.093473 0 0 0 46.32885,0 z"
+       bx:shape="pie 592 554.6 28.293 41.608 330 30 1@90c11f9b"
+       style="stroke: black; fill: #cccccc;stroke-width:1.50418"
+       inkscape:label="left-analog-down" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer1-6"
+     inkscape:label="right analog"
+     transform="translate(175.42055,0.35680375)">
+    <path
+       id="analog-right-up"
+       [ngClass]="{ active: isActive(ControllerButton.rightAnalogUp), disabled: disableAll || disableAllButAnalog }"
+       (click)="toggle(ControllerButton.rightAnalogUp)"
+       d="m 178.08449,150.86867 a 68.131685,57.491295 0 0 1 68.13166,0 l -10.9014,15.93298 a 46.328825,39.093473 0 0 0 -46.32885,0 z"
+       bx:shape="pie 592 554.6 28.293 41.608 330 30 1@90c11f9b"
+       style="stroke: black; fill: #cccccc;stroke-width:1.50418"
+       inkscape:label="right-analog-up" />
+    <path
+      id="analog-right-left"
+      [ngClass]="{ active: isActive(ControllerButton.rightAnalogLeft), disabled: disableAll || disableAllButAnalog }"
+      (click)="toggle(ControllerButton.rightAnalogLeft)"
+       d="m 163.73256,235.73181 a 57.491295,68.131685 0 0 1 0,-68.13166 l 15.93298,10.9014 a 39.093473,46.328825 0 0 0 0,46.32885 z"
+       bx:shape="pie 592 554.6 28.293 41.608 330 30 1@90c11f9b"
+       style="stroke: black; fill: #cccccc;stroke-width:1.50418"
+       inkscape:label="right-analog-right" />
+    <path
+      id="analog-right-right"
+      [ngClass]="{ active: isActive(ControllerButton.rightAnalogRight), disabled: disableAll || disableAllButAnalog }"
+      (click)="toggle(ControllerButton.rightAnalogRight)"
+       d="m 264.11498,167.6 a 57.491295,68.131685 0 0 1 0,68.13166 L 248.182,224.83026 a 39.093473,46.328825 0 0 0 0,-46.32885 z"
+       bx:shape="pie 592 554.6 28.293 41.608 330 30 1@90c11f9b"
+       style="stroke: black; fill: #cccccc;stroke-width:1.50418"
+       inkscape:label="right-analog-left" />
+    <path
+      id="analog-right-down"
+      [ngClass]="{ active: isActive(ControllerButton.rightAnalogDown), disabled: disableAll || disableAllButAnalog }"
+      (click)="toggle(ControllerButton.rightAnalogDown)"
+       d="m 246.21566,249.7682 a 68.131685,57.491295 0 0 1 -68.13166,0 l 10.9014,-15.93298 a 46.328825,39.093473 0 0 0 46.32885,0 z"
+       bx:shape="pie 592 554.6 28.293 41.608 330 30 1@90c11f9b"
+       style="stroke: black; fill: #cccccc;stroke-width:1.50418"
+       inkscape:label="right-analog-down" />
+  </g>
 </svg>
