@@ -8,7 +8,7 @@ I use JLCPCB for my assembly and as such the parts used are sourced from their c
 
 ## Adding a part
 
-Should i need to add a new part there is a PowerShell script in the root `AddJLCPCBPart.ps1` which will add the part to the various libraries.
+See [Changing Parts](./ChangingParts.md) for more info.
 
 # Projects
 
