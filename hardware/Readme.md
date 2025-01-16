@@ -10,6 +10,10 @@ I use JLCPCB for my assembly and as such the parts used are sourced from their c
 
 See [Changing Parts](./ChangingParts.md) for more info.
 
+## Generating JLCPCB production files
+
+See [Generating Gerbers](./GenerateGerbers.md) for more info.
+
 # Projects
 
 # Analog

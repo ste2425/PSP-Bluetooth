@@ -51,4 +51,23 @@ The part is now available for use in KiCad
 
 ![image](./documentation/partReady.png)
 
+## 3: Update Schematic
+
+I would then remove the old part from the schematic and add in the new part, routing it correctly.
+
+## 4: Update PCB
+
+Then in the PCB Editor i would update the PCB from the schematic.
+
+This will full in the footprints for the new components.
+
+It will **not** remove the footprints for the old components.
+
+I'd first delete the old footprints, then clean up the unused traces and via's using the `Tools -> Cleanup Track and Via's` menu item.
+
+I would then place and route the new components footprints.
+
+# Done
+
 And that should be it, hopefully.
+
