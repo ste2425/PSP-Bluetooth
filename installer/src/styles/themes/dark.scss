@@ -16,6 +16,7 @@
     @include mat.select-theme(themes.$installer-dark-theme);
     @include mat.slider-theme(themes.$installer-dark-theme);
     @include mat.radio-theme(themes.$installer-dark-theme);
+    @include mat.checkbox-theme(themes.$installer-dark-theme);
     @include components.theme(themes.$installer-dark-theme);
 
     .tour-step .progress {

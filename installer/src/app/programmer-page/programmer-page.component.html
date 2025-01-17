@@ -1,6 +1,15 @@
-<h2>Firmware Installer</h2>
+<h2>
+  Firmware Installer  
+
+  <mat-checkbox class="example-margin" [(ngModel)]="includePrerelease">Inc. Pre-releases</mat-checkbox>
+</h2>
+
 
 <p>From here you can choose the firmware to install. OTA and Serial options are available. All without the need for external tools.</p>
+
+@if (includePrerelease) {
+  <app-panel colour="accent" borderHorizontal>Pre-releases may be unstable. Please log any bugs found on the GitHub.</app-panel>
+}
 
 <hr />
 

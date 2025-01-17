@@ -1,7 +1,14 @@
 <div class="release">
   <div class="release-heading">
-    <h4>{{name}}</h4>
+    <h4>
+      {{name}}
+
+      @if(release?.prerelease) {
+        <button disabled mat-flat-button color="accent" mat-button>PRERELEASE</button>
+      }
+    </h4>
     <button mat-flat-button color="accent" mat-button [matMenuTriggerFor]="menu">Program</button>
+
     <mat-menu #menu="matMenu">
       <button [disabled]="programDisabled" (click)="programESP()" mat-menu-item>Serial</button>
       <button [disabled]="otaDisabled" (click)="programOTA()" mat-menu-item>OTA</button>
