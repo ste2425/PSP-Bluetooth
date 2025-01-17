@@ -57,7 +57,8 @@ TaskHandle_t core1CommandTaskHandle;
 enum {
 	ARDUINOCMD_RELOAD_MAPPINGS,
     ARDUINOCMD_START_BLE_TIMEOUT,
-    ARDUINOCMD_STOP_BLE_TIMEOUT
+    ARDUINOCMD_STOP_BLE_TIMEOUT,
+    ARDUINOCMD_PREPARE_OTA_APPLY
 };
 
 static void arduinocmd_callback(void* arg) {
@@ -74,9 +75,23 @@ static void arduinocmd_callback(void* arg) {
         case ARDUINOCMD_STOP_BLE_TIMEOUT:
             disableBLETimeout.stop();
             break;
+        case ARDUINOCMD_PREPARE_OTA_APPLY:
+            CTRMANAGER_disconnectAll();
+
+            if (PSPstate_poweredOn())
+                PSPState_togglePower();
+                
+            delay(2000);
+            esp_restart();
+            
+            break;
     }
 
   vTaskDelete(core1CommandTaskHandle);
+}
+
+void INTEROP_prepareOTAApply() {
+    xTaskCreatePinnedToCore(arduinocmd_callback, "arduinocmd_callback", 4096, (void*)ARDUINOCMD_PREPARE_OTA_APPLY, 5, &core1CommandTaskHandle, 1);
 }
 
 void INTEROP_reloadControllerMappings() {

@@ -13,5 +13,6 @@ void INTEROP_toggleBLEService();
 void INTEROP_reloadControllerMappings();
 void INTEROP_enableBLEInactivityWatcher();
 void INTEROP_disableBLEInactivityWatcher();
+void INTEROP_prepareOTAApply();
 void INTEROP_setup();
 void INTEROP_loop();

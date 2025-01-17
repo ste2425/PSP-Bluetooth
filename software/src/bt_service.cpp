@@ -110,8 +110,8 @@ static int att_write_callback(hci_con_handle_t con_handle,
                     if (ESP_OK == esp_ota_set_boot_partition(esp_ota_get_next_update_partition(NULL)))
                     {
                         Serial.println("Done rebooting shortly...");
-                        delay(2000);
-                        esp_restart();
+                        
+                        INTEROP_prepareOTAApply();
                     }
                     else
                     {

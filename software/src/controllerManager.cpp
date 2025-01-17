@@ -22,7 +22,7 @@ void onPSPScreenTimeout() {
   LED_autoSet();
 }
 
-void disconnectAll() {    
+void CTRMANAGER_disconnectAll() {    
       Serial.println("disconnect");
     for (int i = 0; i < maxGamepads; i++) {
         if (myControllers[i] != nullptr) {
@@ -92,7 +92,10 @@ void onDisconnectedController(ControllerPtr ctl) {
 
       pspBootTimeout.stop();
       pspScreenTimeout.stop();
-      PSPState_togglePower();
+
+      if (PSPstate_poweredOn)
+        PSPState_togglePower();
+
       INTEROP_enableBLEService(false);
 
       LED_autoSet();
@@ -326,7 +329,7 @@ void CTRMANAGER_setup() {
     pspScreenTimeout.setTimeout(6000);
 
     controllerTurnOffTimeout.setTimeout(3000);
-    controllerTurnOffTimeout.setCallback(disconnectAll);
+    controllerTurnOffTimeout.setCallback(CTRMANAGER_disconnectAll);
 }
 
 bool newConnectionsEnabled = false;

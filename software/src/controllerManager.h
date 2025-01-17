@@ -15,3 +15,4 @@ void CTRMANAGER_toggleConnections();
 bool CTRMANAGER_newConnectionEnabled();
 void CTRMANAGER_applyColours();
 bool CTRMANAGER_pspBooting();
+void CTRMANAGER_disconnectAll();
