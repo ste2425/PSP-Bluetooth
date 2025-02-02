@@ -186,7 +186,16 @@ bool pressingHome = false;
 void processGamepad(ControllerPtr ctl) {
     MappingMeta *meta = MAPPINGS_current;
     // next mapping y pressing R1 L2 and Dpad right
-    if (bitRead(ctl->buttons(), 4) && bitRead(ctl->buttons(), 5) && bitRead(ctl->dpad(), 2)) {
+    auto l1Pressed = bitRead(ctl->buttons(), 4);
+    auto r1Pressed = bitRead(ctl->buttons(), 5);
+    auto selectPressed = bitRead(ctl->miscButtons(), 1);
+    auto startPressed = bitRead(ctl->miscButtons(), 2);
+    auto isAltMode = l1Pressed && r1Pressed && selectPressed && startPressed;
+
+    auto dpadRightPressed = bitRead(ctl->dpad(), 2);
+    auto dpadLeftPressed = bitRead(ctl->dpad(), 3);
+    
+    if (isAltMode && dpadRightPressed) {
       if (!changingMapping) {
         MAPPINGS_next();
         delay(200);
@@ -197,6 +206,11 @@ void processGamepad(ControllerPtr ctl) {
         changingMapping = true;
       }
 
+      return;
+    } else if (isAltMode && dpadLeftPressed) {
+      PSPState_pressScreen();
+      // dont forget to mark it as pressed otherwise it will never be released.
+      PSPState_markButtonAsPressed(GPIOPins::Display);
       return;
     }
 
