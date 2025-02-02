@@ -279,7 +279,8 @@ export class ConfigurationPageComponent implements OnDestroy {
         });
 
         this.version = await connection.version();
-        this.firmwareTooLow = this.version.endsWith('<DEVELOPMENT>') ? false : semver.lt(this.version.replace(/[^\d.]/g,''), this.MIN_FIRMWARE_VERSION);
+        const version = this.version.match(/(\d+\.\d+\.\d+(-rc\d+)?)/g)?.[0] || ''
+        this.firmwareTooLow = this.version.endsWith('<DEVELOPMENT>') ? false : semver.lt(version, this.MIN_FIRMWARE_VERSION, { includePrerelease: true } as any);
         
         if (!this.firmwareTooLow)
           this.configService = this.configFactory.create(connection);
