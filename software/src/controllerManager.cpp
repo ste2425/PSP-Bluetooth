@@ -208,7 +208,8 @@ void processGamepad(ControllerPtr ctl) {
 
       return;
     } else if (isAltMode && dpadLeftPressed) {
-      PSPState_pressScreen();
+      Serial.println("Pressing left");
+     // PSPState_pressScreen();
       // dont forget to mark it as pressed otherwise it will never be released.
       PSPState_markButtonAsPressed(GPIOPins::Display);
       return;
@@ -261,42 +262,42 @@ void processGamepad(ControllerPtr ctl) {
               PSPState_analog(xRAxis, yRAxis);
             break;
             case 3: //lu
-              if (yAxis < -400) {
+              if (yAxis < -370) {
                 PSPState_markButtonAsPressed(mapping->PSPButton);
               }
             break;
             case 4: //ld
-              if (yAxis > 400) {
+              if (yAxis > 370) {
                 PSPState_markButtonAsPressed(mapping->PSPButton);
               }
             break;
             case 5: //ll
-              if (xAxis < -400) {
+              if (xAxis < -370) {
                 PSPState_markButtonAsPressed(mapping->PSPButton);
               }
             break;
             case 6: //lr
-              if (xAxis > 400) {
+              if (xAxis > 370) {
                 PSPState_markButtonAsPressed(mapping->PSPButton);
               }
             break;
             case 7: //ru
-              if (yRAxis < -400) {
+              if (yRAxis < -370) {
                 PSPState_markButtonAsPressed(mapping->PSPButton);
               }
             break;
             case 8: //rd
-              if (yRAxis > 400) {
+              if (yRAxis > 370) {
                 PSPState_markButtonAsPressed(mapping->PSPButton);
               }
             break;
             case 9: //rd
-              if (xRAxis < -400) {
+              if (xRAxis < -370) {
                 PSPState_markButtonAsPressed(mapping->PSPButton);
               }
             break;
             case 10: //rr
-              if (xRAxis > 400) {
+              if (xRAxis > 370) {
                 PSPState_markButtonAsPressed(mapping->PSPButton);
               }
             break;
