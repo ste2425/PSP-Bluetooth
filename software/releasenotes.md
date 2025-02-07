@@ -1,6 +1,6 @@
-# Release 2.2.0-RC2
+# Release 2.2.0
 
-This pre-releases he button combo which toggle button mappings.
+This changes the button combo which toggles button mappings.
 
 ## Features
 
@@ -8,10 +8,20 @@ N/A
 
 ## Changes
 
-* Changed the button combo to change a button mapping from `L1` & `R1` & `DPADRight` to `L1` & `R1` `Select` & `Start` & `DPADRight`.
-* Added a button combo to press the Display screen 
-	* This should solve any issues people have where either TVOut is not enabled or some homebrew disables it. Fixes [#16](https://github.com/ste2425/PSP-Bluetooth/issues/16), [#18](https://github.com/ste2425/PSP-Bluetooth/issues/18)
-* Lowered the threshold of the analog to button mappings. This will make diaganals work but will also make the stick more sensitive. Will leave like this and wait for feedback. Fixes [#17](https://github.com/ste2425/PSP-Bluetooth/issues/17)
+* Added the following button combos
+
+| Combo | Action |
+| -- | -- |
+| `L1` `R1` `Start` `Select` `DPadRight` | Toggle next button mapping |
+| `L1` `R1` `Start` `Select` `DPadLeft` | Press screen PSP button |
+
+Fixes [#16](https://github.com/ste2425/PSP-Bluetooth/issues/16), [#18](https://github.com/ste2425/PSP-Bluetooth/issues/18)
+
+* Lowered the threshold of the analog to button mappings. 
+
+The solution will be improved for future releases but works (ish) for now.
+
+Fixes [#17](https://github.com/ste2425/PSP-Bluetooth/issues/17)
 
 ## Bug fixes
 
