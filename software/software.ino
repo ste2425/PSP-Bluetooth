@@ -19,7 +19,7 @@ void disableNewConnections() {
 void setup() { 
     disableNewConnectionTimer.setCallback(disableNewConnections);
     disableNewConnectionTimer.setTimeout(1000);
-    //disableNewConnectionTimer.start();
+    disableNewConnectionTimer.start();
 
     Serial.begin(115200);
 
@@ -36,7 +36,7 @@ void setup() {
     LED_setup();
     INTEROP_setup();
 
-    INTEROP_enableBLEService(true);
+    INTEROP_enableBLEService(false);
 }
 
 void loop() {    
