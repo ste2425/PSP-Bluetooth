@@ -5,6 +5,7 @@ Timeout pspScreenTimeout;
 Timeout controllerTurnOffTimeout;
 
 bool pspBooting = false;
+bool pspColdBoot = true;
 
 #define maxGamepads 4
 
@@ -13,13 +14,18 @@ ControllerPtr myControllers[maxGamepads];
 void onPspBootTimeout() {
   PSPState_pressScreen();
   pspScreenTimeout.start();
-  pspBootTimeout.setTimeout(1500); // After first boot PSP is 'warm' so dont need to wait as long
 }
 
 void onPSPScreenTimeout() {
+  Serial.println("Screen has been pressed");
   PSPState_releaseScreen();
   pspBooting = false;
   LED_autoSet();
+}
+
+void CTRMANAGER_updateSettings() {
+  pspScreenTimeout.stop();
+  pspScreenTimeout.setTimeout(SETTINGS_current.screenDelay);
 }
 
 void CTRMANAGER_disconnectAll() {    
@@ -46,9 +52,16 @@ void onConnectedController(ControllerPtr ctl) {
             ctl->setPlayerLEDs(meta->mappingNumer & 0x0f);
             
             // if first controller
-            if (i == 0) {
+            if (i == 0 && !PSPstate_poweredOn()) {
               CTRMANAGER_enableConnections(false);
               PSPState_togglePower();
+              auto delayBootTime = pspColdBoot ? SETTINGS_current.coldBootDelay : SETTINGS_current.warmBootDelay;
+
+              Serial.println("Boot delay");
+              Serial.println(delayBootTime);
+
+              pspBootTimeout.setTimeout(delayBootTime);
+              pspColdBoot = false;
               pspBootTimeout.start();
 
               pspBooting = true;
@@ -93,7 +106,7 @@ void onDisconnectedController(ControllerPtr ctl) {
       pspBootTimeout.stop();
       pspScreenTimeout.stop();
 
-      if (PSPstate_poweredOn)
+      if (PSPstate_poweredOn())
         PSPState_togglePower();
 
       INTEROP_enableBLEService(false);
@@ -173,7 +186,7 @@ void proccessControllerButton(ControllerPtr ctl, ControllerMapping *mapping) {
   } else {
     if (brakeVal == 0 && throttleVal == 0)
       pressed = bitRead(ctl->buttons(), mapping->ControllerBit);
-    else if ((isL2 && ctl->brake() > 800) || (isR2 && ctl->throttle() > 800))
+    else if ((isL2 && ctl->brake() > SETTINGS_current.throttleThreshold) || (isR2 && ctl->throttle() > SETTINGS_current.throttleThreshold))
       pressed = true;
 
     if (pressed)
@@ -183,6 +196,72 @@ void proccessControllerButton(ControllerPtr ctl, ControllerMapping *mapping) {
 
 bool pressingHome = false;
 
+void handleAnalogUp(int32_t xAxis, int32_t yAxis, uint8_t pspButton) {
+  bool isUp = yAxis < 0;
+  bool isLeft = xAxis < 0;
+  bool isRight = xAxis > 0;
+
+  if (!isUp)
+    return;
+
+  uint32_t value = yAxis * -1; // up is minus. Ensure always positivr
+  uint32_t leftValue = xAxis * -1;
+  uint32_t rightValue = xAxis;
+  
+  bool upPressed = value > SETTINGS_current.analogThreshold;
+  bool upLeftPressed = isLeft && value > SETTINGS_current.diagonalThreshold && leftValue > SETTINGS_current.diagonalThreshold;
+  bool upRightPressed = isRight && value > SETTINGS_current.diagonalThreshold && rightValue > SETTINGS_current.diagonalThreshold;
+  
+  if (upPressed || upLeftPressed || upRightPressed) {
+    PSPState_markButtonAsPressed(pspButton);
+  }
+}
+
+void handleAnalogDown(int32_t xAxis, int32_t yAxis, uint8_t pspButton) {
+  bool isDown = yAxis > 0; // down is positive
+
+  if (!isDown)
+    return;
+
+  uint32_t value = yAxis;
+
+  bool pressed = value > SETTINGS_current.analogThreshold;
+
+  if (pressed) {
+    PSPState_markButtonAsPressed(pspButton);
+  }
+}
+
+void handleAnalogLeft(int32_t xAxis, int32_t yAxis, uint8_t pspButton) {
+  bool isLeft = xAxis < 0;
+
+  if (!isLeft)
+    return;
+
+  uint32_t value = xAxis * -1; // left is minus. Ensure always positivr
+  
+  bool pressed = value > SETTINGS_current.analogThreshold;
+  
+  if (pressed) {
+    PSPState_markButtonAsPressed(pspButton);
+  }
+}
+
+void handleAnalogRight(int32_t xAxis, int32_t yAxis, uint8_t pspButton) {
+  bool isRight = xAxis > 0; // right is positive
+
+  if (!isRight)
+    return;
+
+  uint32_t value = xAxis;
+
+  bool pressed = value > SETTINGS_current.analogThreshold;
+
+  if (pressed) {
+    PSPState_markButtonAsPressed(pspButton);
+  }
+}
+
 void processGamepad(ControllerPtr ctl) {
     MappingMeta *meta = MAPPINGS_current;
     // next mapping y pressing R1 L2 and Dpad right
@@ -190,7 +269,10 @@ void processGamepad(ControllerPtr ctl) {
     auto r1Pressed = bitRead(ctl->buttons(), 5);
     auto selectPressed = bitRead(ctl->miscButtons(), 1);
     auto startPressed = bitRead(ctl->miscButtons(), 2);
-    auto isAltMode = l1Pressed && r1Pressed && selectPressed && startPressed;
+    
+    auto isAltMode = SETTINGS_current.useExtraCombo ?
+      l1Pressed && r1Pressed && selectPressed && startPressed : 
+      selectPressed && startPressed;
 
     auto dpadRightPressed = bitRead(ctl->dpad(), 2);
     auto dpadLeftPressed = bitRead(ctl->dpad(), 3);
@@ -262,44 +344,28 @@ void processGamepad(ControllerPtr ctl) {
               PSPState_analog(xRAxis, yRAxis);
             break;
             case 3: //lu
-              if (yAxis < -370) {
-                PSPState_markButtonAsPressed(mapping->PSPButton);
-              }
+              handleAnalogUp(xAxis, yAxis, mapping->PSPButton);
             break;
             case 4: //ld
-              if (yAxis > 370) {
-                PSPState_markButtonAsPressed(mapping->PSPButton);
-              }
+              handleAnalogDown(xAxis, yAxis, mapping->PSPButton);
             break;
             case 5: //ll
-              if (xAxis < -370) {
-                PSPState_markButtonAsPressed(mapping->PSPButton);
-              }
+              handleAnalogLeft(xAxis, yAxis, mapping->PSPButton);
             break;
             case 6: //lr
-              if (xAxis > 370) {
-                PSPState_markButtonAsPressed(mapping->PSPButton);
-              }
+              handleAnalogRight(xAxis, yAxis, mapping->PSPButton);
             break;
             case 7: //ru
-              if (yRAxis < -370) {
-                PSPState_markButtonAsPressed(mapping->PSPButton);
-              }
+              handleAnalogUp(xRAxis, yRAxis, mapping->PSPButton);
             break;
             case 8: //rd
-              if (yRAxis > 370) {
-                PSPState_markButtonAsPressed(mapping->PSPButton);
-              }
+              handleAnalogDown(xRAxis, yRAxis, mapping->PSPButton);
             break;
-            case 9: //rd
-              if (xRAxis < -370) {
-                PSPState_markButtonAsPressed(mapping->PSPButton);
-              }
+            case 9: //rl
+              handleAnalogLeft(xRAxis, yRAxis, mapping->PSPButton);
             break;
             case 10: //rr
-              if (xRAxis > 370) {
-                PSPState_markButtonAsPressed(mapping->PSPButton);
-              }
+              handleAnalogRight(xRAxis, yRAxis, mapping->PSPButton);
             break;
           }
         break;
@@ -339,9 +405,8 @@ void CTRMANAGER_setup() {
 
     BP32.forgetBluetoothKeys();
     pspBootTimeout.setCallback(onPspBootTimeout);
-    pspBootTimeout.setTimeout(12000);
     pspScreenTimeout.setCallback(onPSPScreenTimeout);
-    pspScreenTimeout.setTimeout(6000);
+    pspScreenTimeout.setTimeout(SETTINGS_current.screenDelay);
 
     controllerTurnOffTimeout.setTimeout(3000);
     controllerTurnOffTimeout.setCallback(CTRMANAGER_disconnectAll);

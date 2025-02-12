@@ -7,6 +7,7 @@
 #include "Mappings.h"
 #include "timeout.h"
 #include "interop.h"
+#include "Settings.h"
 
 void CTRMANAGER_loop();
 void CTRMANAGER_setup();
@@ -16,3 +17,4 @@ bool CTRMANAGER_newConnectionEnabled();
 void CTRMANAGER_applyColours();
 bool CTRMANAGER_pspBooting();
 void CTRMANAGER_disconnectAll();
+void CTRMANAGER_updateSettings();

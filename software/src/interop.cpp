@@ -56,6 +56,7 @@ TaskHandle_t core1CommandTaskHandle;
 
 enum {
 	ARDUINOCMD_RELOAD_MAPPINGS,
+	ARDUINOCMD_RELOAD_SETTINGS,
     ARDUINOCMD_START_BLE_TIMEOUT,
     ARDUINOCMD_STOP_BLE_TIMEOUT,
     ARDUINOCMD_PREPARE_OTA_APPLY
@@ -68,6 +69,11 @@ static void arduinocmd_callback(void* arg) {
         case ARDUINOCMD_RELOAD_MAPPINGS:
             MAPPINGS_setup();
             CTRMANAGER_applyColours();
+            break;
+        case ARDUINOCMD_RELOAD_SETTINGS:
+            SETTINGS_setup();
+            LED_autoSet();
+            CTRMANAGER_updateSettings();
             break;
         case ARDUINOCMD_START_BLE_TIMEOUT:
             disableBLETimeout.start();
@@ -96,6 +102,10 @@ void INTEROP_prepareOTAApply() {
 
 void INTEROP_reloadControllerMappings() {
     xTaskCreatePinnedToCore(arduinocmd_callback, "arduinocmd_callback", 4096, (void*)ARDUINOCMD_RELOAD_MAPPINGS, 5, &core1CommandTaskHandle, 1);
+}
+
+void INTEROP_reloadSettings() {
+    xTaskCreatePinnedToCore(arduinocmd_callback, "arduinocmd_callback", 4096, (void*)ARDUINOCMD_RELOAD_SETTINGS, 5, &core1CommandTaskHandle, 1);
 }
 
 void INTEROP_enableBLEInactivityWatcher() {

@@ -8,6 +8,7 @@
 #include "src/controllerManager.h"
 #include "src/interop.h"
 #include "src/timeout.h"
+#include "src/Settings.h"
 
 Timeout disableNewConnectionTimer;
 
@@ -18,11 +19,14 @@ void disableNewConnections() {
 void setup() { 
     disableNewConnectionTimer.setCallback(disableNewConnections);
     disableNewConnectionTimer.setTimeout(1000);
-    disableNewConnectionTimer.start();
+    //disableNewConnectionTimer.start();
 
     Serial.begin(115200);
 
     LittleFS.begin(true);
+
+    // muse be first everything else expects settings to be loaded
+    SETTINGS_setup();
 
     DIGIPOT_setup();
     BUTTON_setup();
@@ -32,7 +36,7 @@ void setup() {
     LED_setup();
     INTEROP_setup();
 
-    INTEROP_enableBLEService(false);
+    INTEROP_enableBLEService(true);
 }
 
 void loop() {    

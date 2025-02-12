@@ -29,7 +29,11 @@ void onPatternTick() {
 
   lit = !lit;
 
-  digitalWrite(LED, lit ? HIGH : LOW);
+  if (lit) {
+    analogWrite(LED, SETTINGS_current.ledBrightness);
+  } else {
+    digitalWrite(LED, LOW);
+  }
 
   patternTimeout.setTimeout(currentPattern[currentTick]);
   patternTimeout.start();
@@ -43,7 +47,7 @@ void setPattern(unsigned long *pattern, uint8_t length, bool loop) {
   repeat = loop;
   run = true;
 
-  digitalWrite(LED, HIGH);
+  analogWrite(LED, SETTINGS_current.ledBrightness);
 }
 
 void LED_bootPattern() {
@@ -56,7 +60,7 @@ void LED_bootPattern() {
 void LED_syncPattern() {
   setPattern(syncPattern, 4, true);
   
-  digitalWrite(LED, HIGH);
+  analogWrite(LED, SETTINGS_current.ledBrightness);
 
   patternTimeout.setTimeout(currentPattern[currentTick]);
   patternTimeout.start();
@@ -65,7 +69,7 @@ void LED_syncPattern() {
 void LED_blePattern() {
   setPattern(blePattern, 6, true);
   
-  digitalWrite(LED, HIGH);
+  analogWrite(LED, SETTINGS_current.ledBrightness);
 
   patternTimeout.setTimeout(currentPattern[currentTick]);
   patternTimeout.start();
@@ -86,7 +90,7 @@ void LED_on() {
 
   run = false;
 
-  digitalWrite(LED, HIGH);
+  analogWrite(LED, SETTINGS_current.ledBrightness);
 }
 
 void LED_loop() {

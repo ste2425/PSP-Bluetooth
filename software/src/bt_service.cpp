@@ -26,6 +26,8 @@ esp_ota_handle_t otaHandler = 0;
 
 bool uploadingConfig = false;
 uint16_t configReadOfset = 0; 
+bool uploadingSettings = false;
+uint16_t settingsReadOfset = 0; 
 
 // clang-format off
 static const uint8_t adv_data[] = {
@@ -78,6 +80,12 @@ static int att_write_callback(hci_con_handle_t con_handle,
         // save controller mappings chunk
         case ATT_CHARACTERISTIC_4627C4A4_AC03_46B9_B688_AFC5C1BF7F63_01_VALUE_HANDLE: {
             FileUtility::appendFile(LittleFS, "/mappingHolding.json", (const char*)buffer);
+            
+            return ATT_ERROR_SUCCESS;
+        }
+        // save settings chunk
+        case ATT_CHARACTERISTIC_4627C4A4_AC02_46B9_B688_AFC5C1BF7F63_01_VALUE_HANDLE: {
+            FileUtility::appendFile(LittleFS, "/settingsHolding.json", (const char*)buffer);
             
             return ATT_ERROR_SUCCESS;
         }
@@ -148,6 +156,29 @@ static int att_write_callback(hci_con_handle_t con_handle,
                     configReadOfset = 0;
 
                     return ATT_ERROR_SUCCESS;
+                case 8: // settngs upload start
+                    FileUtility::deleteFile(LittleFS, "/settingsHolding.json");
+                    uploadingSettings = true;
+
+                    return ATT_ERROR_SUCCESS;
+                break;
+                case 9: //settings upload complete
+                    uploadingSettings = false;
+                break;
+                case 10: // setting spply
+                    uploadingSettings = false;
+                    FileUtility::renameFile(LittleFS, "/settingsHolding.json", "/settings.json");
+                    FileUtility::deleteFile(LittleFS, "/settingsHolding.json");
+
+                    INTEROP_reloadSettings();
+
+                    return ATT_ERROR_SUCCESS;
+                break;
+                case 11: //begin settings read
+                    settingsReadOfset = 0;
+
+                    return ATT_ERROR_SUCCESS;
+                break;
                 default: 
                     Serial.println("Unknown OTA Command");
 
@@ -220,6 +251,32 @@ static uint16_t att_read_callback(hci_con_handle_t con_handle,
             uint8_t resp = att_read_callback_handle_blob((const uint8_t *)dataArr, len, configReadOfset, buffer, 100);
 
             configReadOfset += resp;
+
+            return resp;
+        }
+        // Read setting
+        case ATT_CHARACTERISTIC_4627C4A4_AC02_46B9_B688_AFC5C1BF7F63_01_VALUE_HANDLE: {
+            // TODO change me so its not a String class
+            String mappingsAsString;
+
+            if (uploadingSettings) {
+                mappingsAsString = FileUtility::readFile(LittleFS, "/settingsHolding.json");
+            } else {
+                mappingsAsString = FileUtility::readFile(LittleFS, "/settings.json");
+            }
+
+            // convert to char array
+            auto len = mappingsAsString.length() + 1;
+            char dataArr[len];
+            mappingsAsString.toCharArray(dataArr, len);
+        
+            if (!buffer) {
+                return len;
+            }
+
+            uint8_t resp = att_read_callback_handle_blob((const uint8_t *)dataArr, len, settingsReadOfset, buffer, 100);
+
+            settingsReadOfset += resp;
 
             return resp;
         }

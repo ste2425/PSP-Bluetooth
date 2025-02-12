@@ -7,6 +7,7 @@
 #include "controllerManager.h"
 #include "interop.h"
 #include "PSPState.h"
+#include "Settings.h"
 
 void LED_bootPattern();
 void LED_syncPattern();
