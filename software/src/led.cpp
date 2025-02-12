@@ -32,7 +32,7 @@ void onPatternTick() {
   if (lit) {
     analogWrite(LED, SETTINGS_current.ledBrightness);
   } else {
-    digitalWrite(LED, LOW);
+    analogWrite(LED, 0);
   }
 
   patternTimeout.setTimeout(currentPattern[currentTick]);
@@ -81,7 +81,7 @@ void LED_off() {
 
   run = false;
 
-  digitalWrite(LED, LOW);
+  analogWrite(LED, 0);
 }
 
 void LED_on() {
@@ -113,6 +113,6 @@ void LED_autoSet() {
 
 void LED_setup() {
     pinMode(LED, OUTPUT);
-    digitalWrite(LED, LOW);
+    analogWrite(LED, 0);
     patternTimeout.setCallback(onPatternTick);
 }
