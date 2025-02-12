@@ -4,14 +4,14 @@
 @use "../../app/header/header-theme" as header;
 @use "../../app/programmer/programmer-theme" as programmer;
 @use "../../app/otaprogrammer/ota-programmer-theme" as otaProgrammer;
-@use "../../app/serial-page/serial-page-theme" as serialPage;
-@use "../../app/configuration-page/configuration-page-theme" as configurationPage;
-@use "../../app/home-page/home-page-theme" as homePage;
-@use "../../app/controller-maping/controller-mapping-theme" as controllerMapping;
-@use "../../app/controller-button-mapping/controller-button-mapping-theme" as controllerButtonMapping;
-@use "../../app/psp-viewer/psp-viewer-mapping-theme" as pspViewer;
-@use "../../app/ds4-viewer/ds4-viewer-mapping-theme" as ds4Viewer;
-@use "../../app/colour-picker/colour-picker-page-theme" as colourPicker;
+@use "../../app/pages/serial-page/serial-page-theme" as serialPage;
+@use "../../app/pages/configuration-page/configuration-page-theme" as configurationPage;
+@use "../../app/pages/home-page/home-page-theme" as homePage;
+@use "../../app/configuration/controller-maping/controller-mapping-theme" as controllerMapping;
+@use "../../app/configuration/controller-button-mapping/controller-button-mapping-theme" as controllerButtonMapping;
+@use "../../app/configuration/psp-viewer/psp-viewer-mapping-theme" as pspViewer;
+@use "../../app/configuration/ds4-viewer/ds4-viewer-mapping-theme" as ds4Viewer;
+@use "../../app/configuration/colour-picker/colour-picker-theme" as colourPicker;
 @use "../../app/panel/panel-theme" as panel;
 
 @mixin theme($theme) {

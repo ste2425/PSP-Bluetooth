@@ -1,5 +1,6 @@
 import { BTCommands } from "./btCommands";
 import { COMMANDS_UUID, VERSION_UUID } from "./uuids";
+import semver from 'semver';
 
 export class BTConnection {	
     constructor(public device: BluetoothDevice, private primaryService: BluetoothRemoteGATTService) { }
@@ -18,6 +19,11 @@ export class BTConnection {
 	version(): Promise<string> {
         return this.readValue(VERSION_UUID);
 	}
+
+    versionTooLow(versionToheck: string, minVersion: string) {
+        const version = versionToheck.match(/(\d+\.\d+\.\d+(-rc\d+)?)/g)?.[0] || ''
+        return versionToheck.endsWith('<DEVELOPMENT>') ? false : semver.lt(version, minVersion, { includePrerelease: true } as any);
+    }
 
 	async sendCommand(command: BTCommands) {
         const value = new Uint8Array([command]);

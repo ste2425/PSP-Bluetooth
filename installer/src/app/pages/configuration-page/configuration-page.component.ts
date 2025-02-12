@@ -3,18 +3,17 @@ import { MatButtonModule } from '@angular/material/button';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ControllerMapingComponent } from "../controller-maping/controller-maping.component";
+import { ControllerMapingComponent } from "../../configuration/controller-maping/controller-maping.component";
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import {MatIconModule} from '@angular/material/icon';
-import { ColourPickerComponent } from "../colour-picker/colour-picker.component";
+import { ColourPickerComponent } from "../../configuration/colour-picker/colour-picker.component";
 import { TourMatMenuModule, TourService } from 'ngx-ui-tour-md-menu';
-import { DialogService } from '../dialogs/dialog.service';
-import { PanelComponent } from '../panel/panel.component';
-import { controllerTypes, dpadControllerBits, pspButtons } from '../services/ESPValueDefinitions';
-import { BTConnectionFactoryService } from '../bt/btconnection-factory.service';
-import { ConfigurationService, ConfigurationServiceFactory, IControllerMapping, MAX_GROUPINGS } from '../bt/configuration.service';
-import { BTConnectionAbortedError, BTConnectionGATTConnectionError, BTConnectionPrimaryServiceError, BTConnectionVersionMissmatchError } from '../bt/errors';
-import semver from 'semver';
+import { DialogService } from '../../dialogs/dialog.service';
+import { PanelComponent } from '../../panel/panel.component';
+import { controllerTypes, dpadControllerBits, pspButtons } from '../../services/ESPValueDefinitions';
+import { BTConnectionFactoryService } from '../../bt/btconnection-factory.service';
+import { ConfigurationService, ConfigurationServiceFactory, IControllerMapping, MAX_GROUPINGS } from '../../bt/configuration.service';
+import { BTConnectionAbortedError, BTConnectionGATTConnectionError, BTConnectionPrimaryServiceError, BTConnectionVersionMissmatchError } from '../../bt/errors';
 import { MatSelectModule } from '@angular/material/select';
 
 interface IViewControllerMapping extends IControllerMapping {
@@ -279,8 +278,7 @@ export class ConfigurationPageComponent implements OnDestroy {
         });
 
         this.version = await connection.version();
-        const version = this.version.match(/(\d+\.\d+\.\d+(-rc\d+)?)/g)?.[0] || ''
-        this.firmwareTooLow = this.version.endsWith('<DEVELOPMENT>') ? false : semver.lt(version, this.MIN_FIRMWARE_VERSION, { includePrerelease: true } as any);
+        this.firmwareTooLow = connection.versionTooLow(this.version, this.MIN_FIRMWARE_VERSION)
         
         if (!this.firmwareTooLow)
           this.configService = this.configFactory.create(connection);

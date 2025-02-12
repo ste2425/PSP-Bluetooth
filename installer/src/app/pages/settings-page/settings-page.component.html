@@ -1,0 +1,177 @@
+<app-panel colour="primary" borderHorizontal borderVertical>
+	<div style="width: 100%;">
+		<button color="accent" mat-button (click)="loadConfig()" [disabled]="loading">Load Config</button>
+		<button color="accent" mat-button (click)="saveConfig()" [disabled]="saving || firmwareTooLow || loading">Save Config</button>
+	
+		{{version}}
+	</div>
+</app-panel>
+
+@if(!connected){
+	<p>
+		Use this page to configure various settings.
+	</p>
+}
+
+@if (firmwareTooLow) {
+	<app-panel colour="accent" borderHorizontal style="margin-top: 20px;">
+		<p>Your firmware version is too low to use this feature.</p>
+		<p>Please upgrade to at least <strong>{{MIN_FIRMWARE_VERSION}}</strong></p>
+	</app-panel>
+} @else if(settings) {
+	<div style="width: 75vw; margin: 0 auto;">
+	<app-panel>
+		<h3>LED Brightness</h3>
+
+		<mat-slider
+			[max]="255"
+			[min]="10"
+			[step]="5"
+			[discrete]="true">
+			<input matSliderThumb [(ngModel)]="settings.ledBrightness">
+		</mat-slider>
+	</app-panel>
+
+	<app-panel colour="accent" borderHorizontal>
+		<h3>Throttle Threshold</h3>
+
+		<p>
+			For controllers which have analog R2/L2 triggers. 
+			Set how far the triggers need to be pressed to trigger a PSP button.
+		</p>
+
+		<mat-slider
+			[max]="450"
+			[min]="100"
+			[step]="5"
+			[discrete]="true">
+			<input matSliderThumb [(ngModel)]="settings.throttleThreshold">
+		</mat-slider>
+	</app-panel>
+	
+	<app-panel>	
+		<h3>Analog Threshold</h3>
+
+		<p>
+			Controlls how far the analog stick has to be moved from its center position
+			in any of the four directions to trigger a PSP button press.
+		</p>
+
+		<mat-slider
+			[max]="500"
+			[min]="100"
+			[step]="5"
+			[discrete]="true">
+			<input matSliderThumb [(ngModel)]="settings.analogThreshold">
+		</mat-slider>
+
+		<hr style="width: 100%;">
+	
+		<h3>Diagonal Threshold</h3>
+
+		<p>
+			When setting the <strong>Analog Threshold</strong> to a value beyond <em>370</em> it can make diagonals difficult to trigger.
+			This allows diagonals to have a lower threshold.
+		</p>
+
+		<p>
+			<strong>Analog Threshold</strong> dictates moving in a single direction, Say <em>left</em>. Whilst <strong>Diagonal Threshold</strong> dictates how far moving say <em>up and left</em> is needed to trigger a PSP button press.
+		</p>
+
+		<p>
+			Setting <strong>Diagonal Threshold</strong> to its maximum effectively disables it if you don't want to use this setting.
+		</p>
+
+		<mat-slider
+			[max]="650"
+			[min]="100"
+			[step]="5"
+			[discrete]="true">
+			<input matSliderThumb [(ngModel)]="settings.diagonalThreshold">
+		</mat-slider>
+	</app-panel>
+
+	<app-panel colour="accent" borderHorizontal>	
+		<p>
+			⚠ <strong>Danger ahead</strong> ⚠ Setting the following settings too low can prevent your PSP from enabling TV out.
+		</p>
+
+		To test changes disconnecting/connect a controller is enough.
+
+		<hr style="width: 100%;">
+
+		<p>
+			The boot proccess and TV out requires the PSP to first boot up <em>Before</em> the TV out button is pressed.
+
+			If enough time is not waited before trying to press the display out button, before the PSP has fully booted TV out will not be enabled.
+		</p>
+
+		<p>
+			If TV out is not being enabled, try making these delays longer untill it works.
+		</p>
+		
+		<h3>Screen Delay</h3>
+
+		<p>
+			Once the PSP is booted controls how long the display button is pressed for to enable TV out.
+		
+			<strong>7 seconds is the recommended minimum.</strong>
+		</p>
+
+		<mat-slider
+			[max]="15"
+			[min]="6"
+			[step]="5"
+			[discrete]="true">
+			<input matSliderThumb [(ngModel)]="screenDelay">
+		</mat-slider>
+		
+		<h3>Cold Boot Delay</h3>
+
+		<p>
+			The first time the PSP powers on it takes longer to boot up. This controlls how long to wait for the first boot.
+
+			<strong>13 seconds is the recommended minimum.</strong>
+		</p>
+
+		<mat-slider
+			[max]="20"
+			[min]="12"
+			[step]="5"
+			[discrete]="true">
+			<input matSliderThumb [(ngModel)]="coldBootDelay">
+		</mat-slider>
+		
+		<h3>Warm Boot Delay</h3>
+
+		<p>
+			After the initial PSP boot following boots are much quicker. This controlls how long to wait for the following boots.
+
+			<strong>2.5 seconds is the recommended minimum.</strong>
+		</p>
+
+		<mat-slider
+			[max]="20"
+			[min]="1"
+			[step]="5"
+			[discrete]="true">
+			<input matSliderThumb [(ngModel)]="warmBootDelay">
+		</mat-slider>
+	</app-panel>
+
+	<app-panel>
+		<mat-checkbox [(ngModel)]="settings.useExtraCombo">Use Extra Combo</mat-checkbox>
+
+		<p>
+			By default pressing <em>Select</em> and <em>Start</em> will enable special combo's.
+
+			This setting changes that to <em>Select</em>, <em>Start</em>, <em>L1</em> and <em>R1</em>
+		</p>
+	</app-panel>
+
+	<app-panel colour="accent" borderHorizontal>
+		<p>Don't forget to save at the top.</p>
+	</app-panel>
+		
+</div>
+}

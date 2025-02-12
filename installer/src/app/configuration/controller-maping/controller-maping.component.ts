@@ -1,15 +1,15 @@
 import { Component, Input } from '@angular/core';
-import { ButtonMapping, IControllerMapping, MAX_MAPPINGS } from '../services/btconnection-factory.service';
 import { CommonModule } from '@angular/common';
 import { MatDividerModule } from '@angular/material/divider';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { ControllerButtonMappingComponent } from '../controller-button-mapping/controller-button-mapping.component';
 import { PspViewerComponent } from "../psp-viewer/psp-viewer.component";
 import { DS4ViewerComponent, IDS4ViewerChange } from '../ds4-viewer/ds4-viewer.component';
-import { analogControllerBits, controllerTypes, pspButtons } from '../services/ESPValueDefinitions';
+import { analogControllerBits, controllerTypes, pspButtons } from '../../services/ESPValueDefinitions';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { TourMatMenuModule } from 'ngx-ui-tour-md-menu';
+import { ButtonMapping, IControllerMapping, MAX_MAPPINGS } from '../../bt/configuration.service';
 
 @Component({
   selector: 'app-controller-maping',

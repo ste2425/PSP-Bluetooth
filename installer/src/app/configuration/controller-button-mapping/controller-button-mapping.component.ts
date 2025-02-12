@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Attribute, Component, EventEmitter, HostBinding, HostListener, inject, Input, Output, output } from '@angular/core';
-import { analogControllerBits, buttonControllerBits, controllerTypes, dpadControllerBits, miscControllerBits, pspButtons } from '../services/ESPValueDefinitions';
+import { analogControllerBits, buttonControllerBits, controllerTypes, dpadControllerBits, miscControllerBits, pspButtons } from '../../services/ESPValueDefinitions';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { TourMatMenuModule, TourService } from 'ngx-ui-tour-md-menu';
-import { TimmyDirective } from '../timmy.directive';
+import { TimmyDirective } from '../../timmy.directive';
 
 const dpadDisplayValues = {
   [dpadControllerBits.dpadUp]: 'DPAD up',

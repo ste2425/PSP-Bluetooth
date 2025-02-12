@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
-import { availablePspButtons, pspButtons } from '../services/ESPValueDefinitions';
+import { availablePspButtons, pspButtons } from '../../services/ESPValueDefinitions';
 
 @Component({
   selector: 'app-psp-viewer',

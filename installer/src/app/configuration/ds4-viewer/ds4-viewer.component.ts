@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
-import { analogControllerBits, availablePspButtons, buttonControllerBits, controllerTypes, dpadControllerBits, miscControllerBits, pspButtons } from '../services/ESPValueDefinitions';
-import { ButtonMapping } from '../services/btconnection-factory.service';
+import { analogControllerBits, availablePspButtons, buttonControllerBits, controllerTypes, dpadControllerBits, miscControllerBits, pspButtons } from '../../services/ESPValueDefinitions';
+import { ButtonMapping } from '../../bt/configuration.service';
 
 enum ControllerButton {
   dpadUp,

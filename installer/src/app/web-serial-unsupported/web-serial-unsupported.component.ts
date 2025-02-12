@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
-import { BTConnectionFactoryService } from '../services/btconnection-factory.service';
 import { SerialConnectionFactoryService } from '../services/serial-connection-factory.service';
+import { BTConnectionFactoryService } from '../bt/btconnection-factory.service';
 @Component({
   selector: 'app-web-serial-unsupported',
   standalone: true,

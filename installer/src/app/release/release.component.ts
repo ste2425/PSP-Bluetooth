@@ -14,7 +14,7 @@ import { ProgrammerComponent } from '../programmer/programmer.component';
 import { SerialConnectionFactoryService } from '../services/serial-connection-factory.service';
 import { MatMenuModule } from '@angular/material/menu';
 import { OTAProgrammerComponent } from '../otaprogrammer/otaprogrammer.component';
-import { BTConnectionFactoryService } from '../services/btconnection-factory.service';
+import { BTConnectionFactoryService } from '../bt/btconnection-factory.service';
 
 export interface ReleaseArtifact {
   name: string,

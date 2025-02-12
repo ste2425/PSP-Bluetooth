@@ -2,16 +2,14 @@
     <span class="spacer"></span>
 
     @for (route of routes; track route.path) {
-        @if (displayRoute(route)) {
-            <a
-                mat-button 
-                queryParamsHandling="preserve"
-                [routerLink]="route.path"
-                [routerLinkActiveOptions]="{exact: true}" 
-                routerLinkActive="active">
-                {{route.label}}
-            </a>
-        }
+        <a
+            mat-button 
+            queryParamsHandling="preserve"
+            [routerLink]="route.path"
+            [routerLinkActiveOptions]="{exact: true}" 
+            routerLinkActive="active">
+            {{route.label}}
+        </a>
     } 
 
     <a href="https://github.com/ste2425/PSP-Bluetooth" target="_blank" mat-icon-button >

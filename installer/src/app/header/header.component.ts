@@ -19,8 +19,7 @@ const GITHUB_ICON =
 
 interface IRoute {
   path: string,
-  label: string,
-  experimental: boolean
+  label: string
 }
 
 @Component({
@@ -41,22 +40,22 @@ export class HeaderComponent {
   routes: IRoute[] = [
     {
       path: '/',
-      label: 'Home',
-      experimental: false
+      label: 'Home'
+    },
+    {
+      path: '/settings',
+      label: 'Settings'
     },
     {
       path: '/configuration',
-      label: 'Configuration',
-      experimental: false
+      label: 'Configuration'
     },
     {
       path: '/program',
-      label: 'Program',
-      experimental: false
+      label: 'Program'
     }, {
       path: '/serial',
-      label: 'Serial',
-      experimental: false
+      label: 'Serial'
     }
   ]
 
@@ -64,9 +63,5 @@ export class HeaderComponent {
 
   changeTheme(theme: string) {
     this.themeManager.changeTheme(theme);
-  }
-
-  displayRoute(route: IRoute) {
-    return !route.experimental || !!this.route.snapshot.queryParamMap.has('exp');
   }
 }

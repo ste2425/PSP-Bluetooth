@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { HomePageComponent } from './home-page/home-page.component';
+import { HomePageComponent } from './pages/home-page/home-page.component';
 
 export const routes: Routes = [
 {
@@ -9,15 +9,19 @@ export const routes: Routes = [
 },
 {
     path: 'configuration',
-    loadComponent: () => import('./configuration-page/configuration-page.component').then(m => m.ConfigurationPageComponent),
+    loadComponent: () => import('./pages/configuration-page/configuration-page.component').then(m => m.ConfigurationPageComponent),
     pathMatch: 'full'
 },
 {
     path: 'serial',
-    loadComponent: () => import('./serial-page/serial-page.component').then(m => m.SerialPageComponent),
+    loadComponent: () => import('./pages/serial-page/serial-page.component').then(m => m.SerialPageComponent),
     pathMatch: 'full'
 }, {
     path: 'program',
-    loadComponent: () => import('./programmer-page/programmer-page.component').then(m => m.ProgrammerPageComponent),
+    loadComponent: () => import('./pages/programmer-page/programmer-page.component').then(m => m.ProgrammerPageComponent),
+    pathMatch: 'full'
+}, {
+    path: 'settings',
+    loadComponent: () => import('./pages/settings-page/settings-page.component').then(m => m.SettingsPageComponent),
     pathMatch: 'full'
 }];

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
-import { ESPConnectionFactoryService, ESPSerialConnection } from '../services/espconnection-factory.service';
+import { ESPConnectionFactoryService, ESPSerialConnection } from '../../services/espconnection-factory.service';
 
 @Component({
   selector: 'app-serial-page',

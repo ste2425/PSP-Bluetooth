@@ -4,8 +4,8 @@ import { HeaderComponent } from './header/header.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { WebSerialUnsupportedComponent } from './web-serial-unsupported/web-serial-unsupported.component';
 import { SerialConnectionFactoryService } from './services/serial-connection-factory.service';
-import { BTConnectionFactoryService } from './services/btconnection-factory.service';
 import { TourMatMenuModule, TourService } from 'ngx-ui-tour-md-menu';
+import { BTConnectionFactoryService } from './bt/btconnection-factory.service';
 
 @Component({
   selector: 'app-root',

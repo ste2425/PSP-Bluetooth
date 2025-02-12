@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import { GithubService } from '../github.service';
+import { GithubService } from '../../github.service';
 import { CommonModule } from '@angular/common';
-import { ReleaseComponent } from '../release/release.component';
+import { ReleaseComponent } from '../../release/release.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import { SerialConnectionFactoryService } from '../services/serial-connection-factory.service';
+import { SerialConnectionFactoryService } from '../../services/serial-connection-factory.service';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {FormsModule} from '@angular/forms';
 import { BehaviorSubject, combineLatest, map, shareReplay, withLatestFrom } from 'rxjs';
-import { PanelComponent } from '../panel/panel.component';
+import { PanelComponent } from '../../panel/panel.component';
 
 @Component({
   selector: 'app-programmer-page',

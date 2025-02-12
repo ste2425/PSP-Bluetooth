@@ -6,5 +6,9 @@ export enum BTCommands {
     configUploadStart = 4,
     configUploadComplete = 5,
     configUploadApply = 6,
-    configReadStart = 7
+    configReadStart = 7,
+    settingsUploadStart = 8,
+    settingsUploadComplete = 9,
+    settingsUploadApply = 10,
+    settingsReadStart = 11
 }
