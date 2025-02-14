@@ -21,7 +21,7 @@ export class BTConnection {
 	}
 
     versionTooLow(versionToheck: string, minVersion: string) {
-        const version = versionToheck.match(/(\d+\.\d+\.\d+(-rc\d+)?)/g)?.[0] || ''
+        const version = versionToheck.match(/(\d+\.\d+\.\d?)/g)?.[0] || ''
         return versionToheck.endsWith('<DEVELOPMENT>') ? false : semver.lt(version, minVersion, { includePrerelease: true } as any);
     }
 

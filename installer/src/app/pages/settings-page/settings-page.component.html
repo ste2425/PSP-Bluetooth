@@ -65,7 +65,7 @@
 			<input matSliderThumb [(ngModel)]="settings.analogThreshold">
 		</mat-slider>
 
-		<hr style="width: 100%;">
+		<!--<hr style="width: 100%;">
 	
 		<h3>Diagonal Threshold</h3>
 
@@ -88,7 +88,7 @@
 			[step]="5"
 			[discrete]="true">
 			<input matSliderThumb [(ngModel)]="settings.diagonalThreshold">
-		</mat-slider>
+		</mat-slider>-->
 	</app-panel>
 
 	<app-panel colour="accent" borderHorizontal>	
@@ -121,7 +121,7 @@
 		<mat-slider
 			[max]="15"
 			[min]="6"
-			[step]="5"
+			[step]="1"
 			[discrete]="true">
 			<input matSliderThumb [(ngModel)]="screenDelay">
 		</mat-slider>
@@ -137,7 +137,7 @@
 		<mat-slider
 			[max]="20"
 			[min]="12"
-			[step]="5"
+			[step]="1"
 			[discrete]="true">
 			<input matSliderThumb [(ngModel)]="coldBootDelay">
 		</mat-slider>
@@ -153,7 +153,7 @@
 		<mat-slider
 			[max]="20"
 			[min]="1"
-			[step]="5"
+			[step]="1"
 			[discrete]="true">
 			<input matSliderThumb [(ngModel)]="warmBootDelay">
 		</mat-slider>
