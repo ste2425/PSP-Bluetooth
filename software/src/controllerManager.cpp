@@ -198,21 +198,21 @@ bool pressingHome = false;
 
 void handleAnalogUp(int32_t xAxis, int32_t yAxis, uint8_t pspButton) {
   bool isUp = yAxis < 0;
-  bool isLeft = xAxis < 0;
-  bool isRight = xAxis > 0;
+  //bool isLeft = xAxis < 0;
+  //bool isRight = xAxis > 0;
 
   if (!isUp)
     return;
 
   uint32_t value = yAxis * -1; // up is minus. Ensure always positivr
-  uint32_t leftValue = xAxis * -1;
-  uint32_t rightValue = xAxis;
+ // uint32_t leftValue = xAxis * -1;
+ // uint32_t rightValue = xAxis;
   
   bool upPressed = value > SETTINGS_current.analogThreshold;
-  bool upLeftPressed = isLeft && value > SETTINGS_current.diagonalThreshold && leftValue > SETTINGS_current.diagonalThreshold;
-  bool upRightPressed = isRight && value > SETTINGS_current.diagonalThreshold && rightValue > SETTINGS_current.diagonalThreshold;
+  //bool upLeftPressed = isLeft && value > SETTINGS_current.diagonalThreshold && leftValue > SETTINGS_current.diagonalThreshold;
+  //bool upRightPressed = isRight && value > SETTINGS_current.diagonalThreshold && rightValue > SETTINGS_current.diagonalThreshold;
   
-  if (upPressed || upLeftPressed || upRightPressed) {
+  if (upPressed){// || upLeftPressed || upRightPressed) {
     PSPState_markButtonAsPressed(pspButton);
   }
 }
