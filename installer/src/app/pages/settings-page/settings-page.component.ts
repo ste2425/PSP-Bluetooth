@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import { PanelComponent } from '../../panel/panel.component';
 import { ISettings, SettingsService, SettingsServiceFactory } from '../../bt/settings.service';
 import { BTConnectionFactoryService } from '../../bt/btconnection-factory.service';
@@ -9,15 +9,16 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-settings-page',
   standalone: true,
-  imports: [MatButtonModule, MatSliderModule, MatCheckboxModule, PanelComponent, FormsModule, MatInputModule, MatFormFieldModule],
+  imports: [MatSelectModule, MatButtonModule, MatSliderModule, MatCheckboxModule, PanelComponent, FormsModule, MatInputModule, MatFormFieldModule],
   templateUrl: './settings-page.component.html',
   styleUrl: './settings-page.component.scss'
 })
-export class SettingsPageComponent {
+export class SettingsPageComponent implements OnDestroy {
   version = '';
   loading = false;
   saving = false;
@@ -35,6 +36,12 @@ export class SettingsPageComponent {
   screenDelay = 0;
   coldBootDelay = 0;
   warmBootDelay = 0;
+  shutdownDelay = 0;
+
+  ngOnDestroy(): void {
+    if (this.settingsService)
+      this.settingsService.disconnect();
+  }
 
   async loadConfig() {
     try {
@@ -51,6 +58,7 @@ export class SettingsPageComponent {
       this.screenDelay = this.settings.screenDelay / 1000;
       this.coldBootDelay = this.settings.screenDelay / 1000;
       this.warmBootDelay = this.settings.screenDelay / 1000;
+      this.shutdownDelay = this.settings.shutdownDelay / 1000;
     } catch (e) {
       this.connected = false;
     } finally {
@@ -69,7 +77,8 @@ export class SettingsPageComponent {
         ...this.settings,
         screenDelay: Math.round(this.screenDelay * 1000),
         warmBootDelay: Math.round(this.warmBootDelay * 1000),
-        coldBootDelay: Math.round(this.coldBootDelay * 1000)
+        coldBootDelay: Math.round(this.coldBootDelay * 1000),
+        shutdownDelay: Math.round(this.shutdownDelay * 1000)
       });
     } catch(e) {
       console.error('Error saving', e);

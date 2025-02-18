@@ -1,16 +1,18 @@
 <app-panel colour="primary" borderHorizontal borderVertical>
 	<div style="width: 100%;">
 		<button color="accent" mat-button (click)="loadConfig()" [disabled]="loading">Load Config</button>
-		<button color="accent" mat-button (click)="saveConfig()" [disabled]="saving || firmwareTooLow || loading">Save Config</button>
+		<button color="accent" mat-button (click)="saveConfig()" [disabled]="!connected || saving || firmwareTooLow || loading">Save Config</button>
 	
 		{{version}}
 	</div>
 </app-panel>
 
 @if(!connected){
-	<p>
-		Use this page to configure various settings.
-	</p>
+	<app-panel colour="accent" borderHorizontal style="margin-top: 20px;">
+		<p>
+			Use this page to configure various settings.
+		</p>
+	</app-panel>
 }
 
 @if (firmwareTooLow) {
@@ -22,6 +24,12 @@
 	<div style="width: 75vw; margin: 0 auto;">
 	<app-panel>
 		<h3>LED Brightness</h3>
+
+		<p>
+			Control the brightness for the Power LED. 
+			
+			Note, changing the brightness of contrller RGB Led's (if your controller has that feature) can be done on the configuration page per button mapping.
+		</p>
 
 		<mat-slider
 			[max]="255"
@@ -64,34 +72,25 @@
 			[discrete]="true">
 			<input matSliderThumb [(ngModel)]="settings.analogThreshold">
 		</mat-slider>
-
-		<!--<hr style="width: 100%;">
+	</app-panel>	
 	
-		<h3>Diagonal Threshold</h3>
+	<app-panel colour="accent" borderHorizontal>	
+		<h3>Low Battery Threshold</h3>
 
 		<p>
-			When setting the <strong>Analog Threshold</strong> to a value beyond <em>370</em> it can make diagonals difficult to trigger.
-			This allows diagonals to have a lower threshold.
-		</p>
-
-		<p>
-			<strong>Analog Threshold</strong> dictates moving in a single direction, Say <em>left</em>. Whilst <strong>Diagonal Threshold</strong> dictates how far moving say <em>up and left</em> is needed to trigger a PSP button press.
-		</p>
-
-		<p>
-			Setting <strong>Diagonal Threshold</strong> to its maximum effectively disables it if you don't want to use this setting.
+			Controls when the low battery indicator triggers.
 		</p>
 
 		<mat-slider
-			[max]="650"
-			[min]="100"
-			[step]="5"
+			[max]="255"
+			[min]="1"
+			[step]="1"
 			[discrete]="true">
-			<input matSliderThumb [(ngModel)]="settings.diagonalThreshold">
-		</mat-slider>-->
+			<input matSliderThumb [(ngModel)]="settings.batteryWarning">
+		</mat-slider>
 	</app-panel>
 
-	<app-panel colour="accent" borderHorizontal>	
+	<app-panel>	
 		<p>
 			⚠ <strong>Danger ahead</strong> ⚠ Setting the following settings too low can prevent your PSP from enabling TV out.
 		</p>
@@ -159,7 +158,7 @@
 		</mat-slider>
 	</app-panel>
 
-	<app-panel>
+	<app-panel colour="accent" borderHorizontal>
 		<mat-checkbox [(ngModel)]="settings.useExtraCombo">Use Extra Combo</mat-checkbox>
 
 		<p>
@@ -167,6 +166,30 @@
 
 			This setting changes that to <em>Select</em>, <em>Start</em>, <em>L1</em> and <em>R1</em>
 		</p>
+	</app-panel>
+
+	<app-panel>
+		<h3>Use alternative Shutdown</h3>
+
+		<p>By default holding the controllers <em>Home</em> button for the configured amount of time (below) will shut the PSP down.</p>
+
+		<p>Some homebrew plugins also use holding the PSP's home button and so this can clash. Instead an alternative button combination can be used.</p>
+
+		<p>When set holding <em>L1</em>, <em>R1</em> and <em>Start</em> will instead shutdown the PSP.</p>
+		
+		<mat-checkbox [(ngModel)]="settings.useAlternativeShutdown">Alternative Shutdown</mat-checkbox>
+
+		<h4>Hold duration</h4>
+
+		<p>How long to hold before the cnsole shuts off (in seconds)</p>
+
+		<mat-slider
+			[max]="20"
+			[min]="1"
+			[step]="1"
+			[discrete]="true">
+			<input matSliderThumb [(ngModel)]="shutdownDelay">
+		</mat-slider>
 	</app-panel>
 
 	<app-panel colour="accent" borderHorizontal>

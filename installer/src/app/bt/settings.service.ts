@@ -6,12 +6,15 @@ import { BTCommands } from './btCommands';
 const DEFAULT_SETTINGS: ISettings = {
     ledBrightness: 100,
     throttleThreshold: 370,
-    analogThreshold: 400,
+    analogThreshold: 300,
     diagonalThreshold: 330,
     useExtraCombo: true,
     screenDelay: 7000,
     coldBootDelay: 13000,
-    warmBootDelay: 2500
+    warmBootDelay: 2500,
+    useAlternativeShutdown: false,
+    shutdownDelay: 3000,
+    batteryWarning: 38 //15% of 255
 };
 
 export interface ISettings {
@@ -22,7 +25,10 @@ export interface ISettings {
     useExtraCombo: boolean,
     screenDelay: number,
     coldBootDelay: number,
-    warmBootDelay: number
+    warmBootDelay: number,
+    shutdownDelay: number,
+    useAlternativeShutdown: boolean,
+    batteryWarning: number
 }
 
 export class SettingsService {
@@ -86,7 +92,7 @@ ${settingsJson.trim()}
 
     async readSettings(): Promise<ISettings> {  
         const configString = await this.#readSettings();
-        console.log(configString);
+        
         if (!configString)
             return {...DEFAULT_SETTINGS};
 
