@@ -18,3 +18,4 @@ void CTRMANAGER_applyColours();
 bool CTRMANAGER_pspBooting();
 void CTRMANAGER_disconnectAll();
 void CTRMANAGER_updateSettings();
+bool CTRMANAGER_batteryLow();

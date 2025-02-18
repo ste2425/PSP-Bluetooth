@@ -5,6 +5,7 @@ Timeout patternTimeout;
 unsigned long bootPattern[2] = { 500, 2000 };
 unsigned long syncPattern[4] = { 500, 500, 500, 2000 };
 unsigned long blePattern[6] = { 500, 500, 500, 500, 500, 2000 };
+unsigned long lowBatPattern[2] = { 300, 300 };
 
 uint8_t currentTick = 0;
 bool repeat = false;
@@ -75,6 +76,15 @@ void LED_blePattern() {
   patternTimeout.start();
 }
 
+void LED_lowBatteryPattern() {
+  setPattern(lowBatPattern, 2, true);
+  
+  analogWrite(LED, SETTINGS_current.ledBrightness);
+
+  patternTimeout.setTimeout(currentPattern[currentTick]);
+  patternTimeout.start();
+}
+
 void LED_off() {
   patternTimeout.stop();
   currentTick = 0;
@@ -104,6 +114,8 @@ void LED_autoSet() {
     LED_syncPattern();
   } else if (INTEROP_bleServiceEnabled()) {
     LED_blePattern();
+  } else if(CTRMANAGER_batteryLow()) {
+    LED_lowBatteryPattern();
   } else if (PSPstate_poweredOn()) {
     LED_on();
   } else {

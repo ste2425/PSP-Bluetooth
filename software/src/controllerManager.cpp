@@ -3,9 +3,12 @@
 Timeout pspBootTimeout;
 Timeout pspScreenTimeout;
 Timeout controllerTurnOffTimeout;
+Timeout lowBaterryCheckTimeout;
 
 bool pspBooting = false;
 bool pspColdBoot = true;
+
+bool batteryLow = false;
 
 #define maxGamepads 4
 
@@ -23,19 +26,56 @@ void onPSPScreenTimeout() {
   LED_autoSet();
 }
 
+void onLowBatteryCheck() {
+ // Serial.println("Battery Timeout triggered");
+
+  if (myControllers[0] != nullptr) {
+        
+    uint8_t batteryLevel = myControllers[0]->battery();
+    //Serial.print("Battery level: ");
+    //Serial.println(batteryLevel);
+
+    auto batteryBelow = batteryLevel < SETTINGS_current.batteryWarning;
+
+    if (batteryBelow && !batteryLow) {
+      //Serial.println("Below threshold setting light");
+      batteryLow = true;
+      LED_autoSet();
+    } else if(!batteryBelow && batteryLow) {      
+      //Serial.println("Battery OK");
+      batteryLow = false;
+      LED_autoSet();
+    }
+    
+    lowBaterryCheckTimeout.start();
+  } else {    
+    batteryLow = false;
+  }
+}
+
+bool CTRMANAGER_batteryLow() {
+  return batteryLow;
+}
+
 void CTRMANAGER_updateSettings() {
   pspScreenTimeout.stop();
   pspScreenTimeout.setTimeout(SETTINGS_current.screenDelay);
+  controllerTurnOffTimeout.setTimeout(SETTINGS_current.shutdownDelay);
 }
 
 void CTRMANAGER_disconnectAll() {    
-      Serial.println("disconnect");
+    Serial.println("Disconnecting all controllers");
+
     for (int i = 0; i < maxGamepads; i++) {
         if (myControllers[i] != nullptr) {
-      Serial.println("cont");
+          Serial.print("Disconnecting: ");
+          Serial.println(i);
           myControllers[i]->disconnect();
         }
     }
+
+  lowBaterryCheckTimeout.stop();
+  batteryLow = false;
 }
 
 void onConnectedController(ControllerPtr ctl) {
@@ -67,6 +107,7 @@ void onConnectedController(ControllerPtr ctl) {
               pspBooting = true;
 
               LED_autoSet();
+              lowBaterryCheckTimeout.start();
             }
             
             break;
@@ -105,6 +146,7 @@ void onDisconnectedController(ControllerPtr ctl) {
 
       pspBootTimeout.stop();
       pspScreenTimeout.stop();
+      lowBaterryCheckTimeout.stop();
 
       if (PSPstate_poweredOn())
         PSPState_togglePower();
@@ -117,6 +159,8 @@ void onDisconnectedController(ControllerPtr ctl) {
     if (!foundController) {
         Serial.println("CALLBACK: Controller disconnected, but not found in myControllers");
     }
+
+    batteryLow = false;
 }
 
 void handleButtonMapping(ControllerMapping *mapping) {
@@ -198,21 +242,15 @@ bool pressingHome = false;
 
 void handleAnalogUp(int32_t xAxis, int32_t yAxis, uint8_t pspButton) {
   bool isUp = yAxis < 0;
-  //bool isLeft = xAxis < 0;
-  //bool isRight = xAxis > 0;
 
   if (!isUp)
     return;
 
   uint32_t value = yAxis * -1; // up is minus. Ensure always positivr
- // uint32_t leftValue = xAxis * -1;
- // uint32_t rightValue = xAxis;
   
   bool upPressed = value > SETTINGS_current.analogThreshold;
-  //bool upLeftPressed = isLeft && value > SETTINGS_current.diagonalThreshold && leftValue > SETTINGS_current.diagonalThreshold;
-  //bool upRightPressed = isRight && value > SETTINGS_current.diagonalThreshold && rightValue > SETTINGS_current.diagonalThreshold;
   
-  if (upPressed){// || upLeftPressed || upRightPressed) {
+  if (upPressed){
     PSPState_markButtonAsPressed(pspButton);
   }
 }
@@ -269,6 +307,7 @@ void processGamepad(ControllerPtr ctl) {
     auto r1Pressed = bitRead(ctl->buttons(), 5);
     auto selectPressed = bitRead(ctl->miscButtons(), 1);
     auto startPressed = bitRead(ctl->miscButtons(), 2);
+    bool homePressed = bitRead(ctl->miscButtons(), 0);
     
     auto isAltMode = SETTINGS_current.useExtraCombo ?
       l1Pressed && r1Pressed && selectPressed && startPressed : 
@@ -298,13 +337,15 @@ void processGamepad(ControllerPtr ctl) {
     }
 
     // controller home button
-    bool homePressed = bitRead(ctl->miscButtons(), 0);
-    if (homePressed && !pressingHome) {
-      Serial.println("Press");
+    bool sutdownPressed = SETTINGS_current.useAlternativeShutdown ? 
+      L1 && R1 && startPressed :
+      homePressed;
+    if (sutdownPressed && !pressingHome) {
+      Serial.println("Starting shutdown timer");
       pressingHome = true;
       controllerTurnOffTimeout.start();
-    } else if (!homePressed && pressingHome) {
-      Serial.println("Release");
+    } else if (!sutdownPressed && pressingHome) {
+      Serial.println("Stopping shutdown timer");
       pressingHome = false;
       controllerTurnOffTimeout.stop();
     }
@@ -396,6 +437,7 @@ void CTRMANAGER_loop() {
     pspBootTimeout.loop();
     pspScreenTimeout.loop();
     controllerTurnOffTimeout.loop();
+    lowBaterryCheckTimeout.loop();
 }
 
 void CTRMANAGER_setup() {
@@ -408,8 +450,11 @@ void CTRMANAGER_setup() {
     pspScreenTimeout.setCallback(onPSPScreenTimeout);
     pspScreenTimeout.setTimeout(SETTINGS_current.screenDelay);
 
-    controllerTurnOffTimeout.setTimeout(3000);
+    controllerTurnOffTimeout.setTimeout(SETTINGS_current.shutdownDelay);
     controllerTurnOffTimeout.setCallback(CTRMANAGER_disconnectAll);
+
+    lowBaterryCheckTimeout.setTimeout(5000);
+    lowBaterryCheckTimeout.setCallback(onLowBatteryCheck);
 }
 
 bool newConnectionsEnabled = false;

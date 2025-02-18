@@ -11,7 +11,10 @@ struct Settings {
   uint16_t screenDelay;
   uint16_t coldBootDelay;
   uint16_t warmBootDelay;
+  uint16_t shutdownDelay;
+  uint16_t batteryWarning;
   bool useExtraCombo;
+  bool useAlternativeShutdown;
 };
 
 #endif
