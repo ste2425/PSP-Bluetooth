@@ -1,4 +1,4 @@
-# Release 2.3.1-RC2
+# Release 2.3.1-RC3
 
 **Pre-Release** This release modifies the warm boot delay to `5` seconds from `2.5` seconds.
 
