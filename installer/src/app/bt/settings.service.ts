@@ -11,7 +11,7 @@ const DEFAULT_SETTINGS: ISettings = {
     useExtraCombo: true,
     screenDelay: 7000,
     coldBootDelay: 13000,
-    warmBootDelay: 2500,
+    warmBootDelay: 5000,
     useAlternativeShutdown: false,
     shutdownDelay: 3000,
     batteryWarning: 38 //15% of 255
