@@ -7,6 +7,7 @@
 #include "interop.h"
 #include "led.h"
 #include "fileUtility.h"
+#include "Settings.h"
 
 #define BUTTON_PIN 19
 

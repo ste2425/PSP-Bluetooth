@@ -53,6 +53,40 @@ void onLowBatteryCheck() {
   }
 }
 
+bool CTRMANAGER_isBooted() {
+  return PSPstate_poweredOn();
+}
+
+void CTRMANAGER_bootConsole(bool bootOrEnd) {
+  if (bootOrEnd) {
+    CTRMANAGER_enableConnections(false);
+    PSPState_togglePower();
+    auto delayBootTime = pspColdBoot ? SETTINGS_current.coldBootDelay : SETTINGS_current.warmBootDelay;
+
+    Serial.println("Boot delay");
+    Serial.println(delayBootTime);
+
+    pspBootTimeout.setTimeout(delayBootTime);
+    pspColdBoot = false;
+    pspBootTimeout.start();
+
+    pspBooting = true;
+
+    lowBaterryCheckTimeout.start();
+  } else {
+    pspBootTimeout.stop();
+    pspScreenTimeout.stop();
+    lowBaterryCheckTimeout.stop();
+
+    pspBooting = false;
+
+    if (PSPstate_poweredOn())
+      PSPState_togglePower();
+
+    INTEROP_enableBLEService(false);
+  }
+}
+
 bool CTRMANAGER_batteryLow() {
   return batteryLow;
 }
@@ -93,21 +127,8 @@ void onConnectedController(ControllerPtr ctl) {
             
             // if first controller
             if (i == 0 && !PSPstate_poweredOn()) {
-              CTRMANAGER_enableConnections(false);
-              PSPState_togglePower();
-              auto delayBootTime = pspColdBoot ? SETTINGS_current.coldBootDelay : SETTINGS_current.warmBootDelay;
-
-              Serial.println("Boot delay");
-              Serial.println(delayBootTime);
-
-              pspBootTimeout.setTimeout(delayBootTime);
-              pspColdBoot = false;
-              pspBootTimeout.start();
-
-              pspBooting = true;
-
+              CTRMANAGER_bootConsole(true);
               LED_autoSet();
-              lowBaterryCheckTimeout.start();
             }
             
             break;
@@ -143,16 +164,7 @@ void onDisconnectedController(ControllerPtr ctl) {
     }
     
     if (allDisconnected) {  
-
-      pspBootTimeout.stop();
-      pspScreenTimeout.stop();
-      lowBaterryCheckTimeout.stop();
-
-      if (PSPstate_poweredOn())
-        PSPState_togglePower();
-
-      INTEROP_enableBLEService(false);
-
+      CTRMANAGER_bootConsole(false);
       LED_autoSet();
     }
 

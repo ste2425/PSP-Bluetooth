@@ -2,21 +2,42 @@
 
 OneButton button;
 
-void doubleClick()
-{}
-
-void click() {
-  INTEROP_enableBLEService(false);
-  CTRMANAGER_toggleConnections();  
+void handleClick(uint8_t mode) {
+  switch(mode) {
+    case 1: // controller pair
+      INTEROP_enableBLEService(false);
+      CTRMANAGER_toggleConnections();  
+      break;
+    case 2: // BLE mode
+      CTRMANAGER_enableConnections(false);
+      INTEROP_toggleBLEService();
+      break;
+    case 3: // power toggle
+      CTRMANAGER_enableConnections(false);
+      INTEROP_enableBLEService(false);
+      
+      if (CTRMANAGER_isBooted()) {
+        CTRMANAGER_bootConsole(false);
+        CTRMANAGER_disconnectAll();
+      } else {
+        CTRMANAGER_bootConsole(true);
+      }
+      break;
+  }
 
   LED_autoSet();
 }
 
-void longClick() {
-  CTRMANAGER_enableConnections(false);
-  INTEROP_toggleBLEService();
+void doubleClick() { 
+  handleClick(SETTINGS_current.dblClickMode);
+}
 
-  LED_autoSet();
+void click() {
+  handleClick(SETTINGS_current.clickMode);
+}
+
+void longClick() {
+  handleClick(SETTINGS_current.lngClickMode);
 }
 
 void BUTTON_loop() {
