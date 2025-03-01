@@ -1,4 +1,4 @@
-# Release 2.3.1-RC3
+# Release 2.3.1-RC4
 
 **Pre-Release** This release modifies the warm boot delay to `5` seconds from `2.5` seconds and adds ability to choose Mode Button purpose.
 
