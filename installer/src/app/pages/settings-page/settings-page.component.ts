@@ -43,6 +43,10 @@ export class SettingsPageComponent implements OnDestroy {
       this.settingsService.disconnect();
   }
 
+  percentage(totalValue: number) {
+    return (partialValue: number) => `${Math.round((100 * partialValue) / totalValue)}%`;
+  }
+
   async loadConfig() {
     try {
       this.loading = true;
