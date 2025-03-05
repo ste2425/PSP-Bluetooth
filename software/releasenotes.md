@@ -1,4 +1,4 @@
-# Release 2.3.1-RC4
+# Release 2.3.1-RC5
 
 **Pre-Release** This release modifies the warm boot delay to `5` seconds from `2.5` seconds and adds ability to choose Mode Button purpose.
 
@@ -12,7 +12,7 @@ The default warm boot time was 2.5 seconds. However some people report that this
 As such the default time has been extended to 5 seconds.
 
 ### Mode Button
-Each mode `Click`, `Long Click` and `Double Click` can be configured to either `Toggle new controller connections`, `Toggle BLE mode` or `Toggle PSP power`. This is done via the settings menu.
+Each mode `Click`, `Long Click` and `Double Click` can be configured to either `Toggle new controller connections`, `Toggle BLE mode` or `Turn off console`. This is done via the settings menu.
 
 **⚠ IMPORTANT NOTE ⚠** This only applies to users who have not saved settings on the `Settings Page`. Otherwise the saved settings will be applied.
 

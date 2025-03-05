@@ -12,15 +12,13 @@ void handleClick(uint8_t mode) {
       CTRMANAGER_enableConnections(false);
       INTEROP_toggleBLEService();
       break;
-    case 3: // power toggle
+    case 3: // Turn off console
       CTRMANAGER_enableConnections(false);
       INTEROP_enableBLEService(false);
       
       if (CTRMANAGER_isBooted()) {
         CTRMANAGER_bootConsole(false);
         CTRMANAGER_disconnectAll();
-      } else {
-        CTRMANAGER_bootConsole(true);
       }
       break;
   }
