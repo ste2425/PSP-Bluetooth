@@ -14,7 +14,10 @@ const DEFAULT_SETTINGS: ISettings = {
     warmBootDelay: 5000,
     useAlternativeShutdown: false,
     shutdownDelay: 3000,
-    batteryWarning: 38 //15% of 255
+    batteryWarning: 38, //15% of 255
+    clickMode: 1, // controller pair
+    lngClickMode: 2, // BLE mode
+    dblClickMode: 0 // nothing
 };
 
 export interface ISettings {
@@ -28,7 +31,10 @@ export interface ISettings {
     warmBootDelay: number,
     shutdownDelay: number,
     useAlternativeShutdown: boolean,
-    batteryWarning: number
+    batteryWarning: number,
+    clickMode: number,
+    dblClickMode: number,
+    lngClickMode: number
 }
 
 export class SettingsService {

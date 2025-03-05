@@ -10,6 +10,20 @@ import { IOKModalData, OKModalComponent } from './ok-modal/ok-modal.component';
 export class DialogService {
   dialogService = inject(MatDialog);
 
+  async ShowMissingBLEButtonMode() {
+    const data: IConfirmationData = {
+      title: 'Invalid Button Modes',
+      message: 'At least one button mode must toggle BLE mode. Otherwise you will be locked out of the web app.',
+      hideNoButton: true
+    };
+
+    await firstValueFrom(
+      this.dialogService.open(ConfirmationModalComponent, {
+        data
+      }).afterClosed()
+    );
+  }
+
   async confirmConfigTour(): Promise<boolean> {
     const data: IConfirmationData = {
       title: 'Take a short tour?',

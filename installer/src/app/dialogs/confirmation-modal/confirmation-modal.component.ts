@@ -6,7 +6,8 @@ export interface IConfirmationData {
   title: string,
   message: string,
   yesText?: string,
-  noText?: string
+  noText?: string,
+  hideNoButton?: boolean
 }
 
 @Component({

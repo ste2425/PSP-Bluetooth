@@ -10,6 +10,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
+import { DialogService } from '../../dialogs/dialog.service';
 
 @Component({
   selector: 'app-settings-page',
@@ -30,8 +31,26 @@ export class SettingsPageComponent implements OnDestroy {
 
   settingsFactory = inject(SettingsServiceFactory);
   btConnectionFactory = inject(BTConnectionFactoryService);
+  dialogService = inject(DialogService);
 
   settings?: ISettings;
+
+  buttonClickActions = [
+    {
+      name: 'No Action',
+      value: 0
+    },
+    {
+      name: 'Toggle New Controllers',
+      value: 1
+    }, {
+      name: 'Toggle BLE Mode',
+      value: 2
+    }, {
+      name: 'Turn Console Off',
+      value: 3
+    }
+  ];
 
   screenDelay = 0;
   coldBootDelay = 0;
@@ -73,6 +92,11 @@ export class SettingsPageComponent implements OnDestroy {
   async saveConfig() {
     if (!this.settings)
       return;
+
+    if (this.settings.clickMode !== 2 && this.settings.dblClickMode !== 2 && this.settings.lngClickMode !== 2) {
+      this.dialogService.ShowMissingBLEButtonMode();
+      return;
+    }
 
     this.saving = true;
 
