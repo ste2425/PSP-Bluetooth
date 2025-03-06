@@ -1,12 +1,12 @@
-# Release 2.3.1-RC5
+# Release 2.3.1
 
-**Pre-Release** This release modifies the warm boot delay to `5` seconds from `2.5` seconds and adds ability to choose Mode Button purpose.
+This release modifies the warm boot delay to `5` seconds from `2.5` seconds and adds ability to choose Mode Button purpose.
 
 ## Features
  N/A
 ## Changes
 
-### boot delay
+### Boot delay
 The default warm boot time was 2.5 seconds. However some people report that this is not enough time to ensure the PSP is properly booted before enabling TV out.
 
 As such the default time has been extended to 5 seconds.
