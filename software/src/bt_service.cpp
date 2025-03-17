@@ -228,11 +228,6 @@ static uint16_t att_read_callback(hci_con_handle_t con_handle,
             } else {
                 mappingsAsString = FileUtility::readFile(LittleFS, "/mapping.json");
 
-                Serial.print("Len ");
-                Serial.println(mappingsAsString.length());
-                Serial.println(mappingsAsString[0]);
-                Serial.println(mappingsAsString[1]);
-
                 if (mappingsAsString.length() > 2 && mappingsAsString[0] == '[' && mappingsAsString[1] == ']'){
                     Serial.println("Loading default");
                     mappingsAsString = MAPPINGS_DEFAULT;

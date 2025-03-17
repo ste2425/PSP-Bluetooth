@@ -1,21 +1,19 @@
-# Release 2.3.1
-
-This release modifies the warm boot delay to `5` seconds from `2.5` seconds and adds ability to choose Mode Button purpose.
+# Release 2.3.2 - PRE RELEASE
 
 ## Features
  N/A
 ## Changes
 
-### Boot delay
-The default warm boot time was 2.5 seconds. However some people report that this is not enough time to ensure the PSP is properly booted before enabling TV out.
+## Saving mappings doesnt reset active mapping
+When saving mappings via the web editor the currently active mapping will remain the active mapping.
 
-As such the default time has been extended to 5 seconds.
-
-### Mode Button
-Each mode `Click`, `Long Click` and `Double Click` can be configured to either `Toggle new controller connections`, `Toggle BLE mode` or `Turn off console`. This is done via the settings menu.
-
-**⚠ IMPORTANT NOTE ⚠** This only applies to users who have not saved settings on the `Settings Page`. Otherwise the saved settings will be applied.
+However this is based on mapping number. Imagine you have three configured mappings, with the last one active.
+If a mapping is deleted so there is now only 2 active mappings. In this situation the currently active mapping will still be reset back to mapping one.
 
 ## Bug fixes
 
-N/A
+## Saved button mappings not applying correctly
+
+When saving button mappings via the Web UI they were not saving correctly when a controller is connected.
+
+Now they should update correctly. Note: *The active mappings resets to the first mapping*.

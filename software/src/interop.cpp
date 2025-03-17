@@ -67,6 +67,7 @@ static void arduinocmd_callback(void* arg) {
     uint16_t cmd = ctx & 0xffff;
     switch (cmd) {
         case ARDUINOCMD_RELOAD_MAPPINGS:
+            Serial.println("Reloading mappings");
             MAPPINGS_setup();
             CTRMANAGER_applyColours();
             break;

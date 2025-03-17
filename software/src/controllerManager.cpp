@@ -332,6 +332,9 @@ void processGamepad(ControllerPtr ctl) {
       if (!changingMapping) {
         MAPPINGS_next();
         delay(200);
+
+        // meta is somewhat uneeded but cant be bothered remembering how to use pointers properly
+        meta = MAPPINGS_current;
         
         ctl->setColorLED(meta->colour[0], meta->colour[1], meta->colour[2]);
         ctl->setPlayerLEDs(meta->mappingNumer & 0x0f);
