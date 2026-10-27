@@ -20,6 +20,7 @@ void SETTINGS_setup() {
     deserializeJson(doc, SETTINGS_DEFAULT, strlen(SETTINGS_DEFAULT));
   }
 
+  SETTINGS_current.tvOutControl = (bool)doc["tvOutControl"];
   SETTINGS_current.useExtraCombo = (bool)doc["useExtraCombo"];
   SETTINGS_current.ledBrightness = (uint16_t)doc["ledBrightness"];
   SETTINGS_current.throttleThreshold = (uint16_t)doc["throttleThreshold"];
@@ -82,4 +83,7 @@ void SETTINGS_setup() {
   
   Serial.print("useAlternativeShutdown");
   Serial.println(SETTINGS_current.useAlternativeShutdown);
+
+  Serial.print("tvOutControl");
+  Serial.println(SETTINGS_current.tvOutControl);
 }

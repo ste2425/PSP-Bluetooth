@@ -20,6 +20,6 @@ echo "Deleting bin..."
 rm -r $BIN_DIR
 
 echo "Compiling..."
-arduino-cli compile --port COM9 --upload --log --fqbn esp32-bluepad32:esp32:esp32 --output-dir $BIN_DIR $PROJECT_BIR --config-file $YAML_NAME 
+arduino-cli compile --port /dev/ttyUSB0 --upload --log --fqbn esp32-bluepad32:esp32:esp32 --output-dir $BIN_DIR $PROJECT_BIR --config-file $YAML_NAME 
 
 echo "Done"

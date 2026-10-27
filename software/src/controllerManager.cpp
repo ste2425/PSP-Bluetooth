@@ -14,9 +14,17 @@ bool batteryLow = false;
 
 ControllerPtr myControllers[maxGamepads];
 
+// im probably going to regret this later
+// if PSP-Bluetooth does not manage TVOut just jump straight to PSP beng booted.
 void onPspBootTimeout() {
-  PSPState_pressScreen();
-  pspScreenTimeout.start();
+  if (SETTINGS_current.tvOutControl) {
+    PSPState_pressScreen();
+    pspScreenTimeout.start();
+  } else {
+    pspScreenTimeout.stop();
+    pspBooting = false;
+    LED_autoSet();
+  }
 }
 
 void onPSPScreenTimeout() {
@@ -62,6 +70,10 @@ void CTRMANAGER_bootConsole(bool bootOrEnd) {
     CTRMANAGER_enableConnections(false);
     PSPState_togglePower();
     auto delayBootTime = pspColdBoot ? SETTINGS_current.coldBootDelay : SETTINGS_current.warmBootDelay;
+
+    // If PSP-Bluetooth not controlling tvout set to a default delay whilst booting.
+    if (!SETTINGS_current.tvOutControl)
+      delayBootTime = 3000;
 
     Serial.println("Boot delay");
     Serial.println(delayBootTime);
@@ -461,6 +473,7 @@ void CTRMANAGER_setup() {
     BP32.enableVirtualDevice(false);
 
     BP32.forgetBluetoothKeys();
+    
     pspBootTimeout.setCallback(onPspBootTimeout);
     pspScreenTimeout.setCallback(onPSPScreenTimeout);
     pspScreenTimeout.setTimeout(SETTINGS_current.screenDelay);

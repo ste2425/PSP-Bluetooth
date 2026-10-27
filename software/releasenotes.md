@@ -1,19 +1,19 @@
-# Release 2.3.2 - PRE RELEASE
+# Release 2.4.0 - PRE RELEASE
 
 ## Features
- N/A
+Added support for plugin [Auto Tv Out](https://github.com/ste2425/Auto-Tv-Out).
+
+PSP-Bluetooth (and projects based on it such as PSPlaceable) enabled TVout themselves. This is unreliable and some homebrew can accidentally disable TVOut. 
+
+It is now possible to turn off PSP-Bluetooth managing TVOut via the [Web App Settings Page](https://ste2425.github.io/PSP-Bluetooth/settings). Un-ticking the option `
+Enable TVOut Control`
+
+Instead use the *Auto Tv Out* plugin.
+
 ## Changes
 
-## Saving mappings doesnt reset active mapping
-When saving mappings via the web editor the currently active mapping will remain the active mapping.
-
-However this is based on mapping number. Imagine you have three configured mappings, with the last one active.
-If a mapping is deleted so there is now only 2 active mappings. In this situation the currently active mapping will still be reset back to mapping one.
+N/A
 
 ## Bug fixes
 
-## Saved button mappings not applying correctly
-
-When saving button mappings via the Web UI they were not saving correctly when a controller is connected.
-
-Now they should update correctly. Note: *The active mappings resets to the first mapping*.
+N/A
