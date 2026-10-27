@@ -11,11 +11,12 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { DialogService } from '../../dialogs/dialog.service';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-settings-page',
   standalone: true,
-  imports: [MatSelectModule, MatButtonModule, MatSliderModule, MatCheckboxModule, PanelComponent, FormsModule, MatInputModule, MatFormFieldModule],
+  imports: [MatIconModule, MatSelectModule, MatButtonModule, MatSliderModule, MatCheckboxModule, PanelComponent, FormsModule, MatInputModule, MatFormFieldModule],
   templateUrl: './settings-page.component.html',
   styleUrl: './settings-page.component.scss'
 })

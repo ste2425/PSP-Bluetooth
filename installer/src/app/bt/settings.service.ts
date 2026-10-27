@@ -17,7 +17,8 @@ const DEFAULT_SETTINGS: ISettings = {
     batteryWarning: 38, //15% of 255
     clickMode: 1, // controller pair
     lngClickMode: 2, // BLE mode
-    dblClickMode: 0 // nothing
+    dblClickMode: 0, // nothing
+    tvOutControl: true // by default the ESP enables TVOut
 };
 
 export interface ISettings {
@@ -34,7 +35,8 @@ export interface ISettings {
     batteryWarning: number,
     clickMode: number,
     dblClickMode: number,
-    lngClickMode: number
+    lngClickMode: number,
+    tvOutControl: boolean
 }
 
 export class SettingsService {

@@ -191,9 +191,9 @@ export class DS4ViewerComponent {
       case ControllerButton.dpadRight:
         return type === controllerTypes.dpad && controllerBit === dpadControllerBits.dpadRight;
       case ControllerButton.options:
-        return type === controllerTypes.misc && controllerBit === miscControllerBits.miscSelect;
-      case ControllerButton.share:
         return type === controllerTypes.misc && controllerBit === miscControllerBits.miscStart;
+      case ControllerButton.share:
+        return type === controllerTypes.misc && controllerBit === miscControllerBits.miscSelect;
       case ControllerButton.ps:
         return type === controllerTypes.misc && controllerBit === miscControllerBits.miscHome;
       case ControllerButton.cross:

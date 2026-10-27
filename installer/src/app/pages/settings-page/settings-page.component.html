@@ -8,10 +8,22 @@
 </app-panel>
 
 @if(!connected){
-	<app-panel colour="accent" borderHorizontal style="margin-top: 20px;">
-		<p>
-			Use this page to configure various settings.
-		</p>
+	<app-panel minHeight="xs">
+		<div>
+			Please enable the <em>BLE service</em> by press and holding the mode button. This will trigger the LED to flash three times in a row with a pause. 
+		</div>
+	</app-panel>
+
+	<app-panel minHeight="xs">
+		<div>
+			Then click the <em>Load Config</em> in the top left of this page. 
+			
+			The browser will then how a popup to select the device labelled either <em>BP32</em> or <em>Bluepad32</em>.
+		</div>
+	</app-panel>
+
+	<app-panel colour="primary"borderHorizontal>
+		<img style="max-width: 100%; max-height: 350px;" src="assets/pairDialog.png" />
 	</app-panel>
 }
 
@@ -136,6 +148,18 @@
 		</app-panel>
 
 		<app-panel colour="accent" borderHorizontal>	
+
+			<mat-checkbox [(ngModel)]="settings.tvOutControl">Enable TVOut Control</mat-checkbox>
+
+			<p>
+				If this is enabled PSP-Bluetooth will attempt to switch to TVOut itself using the delay configurations below. 
+				If disabled it expects a plugin on the PSP to do this.
+			</p>
+
+			<strong>Disabling this and using the plugin <a mat-button="elevated" href="https://github.com/ste2425/Auto-Tv-Out" target="blank">Auto Tv Out <mat-icon>open_in_new</mat-icon></a> is the recommended setup.</strong>
+			
+			<hr style="width: 100%;">
+			
 			<p>
 				⚠ <strong>Danger ahead</strong> ⚠ Setting the following settings too low can prevent your PSP from enabling TV out.
 			</p>
